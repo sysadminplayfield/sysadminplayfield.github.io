@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>RHCSA Certification - Part8 - User/group management and basic permissions | SysAdmin Playfield</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="RHCSA Certification - Part8 - User/group management and basic permissions" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you." />
+<meta property="og:description" content="It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you." />
+<link rel="canonical" href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html" />
+<meta property="og:url" content="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html" />
+<meta property="og:site_name" content="SysAdmin Playfield" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-20T15:30:00-06:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html","headline":"RHCSA Certification - Part8 - User/group management and basic permissions","dateModified":"2020-02-20T15:30:00-06:00","description":"It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.","datePublished":"2020-02-20T15:30:00-06:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">SysAdmin Playfield</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">RHCSA Certification - Part8 - User/group management and basic permissions</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-02-20T15:30:00-06:00" itemprop="datePublished">Feb 20, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.</p>
+
+<p><br />
+<strong>USERADD</strong></p>
+
+<p>Usage: <code class="highlighter-rouge">useradd [options] &lt;user_name&gt;</code><br />
+This command will create a new user account, and, if no other option is specified, will also create a home folder in <code class="highlighter-rouge">/home/&lt;user_name&gt;</code><br />
+To start with, the most important options are:
+ -D : defaults (can be altered with additional options)<br />
+ -m : create home directory if it doesn’t exist <br />
+ -s : shell (/bin/bash, /sbin/nologin, etc. …)  <br />
+ -e : expire date with format YYYY-MM-DD<br />
+ -f : inactive after creation<br />
+ -g : manual gid number<br />
+ -u : manual uid number 
+ -G : groups (coma separated)<br />
+ -r : system account, doesn’t create home, mail, usergroup…
+And more … rtfm</p>
+
+<p><br />
+<strong>CHAGE</strong></p>
+
+<p>Usage: <code class="highlighter-rouge">chage [options] &lt;user_name&gt;</code></p>
+
+<p>The <strong>-l</strong> option will <strong>display</strong> password aging <strong>information</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chage -l mary
+# chage -l barry
+</code></pre></div></div>
+
+<p>The <strong>-E</strong> option will set a <strong>password expiration</strong> date for the user:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chage -E 2017-12-31 mary
+# chage -E 2017-12-31 barry
+</code></pre></div></div>
+
+<p><br />
+<strong>GROUPADD</strong></p>
+
+<p>Usage: <code class="highlighter-rouge">groupadd [options] &lt;group_name&gt;</code></p>
+
+<p>Just <strong>create</strong> the <strong>group</strong> dba:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># groupadd dba
+</code></pre></div></div>
+
+<p><br />
+<strong>USERMOD</strong></p>
+
+<p>Usage: <code class="highlighter-rouge">usermod [options] &lt;user_name&gt;</code>
+The <strong>-aG</strong> option means <strong>append Group</strong>. It will basically add a supplementary group to the user.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># usermod -aG dba larry
+# usermod -aG dba gary
+</code></pre></div></div>
+
+<p><br />
+<strong>CHOWN</strong></p>
+
+<p>Use <strong>chown</strong> to <strong>change user and/or group</strong> ownership:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chown larry /srv/grouptest
+or
+# chown larry:dba /srv/grouptest
+or
+# chown larry: /srv/grouptest
+or
+# chown :dba /srv/grouptest
+</code></pre></div></div>
+
+<p><br />
+<strong>CHGRP</strong></p>
+
+<p>Use <strong>chgrp</strong> to <strong>change</strong> the <strong>group</strong> on a file or folder:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chgrp /srv/grouptest dba
+</code></pre></div></div>
+
+<p><br />
+<strong>CHMOD</strong></p>
+
+<p>Use <strong>chmod</strong> to change permissions to <strong>rwx</strong> (read, write, execute) on <strong>/srv/grouptest</strong> for owner and group members only:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod -R 770 /srv/grouptest
+or
+# chmod -R ug=rwx,o-rwx /srv/grouptest
+</code></pre></div></div>
+
+<p>Group collaboration:<br />
+SetGID: All files created belong to the group. All the members of the group can create files, edit or remove any files from the group.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 2770 /srv/grouptest
+or
+# chmod g+s /srv/grouptest
+</code></pre></div></div>
+
+<p>SetUID is not recommended. Users allowed to execute a program use the identity (and permissions) of the owner.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 4770 /srv/grouptest/script.sh
+or
+# chmod u+s /srv/grouptest/script.sh
+</code></pre></div></div>
+
+<p>StickyBit:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 1770 /srv/grouptest/myfile
+or
+# chmod +t /srv/grouptest/myfile
+</code></pre></div></div>
+
+<p>StickyBit with SetGID:<br />
+StickyBit sets additional permissions on a file. It comes very convenient in case of group collaboration because only the owner can delete its files:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#chmod 3770 /srv/grouptest/myfile
+</code></pre></div></div>
+
+<p><br />
+<strong>CHATTR</strong></p>
+
+<p>Change attributes on a file, set the file to immutable (even by root):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chattr +i file
+</code></pre></div></div>
+
+<p><br />
+<strong>GPASSWD</strong></p>
+
+<p>Usage: <code class="highlighter-rouge">gpasswd [option] &lt;user_name&gt; &lt;group_name&gt;</code></p>
+
+<p>Remove user larry from the dba group:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># gpasswd -d larry dba
+</code></pre></div></div>
+
+<p><br />
+<strong>USERDEL</strong></p>
+
+<p>Delete a user:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># userdel larry
+</code></pre></div></div>
+
+<p>Delete a user with its home directory and mailbox:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># userdel -r larry
+</code></pre></div></div>
+
+<p><br />
+<strong>GROUPDEL</strong></p>
+
+<p>Delete a group:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># groupdel dba
+</code></pre></div></div>
+
+<p><br />
+<strong>EXAMPLE</strong></p>
+
+<p>Create several users in 1 command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># for i in barry harry larry mary gary; do useradd $i; done
+</code></pre></div></div>
+
+<p>Check if all the user accounts have properly been created:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tail -5 /etc/passwd
+or
+# for i in barry harry larry mary gary; do id $i; done
+</code></pre></div></div>
+
+<p>Set password for all newly created users by redirecting “password” in the standard input:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># for i in barry harry larry mary gary; do echo "password" | passwd $i --stdin; done
+</code></pre></div></div>
+
+<p>Just to mention that this is not the safest way to do it !
+There are several discussions related to this topic, for example in https://stackoverflow.com/questions/714915/using-the-passwd-command-from-within-a-shell-script<br />
+Also, it may not be ideal to keep this command in the bash history. If you want to run the command without keeping it in history, just add a space at the beginning of the line (works for bash shell, not for zsh).</p>
+
+  </div><a class="u-url" href="/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">SysAdmin Playfield</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/sysadminplayfield"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">sysadminplayfield</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

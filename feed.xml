@@ -1,345 +1,388 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-21T10:37:52-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</subtitle><entry><title type="html">RHCSA Certification - Part15 - Compression: tar, star</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star.html" rel="alternate" type="text/html" title="RHCSA Certification - Part15 - Compression: tar, star" /><published>2020-02-20T11:02:40-06:00</published><updated>2020-02-20T11:02:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star.html">&lt;p&gt;Create tar.gz archive file (cvzf= create verbose zip file):&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-21T11:33:43-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</subtitle><entry><title type="html">RHCSA Certification - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA Certification - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# tar cvzf /root/tar_compressed_archive.tar.gz /usr/local
+&lt;p&gt;At grub2 screen, press “&lt;strong&gt;e&lt;/strong&gt;” to &lt;strong&gt;edit&lt;/strong&gt; the configuration.&lt;br /&gt;
+At the end of the line starting with “&lt;strong&gt;linux16&lt;/strong&gt;”, append the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;rd.break enforcing=0
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;“&lt;strong&gt;rd.break&lt;/strong&gt;” interrupts the boot process.&lt;br /&gt;
+“&lt;strong&gt;enforcing=0&lt;/strong&gt;” sets temporarily SELinux to “Permissive”.&lt;/p&gt;
+
+&lt;p&gt;Proceed with &lt;strong&gt;Ctrl+x&lt;/strong&gt; to load the new configuration.&lt;/p&gt;
+
+&lt;p&gt;As follows, &lt;strong&gt;mount&lt;/strong&gt; the /sysroot folder with &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; access, and change root (&lt;strong&gt;chroot&lt;/strong&gt;) to set the new root password:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;switch_root:/# mount -o rw,remount /sysroot
+switch_root:/# chroot /sysroot
+sh-4.2# passwd
+	Enter new root password:.....
+	Confirm new root password:.....
+sh-4.2# exit
+switch_root:/# exit
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Check the archive:&lt;/p&gt;
+&lt;p&gt;Log in as root using the new password, and reset the SELinux context of /etc/shadow :&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# tar tvzf /root/tar_compressed_archive.tar.gz
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Create tar.gz archive file (cvzf= create verbose zip file):</summary></entry><entry><title type="html">RHCSA Certification - Part14 - grub2</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-grub2.html" rel="alternate" type="text/html" title="RHCSA Certification - Part14 - grub2" /><published>2020-02-20T10:52:40-06:00</published><updated>2020-02-20T10:52:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-grub2</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-grub2.html">&lt;p&gt;&lt;strong&gt;Grub2&lt;/strong&gt; is the &lt;strong&gt;bootloader&lt;/strong&gt; in RHEL/CENTOS distributions.
-&lt;strong&gt;Grub2&lt;/strong&gt; &lt;strong&gt;boot parameters&lt;/strong&gt; are stored in &lt;strong&gt;/etc/default/grub&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@localhost# restorecon -v /etc/shadow
+root@localhost# reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.</summary></entry><entry><title type="html">RHCSA Certification - Part2 - Configure network interface</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html" rel="alternate" type="text/html" title="RHCSA Certification - Part2 - Configure network interface" /><published>2020-02-20T22:00:01-06:00</published><updated>2020-02-20T22:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html">&lt;p&gt;We assume the following:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;OS: CentOS 7.0&lt;/li&gt;
+  &lt;li&gt;Static IP address: 192.168.2.100/24&lt;/li&gt;
+  &lt;li&gt;Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;Edit /etc/default/grub&lt;/strong&gt; to change timeout from 5 to 2 seconds:&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+Although it is still possible to manually edit the network configuration files in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/sysconfig/network-scripts&lt;/code&gt; directory, this is not the preferred way anymore.&lt;br /&gt;
+If you still wish to manually modify the files, do not forget to execute &lt;code class=&quot;highlighter-rouge&quot;&gt;nmcli con reload&lt;/code&gt; to update changes.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# vi /etc/default/grub
-    GRUB_TIMEOUT=2
-    [...]
+&lt;p&gt;&lt;br /&gt;
+Let’s start the configuration:&lt;/p&gt;
+
+&lt;p&gt;Display network configurations with &lt;strong&gt;nmcli&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli c s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Now, &lt;strong&gt;update grub2 configuration&lt;/strong&gt; with the new parameters:&lt;/p&gt;
+&lt;p&gt;If the command doesn’t display any connection and you don’t know the name of the interface, use &lt;code class=&quot;highlighter-rouge&quot;&gt;ip a&lt;/code&gt; to get it.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# grub2-mkconfig -o /boot/grub2/grub.cfg
-# reboot
+&lt;p&gt;Create the new connection:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type ethernet ifname eth0 con-name eth0
+# nmcli con mod eth0 ipv4.addresses &quot;192.168.2.100/24 192.168.2.1&quot; \
+ 			ipv4.dns 192.168.2.200 \
+ 			ipv4.method manual \
+ 			connection.autoconnect yes
+# nmcli con up eth0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Set &lt;strong&gt;grub2&lt;/strong&gt; to &lt;strong&gt;default&lt;/strong&gt; boot on the &lt;strong&gt;2nd entry&lt;/strong&gt; of the kernel list:&lt;/p&gt;
+&lt;p&gt;Test the new connection:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# grub-set-default 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Grub2 is the bootloader in RHEL/CENTOS distributions. Grub2 boot parameters are stored in /etc/default/grub.</summary></entry><entry><title type="html">RHCSA Certification - Part13 - Cron, at</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-cron.html" rel="alternate" type="text/html" title="RHCSA Certification - Part13 - Cron, at" /><published>2020-02-20T10:42:40-06:00</published><updated>2020-02-20T10:42:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-cron</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-cron.html">&lt;p&gt;&lt;strong&gt;CRON&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ping -I eth0 192.168.2.200
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">We assume the following: OS: CentOS 7.0 Static IP address: 192.168.2.100/24 Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</summary></entry><entry><title type="html">RHCSA Certification - Part3 - systemd targets</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html" rel="alternate" type="text/html" title="RHCSA Certification - Part3 - systemd targets" /><published>2020-02-20T20:00:01-06:00</published><updated>2020-02-20T20:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html">&lt;p&gt;With &lt;strong&gt;SysVinit&lt;/strong&gt;, we talked about &lt;strong&gt;runlevels&lt;/strong&gt;, but with &lt;strong&gt;systemd&lt;/strong&gt; it is all about &lt;strong&gt;targets&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;Cron can be configured using &lt;strong&gt;crontab&lt;/strong&gt;.&lt;br /&gt;
-An explanation of the configuration is available in &lt;strong&gt;/etc/crontab&lt;/strong&gt; file (see below).&lt;/p&gt;
+&lt;p&gt;Below, the relationship between runlevels and targets:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# .---------------- minute (0 - 59)
-# |  .------------- hour (0 - 23)
-# |  |  .---------- day of month (1 - 31)
-# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
-# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
-# |  |  |  |  |
-# *  *  *  *  * user-name  command to be executed
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Prior to create the crontab job, make sure your command/script is working:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# find /var -type f -name &quot;*.log&quot; &amp;gt;&amp;gt; /var/log/varfiles
-# cat /var/log/varfiles
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; the &lt;strong&gt;cron job&lt;/strong&gt; using &lt;strong&gt;crontab&lt;/strong&gt;. Set it to run &lt;strong&gt;every monday at 1h20am&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# crontab -e
-    [...]
-    20 1 * * 1 find /var -type f -name &quot;*.log&quot; &amp;gt;&amp;gt; /var/log/varfiles
-    [...]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;List&lt;/strong&gt; the &lt;strong&gt;cronjobs&lt;/strong&gt; for user &lt;strong&gt;root&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# crontab -l
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Runlevel	Target											Description
+0			runlevel0.target, poweroff.target				Power off
+1			runlevel1.target, rescue.target					Non-graphical single-user
+2,3,4		runlevel[234].target, multi-user.target			Non-graphical multi-user
+5 			runlevel5.target, graphical.target				Graphical multi-user
+6 			runlevel6.target, reboot.target					Reboot
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;AT&lt;/strong&gt;&lt;/p&gt;
+&lt;strong&gt;Check&lt;/strong&gt; the system’s current &lt;strong&gt;default target&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;at&lt;/strong&gt; tool is a very useful tool to schedule an action at a later time without setting up a cron job.&lt;br /&gt;
-This tool is not installed by default in CentOS 7 minimal installation.&lt;/p&gt;
-
-&lt;p&gt;Install &lt;strong&gt;at&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y at
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # systemctl get-default
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Add &lt;strong&gt;alice&lt;/strong&gt; to the file &lt;strong&gt;/etc/at.deny&lt;/strong&gt; to &lt;strong&gt;forbid&lt;/strong&gt; her to use at tool:&lt;/p&gt;
+&lt;p&gt;If it is not already set to multi-user, &lt;strong&gt;set&lt;/strong&gt; the new &lt;strong&gt;default target&lt;/strong&gt; as follow:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo alice &amp;gt; /etc/at.deny
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # systemctl set-default multi-user.target
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Add &lt;strong&gt;ben&lt;/strong&gt; to the file &lt;strong&gt;/etc/at.allow&lt;/strong&gt; to &lt;strong&gt;allow&lt;/strong&gt; him to use at tool:&lt;/p&gt;
+&lt;p&gt;But if you wish to &lt;strong&gt;switch immediately to rescue&lt;/strong&gt; (formerly “single user”, or “init 1”):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo ben &amp;gt; /etc/at.allow
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # systemctl isolate rescue
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">With SysVinit, we talked about runlevels, but with systemd it is all about targets.</summary></entry><entry><title type="html">RHCSA Certification - Part4 - SELinux</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html" rel="alternate" type="text/html" title="RHCSA Certification - Part4 - SELinux" /><published>2020-02-20T17:30:40-06:00</published><updated>2020-02-20T17:30:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html">&lt;p&gt;&lt;strong&gt;SElinux&lt;/strong&gt; configuration file is &lt;strong&gt;/etc/selinux/config&lt;/strong&gt;.&lt;br /&gt;
+In this file you can set the default configuration such as the mode (&lt;strong&gt;enforcing&lt;/strong&gt;, &lt;strong&gt;permissive&lt;/strong&gt;, &lt;strong&gt;disabled&lt;/strong&gt;) and the protection type (&lt;strong&gt;targeted&lt;/strong&gt;, &lt;strong&gt;minimum&lt;/strong&gt;, &lt;strong&gt;mls&lt;/strong&gt;)&lt;/p&gt;
+
+&lt;p&gt;When enabled, SELinux can be in Permissive mode or Enforcing mode.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+Check current mode for SELinux:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # getenforce
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Let’s &lt;strong&gt;check&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;If SELinux current mode is “Enforcing”, you can &lt;strong&gt;temporarily&lt;/strong&gt; set it to “&lt;strong&gt;Permissive&lt;/strong&gt;”:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# su - alice
-$ at
-	You do not have permission to use at.
-$ exit
-# su - ben
-$ at
-	Garbled time
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">CRON</summary></entry><entry><title type="html">RHCSA Certification - Part12 - Swap</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-swap.html" rel="alternate" type="text/html" title="RHCSA Certification - Part12 - Swap" /><published>2020-02-20T10:22:40-06:00</published><updated>2020-02-20T10:22:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-swap</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-swap.html">&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; a partition on &lt;strong&gt;/dev/sda&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# fdisk /dev/sda
-    p (print partition table to see a summary of the partitions already present on /dev/sda)
-    n (create new partition)
-    p (primary)
-    enter (default partition number - 6)
-    enter (default 1st block)
-    +65M (size of the new partition)
-    p (print partition table to make sure no mistake has been made)
-    w (write changes made to the partition table)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Use &lt;strong&gt;partprobe&lt;/strong&gt; to update system’s awareness about the new partition:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# partprobe -s
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; Linux SWAP &lt;strong&gt;filesystem&lt;/strong&gt; type on the new partition &lt;strong&gt;/dev/sda6&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkswap /dev/sda6
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Write the swap partition &lt;strong&gt;UUID&lt;/strong&gt; to &lt;strong&gt;/etc/fstab&lt;/strong&gt; to make it &lt;strong&gt;persistent across reboots&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# blkid | grep /dev/sda6 &amp;gt;&amp;gt; /etc/fstab
-# vi /etc/fstab
-    [...]
-    UUID=&amp;lt;/dev/sda6 UUID&amp;gt; swap swap defaults 0 0
-    [...]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Mount&lt;/strong&gt; the new &lt;strong&gt;swap&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# swapon -a
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Check&lt;/strong&gt; the &lt;strong&gt;swap&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# blkid | grep swap
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # setenforce permissive
 or
-# swapon -s
+ # setenforce 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Or else, if it is set to “Permissive” and you want to &lt;strong&gt;temporarily&lt;/strong&gt; set it to “&lt;strong&gt;Enforcing&lt;/strong&gt;”:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # setenforce permissive
 or
-# cat /proc/swaps
-or
-# free -h
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Create a partition on /dev/sda:</summary></entry><entry><title type="html">RHCSA Certification - Part11 - Logical volumes: PV, VG, LV</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-lvm-vg-pv.html" rel="alternate" type="text/html" title="RHCSA Certification - Part11 - Logical volumes: PV, VG, LV" /><published>2020-02-20T10:12:40-06:00</published><updated>2020-02-20T10:12:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-lvm-vg-pv</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-lvm-vg-pv.html">&lt;p&gt;PV = Physical Volume (can be a partition on a physical drive, or a full disk)&lt;br /&gt;
-VG = Volume Group (logical group made of one or more PVs)&lt;br /&gt;
-PE = Physical Extent (minimal unit size defined for a VG, default is 4MB)&lt;br /&gt;
-LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10*LE=40MB)&lt;br /&gt;
-LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;FDISK&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Let’s create a new physical partition on /dev/sdb:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# fdisk /dev/sdb
-    p (print partition table on /dev/sdb)
-    n (create new partition)
-    p (primary partition type)
-    enter (default partition number - 1)
-    enter (default 1st block)
-    +330M (size of the new partition)
-    t (partition type)
-    enter (default partition number - 1)
-    8e (Linux LVM)
-    p (print partition table again, last check before writing changes to disk)
-    w (write changes made to the partition table)
+ # setenforce 0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;PARTPROBE&lt;/strong&gt;&lt;/p&gt;
+If SELinux is disabled, &lt;code class=&quot;highlighter-rouge&quot;&gt;setenforce&lt;/code&gt; will not work because it requires relabeling thoe whole filesystem. You can force a relabel with the following command:&lt;/p&gt;
 
-&lt;p&gt;Use &lt;strong&gt;partprobe&lt;/strong&gt; to force the system to be aware of the new partition table:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# partprobe -s
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;touch /.autorelabel
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To &lt;strong&gt;permanently&lt;/strong&gt; set an SELinux mode (&lt;strong&gt;persists across reboots&lt;/strong&gt;), &lt;strong&gt;edit&lt;/strong&gt; the configuration file &lt;strong&gt;/etc/selinux/config&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;PVCREATE&lt;/strong&gt;&lt;br /&gt;
-(Optional, because the command &lt;code class=&quot;highlighter-rouge&quot;&gt;vgcreate&lt;/code&gt; automatically creates the PVs)
-Create a PV on /dev/sdb1:&lt;/p&gt;
+&lt;strong&gt;SEMANAGE&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# pvcreate /dev/sdb1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;semanage&lt;/strong&gt; tool is not present in the minimal install of CentOS 7, we need to install it.&lt;/p&gt;
 
-&lt;p&gt;Let’s check it:&lt;/p&gt;
+&lt;p&gt;If you can’t remember what package provides &lt;strong&gt;semanage&lt;/strong&gt; tool, and let’s install it:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# pvs
-# pvdisplay
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;VGCREATE&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Create a VG called vg_test, with a PE size of 8MB on /dev/sdb1:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# vgcreate -s 8M vg_test /dev/sdb1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Let’s check it:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# vgs
-# vgdisplay
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;LVCREATE&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; an LV called &lt;code class=&quot;highlighter-rouge&quot;&gt;lv_test&lt;/code&gt;, with a total size of &lt;strong&gt;10 LEs&lt;/strong&gt; on &lt;strong&gt;vg_test&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# lvcreate -n lv_test -l 10 vg_test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Let’s check it:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# lvs
-# lvdisplay
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Format&lt;/strong&gt; the LV filesystem to &lt;strong&gt;xfs&lt;/strong&gt; and create a mount point:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkfs.xfs /dev/vg_test/lv_test
-# mkdir /mnt/mountpoint
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In order to automatically mount &lt;code class=&quot;highlighter-rouge&quot;&gt;lv_test&lt;/code&gt; LVM at boot time, we need to define UUID (or logical map path), mounting point, filesystem type, and options in &lt;strong&gt;/etc/fstab&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;p&gt;Let’s append the output of &lt;strong&gt;blkid&lt;/strong&gt; to &lt;strong&gt;/etc/fstab&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# blkid | grep lv_test &amp;gt;&amp;gt; /etc/fstab
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;And edit &lt;strong&gt;/etc/fstab&lt;/strong&gt; to complete the information (in this example, we use the &lt;strong&gt;UUID&lt;/strong&gt; to identify the volume):&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# vi /etc/fstab
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum provides */semanage
     [...]
-    UUID=&amp;lt;UUID-of-lv_test&amp;gt;	/mnt/mountpoint		xfs		defaults 0 0
+    policycoreutils-python
+    setroubleshoot-server
+    [...]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Mount the volume:&lt;/p&gt;
+&lt;p&gt;You can install either &lt;strong&gt;setroubleshoot-server&lt;/strong&gt; or &lt;strong&gt;policycoreutils-python&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mount -av
-# mount | grep lv_test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;VGEXTEND&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Add a new PV to an existing VG:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# vgextend vg_test /dev/sdc1
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y setroubleshoot-server
+or
+# yum install -y policycoreutils-python
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;LVEXTEND&lt;/strong&gt;&lt;/p&gt;
+&lt;strong&gt;CONTEXTS ON FILES/DIRECTORIES&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;WARNING&lt;/strong&gt;: AT EVERY LV RESIZING USING LVEXTEND, FIRST, MAKE SURE TO TEST WITH THE “-t” OPTION.&lt;br /&gt;
-IF IT FAILS WITH THE “-t” OPTION, IT’S OK, YOU CAN INVESTIGATE.
-BUT IF YOU SKIP THE TEST AND LVEXTEND FAILS, YOU LOOSE ALL YOUR DATA.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;List&lt;/strong&gt; available contexts for admin_home:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Test&lt;/strong&gt; &lt;strong&gt;lvxtend&lt;/strong&gt; with the “&lt;strong&gt;-t&lt;/strong&gt;” option:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# lvextend -r -L +35 /dev/vg_test/lv_test -t
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# semanage fcontext -l | grep admin_home
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;If there is no error message, you can proceed:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Retreive SELinux context&lt;/strong&gt; for /root folder using ls with &lt;strong&gt;-Z&lt;/strong&gt; option:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# lvextend -r -L +35 /dev/vg_test/lv_test
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ls -ldZ /root
+    dr-xr-x---. root root system-u:object_r:admin_home_t:s0 /root
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You can also extend with &lt;code class=&quot;highlighter-rouge&quot;&gt;-l +100%FREE&lt;/code&gt; to extend an LV to the maximum size provided by the VG:&lt;/p&gt;
+&lt;p&gt;Create &lt;code class=&quot;highlighter-rouge&quot;&gt;/custom_home&lt;/code&gt; folder, and &lt;strong&gt;set&lt;/strong&gt; “&lt;strong&gt;admin_home_t&lt;/strong&gt;” &lt;strong&gt;context&lt;/strong&gt; on it using &lt;strong&gt;semanage&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# lvextend -r -l +100%FREE /dev/vg_test/lv_test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">PV = Physical Volume (can be a partition on a physical drive, or a full disk) VG = Volume Group (logical group made of one or more PVs) PE = Physical Extent (minimal unit size defined for a VG, default is 4MB) LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10*LE=40MB) LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)</summary></entry><entry><title type="html">RHCSA Certification - Part10 - vsftpd, yum custom repository</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-vsftpd-yum.html" rel="alternate" type="text/html" title="RHCSA Certification - Part10 - vsftpd, yum custom repository" /><published>2020-02-19T09:40:40-06:00</published><updated>2020-02-19T09:40:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-vsftpd-yum</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-vsftpd-yum.html">&lt;p&gt;Install &lt;strong&gt;vsftpd&lt;/strong&gt; (very secure file transfer protocol daemon) and &lt;strong&gt;createrepo&lt;/strong&gt; (tool to create repositories):&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install vsftpd createrepo
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /custom_home
+# semanage fcontext -a -t admin_home_t &quot;/custom_home(/.*)?&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Start vsftpd.service and enable autostart at boot:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Apply/Update&lt;/strong&gt; the new &lt;strong&gt;context&lt;/strong&gt; (-v option is for verbose) and check:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable vsftpd.service
-# systemctl start vsftpd.service
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# restorecon -v /custom_home
+# ls -ldZ /custom_home
+    dr-xr-x---. root root unconfined_u:object_r:admin_home_t:s0 /custom_home
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Configure firewalld to allow ftp service (default port 21):&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;CONTEXTS ON PORTS&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=ftp
+&lt;p&gt;&lt;strong&gt;List&lt;/strong&gt; available contexts for ssh:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;semanage port -l | grep ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Allow&lt;/strong&gt; listening on an &lt;strong&gt;unconventional&lt;/strong&gt; &lt;strong&gt;port&lt;/strong&gt; for ssh in SELinux:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# semanage port -at ssh_port_t 2222 -p tcp
+or, if you need to change the default port:
+# semanage port -mt ssh_port_t 2222 -p tcp
+or, if you need to delete the context:
+# semanage port -dt ssh_port_t 2222 -p tcp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Edit&lt;/strong&gt; &lt;strong&gt;/etc/ssh/sshd_config&lt;/strong&gt; to add listening on &lt;strong&gt;port 2222&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# vi /etc/ssh/sshd_config
+	[...]
+	Port 22
+	Port 2222
+	[...]
+	PermitRootLogin yes
+	[...]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Restart sshd&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl restart sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Allow&lt;/strong&gt; access in &lt;strong&gt;firewalld&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-port=2222/tcp
 # firewall-cmd --reload
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Create the custom repository on the server with createrepo:&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;BOOLEANS&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /var/ftp/pub/customrepo
-# createrepo /var/ftp/pub/customrepo
+&lt;p&gt;&lt;strong&gt;List&lt;/strong&gt; all &lt;strong&gt;selinux booleans&lt;/strong&gt; related to nfs:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getsebool -a | grep httpd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable **temporarily&lt;/strong&gt; a &lt;strong&gt;boolean&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setsebool httpd_can_sendmail on
+or
+# setsebool httpd_can_sendmail 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Disable&lt;/strong&gt; &lt;strong&gt;temporarily&lt;/strong&gt; a &lt;strong&gt;boolean&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setsebool httpd_can_sendmail off
+or
+# setsebool httpd_can_sendmail 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable&lt;/strong&gt; &lt;strong&gt;permanently&lt;/strong&gt; a &lt;strong&gt;boolean&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setsebool -P httpd_can_sendmail on
+or
+# setsebool -P httpd_can_sendmail 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">SElinux configuration file is /etc/selinux/config. In this file you can set the default configuration such as the mode (enforcing, permissive, disabled) and the protection type (targeted, minimum, mls)</summary></entry><entry><title type="html">RHCSA Certification - Part5 - Redirections, STD{IN,OUT,ERR}, |, ||, &amp;amp;&amp;amp;</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-05-redirection-piping.html" rel="alternate" type="text/html" title="RHCSA Certification - Part5 - Redirections, STD{IN,OUT,ERR}, |, ||, &amp;&amp;" /><published>2020-02-20T17:00:00-06:00</published><updated>2020-02-20T17:00:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-05-redirection-piping</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-05-redirection-piping.html">&lt;p&gt;stdin: &amp;lt; : code 0 : Standard input&lt;br /&gt;
+stdout: &amp;gt; : code 1 : Standard output&lt;br /&gt;
+stderr: 2&amp;gt; : code 2 : Standard error&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;|&lt;/code&gt; : redirects the output of a command to another command &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&amp;gt;&lt;/code&gt; : append to a file&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;||&lt;/code&gt; : logical OR (if the 1st command fails, do the 2nd anyway)&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&amp;amp;&lt;/code&gt; : logical AND (if the 1st command fails, stop)&lt;/p&gt;
+
+&lt;p&gt;Redirect stdout to a file (stderr will be displayed on screen and ):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# find /var/log -perm 0755 &amp;gt;/root/perms.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Redirect stderr to a file (stdout will be displayed on screen):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# find /var/log -perm 0755 2&amp;gt; /root/perms.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Redirect stderr to the target of stdout (here, a file called /root/perms.txt):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# find /var/log -perm 0755 &amp;gt; /root/perms.txt 2&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Redirect the &lt;strong&gt;echo&lt;/strong&gt; command to a file:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo &quot;test&quot; &amp;gt; /root/testfile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Append text to a file:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo &quot; and 2nd test&quot; &amp;gt;&amp;gt; /root/testfile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Redirect to stdin (here, the screen):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# &amp;lt; testfile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Complex command to send a string and attach a file to an mail, and confirm if the command successfully exited:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo &quot;Hi&quot; | mailx -s &quot;Re: requested file&quot; root &amp;lt; testfile | if [ $? -eq 0 ]; then; echo &quot;Mail has been sent&quot;; else; echo &quot;Error&quot;; fi
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CLIENT SETUP&lt;/strong&gt;&lt;/p&gt;
+Usage for &lt;code class=&quot;highlighter-rouge&quot;&gt;**||**&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;**&amp;amp;&amp;amp;**&lt;/code&gt;:&lt;/p&gt;
 
-&lt;p&gt;Just create a new file: &lt;strong&gt;/etc/yum.repos.d/customrepo.repo&lt;/strong&gt; :&lt;/p&gt;
+&lt;p&gt;Example for logical OR:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# vi /etc/yum.repos.d/customrepo.repo
-
-[customrepo]
-name=Custom Repo
-baseurl=ftp://&amp;lt;client_IP_or_hostname&amp;gt;/pub/customrepo
-enabled=1
-gpgcheck=0
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rm -Rf somedir || exit_on_error &quot;Failed to remove the directory&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Update the repository cache:&lt;/p&gt;
+&lt;p&gt;Example for logical AND (excludes 2nd part if the first fails):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum repolist
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Install vsftpd (very secure file transfer protocol daemon) and createrepo (tool to create repositories):</summary></entry><entry><title type="html">RHCSA Certification - Part9 - ACLs</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html" rel="alternate" type="text/html" title="RHCSA Certification - Part9 - ACLs" /><published>2020-02-19T09:30:40-06:00</published><updated>2020-02-19T09:30:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html">&lt;p&gt;&lt;br /&gt;
-Use &lt;strong&gt;chown&lt;/strong&gt; to change ownership:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chown alice: /home/alice/testdir
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rm -Rf somedir &amp;amp;&amp;amp; trace_output &quot;Removed the directory&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Use &lt;strong&gt;getfacl&lt;/strong&gt; to retrieve the ACLs:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfacl /home/alice/testdir
+&lt;p&gt;Example for both logical AND and OR:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mailx -s &quot;Re: requested file&quot; root &amp;lt; testfile &amp;amp;&amp;amp; echo &quot;Mail has been sent&quot; || echo &quot;Error&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with &lt;strong&gt;-m&lt;/strong&gt; option to set &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs for ben to access testdir subfolder with &lt;strong&gt;read-only&lt;/strong&gt; permissions:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rm -Rf somedir &amp;amp;&amp;amp; trace_output &quot;Removed the directory&quot; || exit_on_error &quot;Failed to remove the directory&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">stdin: &amp;lt; : code 0 : Standard input stdout: &amp;gt; : code 1 : Standard output stderr: 2&amp;gt; : code 2 : Standard error | : redirects the output of a command to another command &amp;gt;&amp;gt; : append to a file || : logical OR (if the 1st command fails, do the 2nd anyway) &amp;amp;&amp;amp; : logical AND (if the 1st command fails, stop)</summary></entry><entry><title type="html">RHCSA Certification - Part6 - Firewalld</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-06-firewalld.html" rel="alternate" type="text/html" title="RHCSA Certification - Part6 - Firewalld" /><published>2020-02-20T16:30:00-06:00</published><updated>2020-02-20T16:30:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-06-firewalld</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-06-firewalld.html">&lt;p&gt;Verify if firewalld is active:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:ben:rx /home/alice
-# setfacl -m du:ben:rx /home/alice
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --state
+running
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with option &lt;strong&gt;-m&lt;/strong&gt; to modify &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs in order to provide ben with &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; access:&lt;/p&gt;
+&lt;p&gt;Start firewalld:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:ben:rwx /home/alice/testdir
-# setfacl -m du:ben:rwx /home/alice/testdir
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl start firewalld.service
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Check newly applied ACLs on folders &lt;strong&gt;/home/alice&lt;/strong&gt; and &lt;strong&gt;/home/alice/testdir&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;Set firewalld to start automatically at boot:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfact /home/alice
-# getfact /home/alice/testdir
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable firewalld.service
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Real-life &lt;strong&gt;test&lt;/strong&gt; to check new &lt;strong&gt;access rights&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;Set the firewall &lt;strong&gt;default zone&lt;/strong&gt; (Default is Public zone. Common zones are: internal, external, home, dmz, trusted, drop, etc. …):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# su - ben
-$ touch /home/alice/testdir/testfile
-$ echo &quot;this is a write access test&quot; &amp;gt; /home/alice/testdir/testfile
-$ cat /home/alice/testdir/testfile
-this is a write access test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Use chown to change ownership:</summary></entry><entry><title type="html">RHCSA Certification - Part8 - User/group management and basic permissions</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd.html" rel="alternate" type="text/html" title="RHCSA Certification - Part8 - User/group management and basic permissions" /><published>2020-02-19T09:20:40-06:00</published><updated>2020-02-19T09:20:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd.html">&lt;p&gt;It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --set-default-zone=dmz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Allow temporarily&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --add-service=ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Allow permanently&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=ssh
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Remove temporarily&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --remove-service=ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Remove permanently&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --remove-service=ssh
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add a &lt;strong&gt;port&lt;/strong&gt; to a specific zone:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --zone=dmz --add-port=8080/tcp
+# firewall-cmd --permanent
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create a &lt;strong&gt;rich rules&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=192.168.2.2 port port=80 protocol=tcp accept'
+# firewall-cmd --permanent --add-rich-rule 'rule service name=ssh log prefix=&quot;SSH_&quot; level=debug limit value=2/m reject'
+#firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add a &lt;strong&gt;port forwarding&lt;/strong&gt; to the default zone:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-masquerade
+# firewall-cmd --permanent --add-forward-port=port=21:proto=tcp:toport=80:toaddr=192.168.2.3
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Verify if firewalld is active:</summary></entry><entry><title type="html">RHCSA Certification - Part7 - The $PS1 variable</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html" rel="alternate" type="text/html" title="RHCSA Certification - Part7 - The $PS1 variable" /><published>2020-02-20T16:00:00-06:00</published><updated>2020-02-20T16:00:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html">&lt;p&gt;The $PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell)
+You can display your system variable using the echo command, as follows:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo $PS1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+To find information about the &lt;strong&gt;$PS1&lt;/strong&gt; variable when you do not have access to internet, you can check the &lt;strong&gt;bash manual&lt;/strong&gt;.&lt;br /&gt;
+To do so, just enter &lt;code class=&quot;highlighter-rouge&quot;&gt;man bash&lt;/code&gt; in your terminal, then type &lt;code class=&quot;highlighter-rouge&quot;&gt;/PROMPTING&lt;/code&gt; then hit enter, then hit the &lt;strong&gt;n&lt;/strong&gt; key twice, and it will jump to the options available for the $PS1 variable.&lt;/p&gt;
+
+&lt;p&gt;In our case, we only need 4 options:&lt;br /&gt;
+\H = display hostname&lt;br /&gt;
+\u = display username&lt;br /&gt;
+\w = display working directory&lt;br /&gt;
+$ = display “$” for normal user or “#” for root user&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+Now we can change our &lt;strong&gt;$PS1&lt;/strong&gt; variable:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# export PS1=&quot;\H \u \w \$&quot;
+# echo $PS1
+ PS1=&quot;\H \u \w \$&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To make the variable &lt;strong&gt;persistent across reboots&lt;/strong&gt;, we need to append it to the &lt;code class=&quot;highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; file in the user directory (either &lt;strong&gt;/root&lt;/strong&gt; or &lt;strong&gt;/home/$user&lt;/strong&gt;):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo 'export PS1=&quot;\H \u \w \$&quot;' &amp;gt;&amp;gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">The $PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell) You can display your system variable using the echo command, as follows:</summary></entry><entry><title type="html">RHCSA Certification - Part8 - User/group management and basic permissions</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html" rel="alternate" type="text/html" title="RHCSA Certification - Part8 - User/group management and basic permissions" /><published>2020-02-20T15:30:00-06:00</published><updated>2020-02-20T15:30:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html">&lt;p&gt;It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;strong&gt;USERADD&lt;/strong&gt;&lt;/p&gt;
@@ -516,92 +559,80 @@ or
 
 &lt;p&gt;Just to mention that this is not the safest way to do it !
 There are several discussions related to this topic, for example in https://stackoverflow.com/questions/714915/using-the-passwd-command-from-within-a-shell-script&lt;br /&gt;
-Also, it may not be ideal to keep this command in the bash history. If you want to run the command without keeping it in history, just add a space at the beginning of the line (works for bash shell, not for zsh).&lt;/p&gt;</content><author><name></name></author><summary type="html">It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.</summary></entry><entry><title type="html">RHCSA Certification - Part7 - The $PS1 variable</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-personalize-prompt.html" rel="alternate" type="text/html" title="RHCSA Certification - Part7 - The $PS1 variable" /><published>2020-02-19T09:10:40-06:00</published><updated>2020-02-19T09:10:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-personalize-prompt</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-personalize-prompt.html">&lt;p&gt;The $PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell)
-You can display your system variable using the echo command, as follows:&lt;/p&gt;
+Also, it may not be ideal to keep this command in the bash history. If you want to run the command without keeping it in history, just add a space at the beginning of the line (works for bash shell, not for zsh).&lt;/p&gt;</content><author><name></name></author><summary type="html">It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.</summary></entry><entry><title type="html">RHCSA Certification - Part9 - ACLs</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-09-ACLs.html" rel="alternate" type="text/html" title="RHCSA Certification - Part9 - ACLs" /><published>2020-02-20T15:00:00-06:00</published><updated>2020-02-20T15:00:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-09-ACLs</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-09-ACLs.html">&lt;p&gt;&lt;br /&gt;
+Use &lt;strong&gt;chown&lt;/strong&gt; to change ownership:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo $PS1
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chown alice: /home/alice/testdir
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Use &lt;strong&gt;getfacl&lt;/strong&gt; to retrieve the ACLs:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfacl /home/alice/testdir
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with &lt;strong&gt;-m&lt;/strong&gt; option to set &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs for ben to access testdir subfolder with &lt;strong&gt;read-only&lt;/strong&gt; permissions:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:ben:rx /home/alice
+# setfacl -m du:ben:rx /home/alice
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with option &lt;strong&gt;-m&lt;/strong&gt; to modify &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs in order to provide ben with &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; access:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:ben:rwx /home/alice/testdir
+# setfacl -m du:ben:rwx /home/alice/testdir
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Check newly applied ACLs on folders &lt;strong&gt;/home/alice&lt;/strong&gt; and &lt;strong&gt;/home/alice/testdir&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfact /home/alice
+# getfact /home/alice/testdir
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Real-life &lt;strong&gt;test&lt;/strong&gt; to check new &lt;strong&gt;access rights&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# su - ben
+$ touch /home/alice/testdir/testfile
+$ echo &quot;this is a write access test&quot; &amp;gt; /home/alice/testdir/testfile
+$ cat /home/alice/testdir/testfile
+this is a write access test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Use chown to change ownership:</summary></entry><entry><title type="html">RHCSA Certification - Part10 - vsftpd, yum custom repository</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-10-vsftpd-yum.html" rel="alternate" type="text/html" title="RHCSA Certification - Part10 - vsftpd, yum custom repository" /><published>2020-02-20T14:30:00-06:00</published><updated>2020-02-20T14:30:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-10-vsftpd-yum</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-10-vsftpd-yum.html">&lt;p&gt;Install &lt;strong&gt;vsftpd&lt;/strong&gt; (very secure file transfer protocol daemon) and &lt;strong&gt;createrepo&lt;/strong&gt; (tool to create repositories):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install vsftpd createrepo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Start vsftpd.service and enable autostart at boot:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable vsftpd.service
+# systemctl start vsftpd.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Configure firewalld to allow ftp service (default port 21):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=ftp
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create the custom repository on the server with createrepo:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /var/ftp/pub/customrepo
+# createrepo /var/ftp/pub/customrepo
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;
-To find information about the &lt;strong&gt;$PS1&lt;/strong&gt; variable when you do not have access to internet, you can check the &lt;strong&gt;bash manual&lt;/strong&gt;.&lt;br /&gt;
-To do so, just enter &lt;code class=&quot;highlighter-rouge&quot;&gt;man bash&lt;/code&gt; in your terminal, then type &lt;code class=&quot;highlighter-rouge&quot;&gt;/PROMPTING&lt;/code&gt; then hit enter, then hit the &lt;strong&gt;n&lt;/strong&gt; key twice, and it will jump to the options available for the $PS1 variable.&lt;/p&gt;
+&lt;strong&gt;CLIENT SETUP&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;In our case, we only need 4 options:&lt;br /&gt;
-\H = display hostname&lt;br /&gt;
-\u = display username&lt;br /&gt;
-\w = display working directory&lt;br /&gt;
-$ = display “$” for normal user or “#” for root user&lt;/p&gt;
+&lt;p&gt;Just create a new file: &lt;strong&gt;/etc/yum.repos.d/customrepo.repo&lt;/strong&gt; :&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;
-Now we can change our &lt;strong&gt;$PS1&lt;/strong&gt; variable:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# vi /etc/yum.repos.d/customrepo.repo
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# export PS1=&quot;\H \u \w \$&quot;
-# echo $PS1
- PS1=&quot;\H \u \w \$&quot;
+[customrepo]
+name=Custom Repo
+baseurl=ftp://&amp;lt;client_IP_or_hostname&amp;gt;/pub/customrepo
+enabled=1
+gpgcheck=0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;To make the variable &lt;strong&gt;persistent across reboots&lt;/strong&gt;, we need to append it to the &lt;code class=&quot;highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; file in the user directory (either &lt;strong&gt;/root&lt;/strong&gt; or &lt;strong&gt;/home/$user&lt;/strong&gt;):&lt;/p&gt;
+&lt;p&gt;Update the repository cache:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo 'export PS1=&quot;\H \u \w \$&quot;' &amp;gt;&amp;gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">The $PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell) You can display your system variable using the echo command, as follows:</summary></entry><entry><title type="html">RHCSA Certification - Part6 - Firewalld</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-firewalld.html" rel="alternate" type="text/html" title="RHCSA Certification - Part6 - Firewalld" /><published>2020-02-19T09:00:40-06:00</published><updated>2020-02-19T09:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-firewalld</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-firewalld.html">&lt;p&gt;Verify if firewalld is active:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --state
-running
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Start firewalld:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl start firewalld.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Set firewalld to start automatically at boot:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable firewalld.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Set the firewall &lt;strong&gt;default zone&lt;/strong&gt; (Default is Public zone. Common zones are: internal, external, home, dmz, trusted, drop, etc. …):&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --set-default-zone=dmz
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Allow temporarily&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --add-service=ssh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Allow permanently&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=ssh
-# firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Remove temporarily&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --remove-service=ssh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Remove permanently&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --remove-service=ssh
-# firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Add a &lt;strong&gt;port&lt;/strong&gt; to a specific zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --zone=dmz --add-port=8080/tcp
-# firewall-cmd --permanent
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Create a &lt;strong&gt;rich rules&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=192.168.2.2 port port=80 protocol=tcp accept'
-# firewall-cmd --permanent --add-rich-rule 'rule service name=ssh log prefix=&quot;SSH_&quot; level=debug limit value=2/m reject'
-#firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Add a &lt;strong&gt;port forwarding&lt;/strong&gt; to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-masquerade
-# firewall-cmd --permanent --add-forward-port=port=21:proto=tcp:toport=80:toaddr=192.168.2.3
-# firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Verify if firewalld is active:</summary></entry></feed>
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum repolist
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Install vsftpd (very secure file transfer protocol daemon) and createrepo (tool to create repositories):</summary></entry></feed>
