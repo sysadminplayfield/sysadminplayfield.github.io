@@ -7,15 +7,15 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="RHCSA Certification - Part9 - ACLs" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Usage:" />
-<meta property="og:description" content="Usage:" />
+<meta name="description" content="Use chown to change ownership:" />
+<meta property="og:description" content="Use chown to change ownership:" />
 <link rel="canonical" href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html" />
 <meta property="og:url" content="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html" />
 <meta property="og:site_name" content="SysAdmin Playfield" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-19T09:30:40-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"RHCSA Certification - Part9 - ACLs","dateModified":"2020-02-19T09:30:40-06:00","datePublished":"2020-02-19T09:30:40-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html","description":"Usage:","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","headline":"RHCSA Certification - Part9 - ACLs","dateModified":"2020-02-19T09:30:40-06:00","datePublished":"2020-02-19T09:30:40-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html","description":"Use chown to change ownership:","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -45,52 +45,41 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Usage:</p>
+    <p><br />
+Use <strong>chown</strong> to change ownership:</p>
 
-<p><code class="highlighter-rouge">getfacl &lt;path_to_file_or_folder&gt;</code><br />
-<code class="highlighter-rouge">setfacl [options] [(default)user:&lt;user_name&gt;:&lt;rwx_permissions&gt;] &lt;path_to_file_or_folder&gt;</code></p>
-
-<p><br />
-First, lets switch to user mary and create a folder /home/mary/testdir2 :</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># su - mary
-$ mkdir /home/mary/testdir2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chown alice: /home/alice/testdir
 </code></pre></div></div>
 
-<p>Use <strong>chown</strong> to change ownership:</p>
+<p>Use <strong>getfacl</strong> to retrieve the ACLs:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chown mary:mary /home/mary/testdir2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># getfacl /home/alice/testdir
 </code></pre></div></div>
 
-<p>Use <strong>getfacl</strong> to retrieve the ACLs related to /home/mary/testdir2 :</p>
+<p>Use <strong>setfacl</strong> with <strong>-m</strong> option to set <strong>standard</strong> and <strong>default</strong> ACLs for ben to access testdir subfolder with <strong>read-only</strong> permissions:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># getfacl /home/mary/testdir2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># setfacl -m u:ben:rx /home/alice
+# setfacl -m du:ben:rx /home/alice
 </code></pre></div></div>
 
-<p>Now, use <strong>setfacl</strong> with <strong>-m</strong> option to modify <strong>standard</strong> and <strong>default</strong> ACLs of /home/mary in order to allow barry to access testdir2 subfolder with <strong>read-only</strong> permissions:</p>
+<p>Use <strong>setfacl</strong> with option <strong>-m</strong> to modify <strong>standard</strong> and <strong>default</strong> ACLs in order to provide ben with <strong>read</strong> and <strong>write</strong> access:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># setfacl -m u:barry:rx /home/mary
-# setfacl -m du:barry:rx /home/mary
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># setfacl -m u:ben:rwx /home/alice/testdir
+# setfacl -m du:ben:rwx /home/alice/testdir
 </code></pre></div></div>
 
-<p>Use <strong>setfacl</strong> with option <strong>-m</strong> to modify <strong>standard</strong> and <strong>default</strong> ACLs of /home/mary/testdir2 in order to provide barry with <strong>read</strong> and <strong>write</strong> access:</p>
+<p>Check newly applied ACLs on folders <strong>/home/alice</strong> and <strong>/home/alice/testdir</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># setfacl -m u:barry:rwx /home/mary/testdir2
-# setfacl -m du:barry:rwx /home/mary/testdir2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># getfact /home/alice
+# getfact /home/alice/testdir
 </code></pre></div></div>
 
-<p>Check newly applied ACLs on folders /home/mary and /home/mary/testdir2 :</p>
+<p>Real-life <strong>test</strong> to check new <strong>access rights</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># getfact /home/mary
-# getfact /home/mary/testdir2
-</code></pre></div></div>
-
-<p>Finaly, a real-life test to make sure nothing prohibits barry to access testdir2 and to create/edit files:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># su - barry
-$ touch /home/mary/testdir2/testfile
-$ echo "this is a write access test" &gt; /home/mary/testdir2/testfile
-$ cat /home/mary/testdir2/testfile
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># su - ben
+$ touch /home/alice/testdir/testfile
+$ echo "this is a write access test" &gt; /home/alice/testdir/testfile
+$ cat /home/alice/testdir/testfile
 this is a write access test
 </code></pre></div></div>
 

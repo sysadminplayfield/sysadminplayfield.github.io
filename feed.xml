@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-21T09:42:54-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</subtitle><entry><title type="html">RHCSA Certification - Part15 - Compression: tar, star</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star.html" rel="alternate" type="text/html" title="RHCSA Certification - Part15 - Compression: tar, star" /><published>2020-02-20T11:02:40-06:00</published><updated>2020-02-20T11:02:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star.html">&lt;p&gt;Create tar.gz archive file (cvzf= create verbose zip file):&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-21T10:37:52-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</subtitle><entry><title type="html">RHCSA Certification - Part15 - Compression: tar, star</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star.html" rel="alternate" type="text/html" title="RHCSA Certification - Part15 - Compression: tar, star" /><published>2020-02-20T11:02:40-06:00</published><updated>2020-02-20T11:02:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-tar-star.html">&lt;p&gt;Create tar.gz archive file (cvzf= create verbose zip file):&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# tar cvzf /root/tar_compressed_archive.tar.gz /usr/local
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -303,54 +303,43 @@ gpgcheck=0
 &lt;p&gt;Update the repository cache:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum repolist
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Install vsftpd (very secure file transfer protocol daemon) and createrepo (tool to create repositories):</summary></entry><entry><title type="html">RHCSA Certification - Part9 - ACLs</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html" rel="alternate" type="text/html" title="RHCSA Certification - Part9 - ACLs" /><published>2020-02-19T09:30:40-06:00</published><updated>2020-02-19T09:30:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html">&lt;p&gt;Usage:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Install vsftpd (very secure file transfer protocol daemon) and createrepo (tool to create repositories):</summary></entry><entry><title type="html">RHCSA Certification - Part9 - ACLs</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html" rel="alternate" type="text/html" title="RHCSA Certification - Part9 - ACLs" /><published>2020-02-19T09:30:40-06:00</published><updated>2020-02-19T09:30:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-ACLs.html">&lt;p&gt;&lt;br /&gt;
+Use &lt;strong&gt;chown&lt;/strong&gt; to change ownership:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;getfacl &amp;lt;path_to_file_or_folder&amp;gt;&lt;/code&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;setfacl [options] [(default)user:&amp;lt;user_name&amp;gt;:&amp;lt;rwx_permissions&amp;gt;] &amp;lt;path_to_file_or_folder&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-First, lets switch to user mary and create a folder /home/mary/testdir2 :&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# su - mary
-$ mkdir /home/mary/testdir2
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chown alice: /home/alice/testdir
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Use &lt;strong&gt;chown&lt;/strong&gt; to change ownership:&lt;/p&gt;
+&lt;p&gt;Use &lt;strong&gt;getfacl&lt;/strong&gt; to retrieve the ACLs:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chown mary:mary /home/mary/testdir2
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfacl /home/alice/testdir
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Use &lt;strong&gt;getfacl&lt;/strong&gt; to retrieve the ACLs related to /home/mary/testdir2 :&lt;/p&gt;
+&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with &lt;strong&gt;-m&lt;/strong&gt; option to set &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs for ben to access testdir subfolder with &lt;strong&gt;read-only&lt;/strong&gt; permissions:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfacl /home/mary/testdir2
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:ben:rx /home/alice
+# setfacl -m du:ben:rx /home/alice
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Now, use &lt;strong&gt;setfacl&lt;/strong&gt; with &lt;strong&gt;-m&lt;/strong&gt; option to modify &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs of /home/mary in order to allow barry to access testdir2 subfolder with &lt;strong&gt;read-only&lt;/strong&gt; permissions:&lt;/p&gt;
+&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with option &lt;strong&gt;-m&lt;/strong&gt; to modify &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs in order to provide ben with &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; access:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:barry:rx /home/mary
-# setfacl -m du:barry:rx /home/mary
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:ben:rwx /home/alice/testdir
+# setfacl -m du:ben:rwx /home/alice/testdir
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with option &lt;strong&gt;-m&lt;/strong&gt; to modify &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs of /home/mary/testdir2 in order to provide barry with &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; access:&lt;/p&gt;
+&lt;p&gt;Check newly applied ACLs on folders &lt;strong&gt;/home/alice&lt;/strong&gt; and &lt;strong&gt;/home/alice/testdir&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:barry:rwx /home/mary/testdir2
-# setfacl -m du:barry:rwx /home/mary/testdir2
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfact /home/alice
+# getfact /home/alice/testdir
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Check newly applied ACLs on folders /home/mary and /home/mary/testdir2 :&lt;/p&gt;
+&lt;p&gt;Real-life &lt;strong&gt;test&lt;/strong&gt; to check new &lt;strong&gt;access rights&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfact /home/mary
-# getfact /home/mary/testdir2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Finaly, a real-life test to make sure nothing prohibits barry to access testdir2 and to create/edit files:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# su - barry
-$ touch /home/mary/testdir2/testfile
-$ echo &quot;this is a write access test&quot; &amp;gt; /home/mary/testdir2/testfile
-$ cat /home/mary/testdir2/testfile
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# su - ben
+$ touch /home/alice/testdir/testfile
+$ echo &quot;this is a write access test&quot; &amp;gt; /home/alice/testdir/testfile
+$ cat /home/alice/testdir/testfile
 this is a write access test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Usage:</summary></entry><entry><title type="html">RHCSA Certification - Part8 - User/group management and basic permissions</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd.html" rel="alternate" type="text/html" title="RHCSA Certification - Part8 - User/group management and basic permissions" /><published>2020-02-19T09:20:40-06:00</published><updated>2020-02-19T09:20:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd.html">&lt;p&gt;It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Use chown to change ownership:</summary></entry><entry><title type="html">RHCSA Certification - Part8 - User/group management and basic permissions</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd.html" rel="alternate" type="text/html" title="RHCSA Certification - Part8 - User/group management and basic permissions" /><published>2020-02-19T09:20:40-06:00</published><updated>2020-02-19T09:20:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/19/rhcsa-user-group-chage-passwd.html">&lt;p&gt;It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;strong&gt;USERADD&lt;/strong&gt;&lt;/p&gt;
