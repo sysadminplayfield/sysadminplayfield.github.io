@@ -47,16 +47,17 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p><strong>Create</strong> a partition on <strong>/dev/sda</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># fdisk /dev/sda
-    p (print partition table to see a summary of the partitions already present on /dev/sda)
-    n (create new partition)
-    p (primary)
-    enter (default partition number - 6)
-    enter (default 1st block)
-    +65M (size of the new partition)
-    p (print partition table to make sure no mistake has been made)
-    w (write changes made to the partition table)
-</code></pre></div></div>
+<pre>
+# fdisk /dev/sda
+    <b>p</b> (print partition table to see a summary of the partitions already present on /dev/sda)
+    <b>n</b> (create new partition)
+    <b>p</b> (primary)
+    <b>enter</b> (default partition number - 6)
+    <b>enter</b> (default 1st block)
+    <b>+65M</b> (size of the new partition)
+    <b>p</b> (print partition table to make sure no mistake has been made)
+    <b>w</b> (write changes made to the partition table)
+</pre>
 
 <p>Use <strong>partprobe</strong> to update system’s awareness about the new partition:</p>
 
@@ -70,12 +71,13 @@
 
 <p>Write the swap partition <strong>UUID</strong> to <strong>/etc/fstab</strong> to make it <strong>persistent across reboots</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># blkid | grep /dev/sda6 &gt;&gt; /etc/fstab
-# vi /etc/fstab
+<pre>
+# blkid | grep /dev/sda6 &gt;&gt; /etc/fstab
+# <b>vi /etc/fstab</b>
     [...]
-    UUID=&lt;/dev/sda6 UUID&gt; swap swap defaults 0 0
+    UUID=UUID_of_/dev/sda6 swap swap defaults 0 0
     [...]
-</code></pre></div></div>
+</pre>
 
 <p><strong>Mount</strong> the new <strong>swap</strong>:</p>
 
@@ -112,7 +114,7 @@ or
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

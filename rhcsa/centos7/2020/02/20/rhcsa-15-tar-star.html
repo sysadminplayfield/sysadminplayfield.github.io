@@ -45,14 +45,24 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Create tar.gz archive file (cvzf= create verbose zip file):</p>
+    <p><strong>Create</strong> <strong>tar.gz</strong> archive <strong>file</strong> (cvzf= create verbose zip file):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar cvzf /root/tar_compressed_archive.tar.gz /usr/local
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cvzf /root/archive.tar.gz /usr/local
 </code></pre></div></div>
 
-<p>Check the archive:</p>
+<p><strong>List</strong> archive <strong>files</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar tvzf /root/tar_compressed_archive.tar.gz
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -tvzf /root/archive.tar.gz
+</code></pre></div></div>
+
+<p><strong>Create tar.bz2</strong> archive <strong>file</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cjzf /root/archive.tar.bz2 /usr/local
+</code></pre></div></div>
+
+<p><strong>Create tar.xz</strong> archive <strong>file</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cJzf /root/archive.tar.xz /usr/local
 </code></pre></div></div>
 
   </div><a class="u-url" href="/rhcsa/centos7/2020/02/20/rhcsa-15-tar-star.html" hidden></a>
@@ -74,7 +84,7 @@
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

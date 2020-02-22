@@ -46,12 +46,12 @@
 
   <div class="post-content e-content" itemprop="articleBody">
     <p><br />
-Use <strong>chown</strong> to change ownership:</p>
+Use <strong>chown</strong> to <strong>change ownership</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chown alice: /home/alice/testdir
 </code></pre></div></div>
 
-<p>Use <strong>getfacl</strong> to retrieve the ACLs:</p>
+<p>Use <strong>getfacl</strong> to <strong>retrieve</strong> the <strong>ACLs</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># getfacl /home/alice/testdir
 </code></pre></div></div>
@@ -68,13 +68,13 @@ Use <strong>chown</strong> to change ownership:</p>
 # setfacl -m du:ben:rwx /home/alice/testdir
 </code></pre></div></div>
 
-<p>Check newly applied ACLs on folders <strong>/home/alice</strong> and <strong>/home/alice/testdir</strong>:</p>
+<p><strong>Check</strong> newly applied <strong>ACLs</strong> on folders <strong>/home/alice</strong> and <strong>/home/alice/testdir</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># getfact /home/alice
-# getfact /home/alice/testdir
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># getfacl /home/alice
+# getfacl /home/alice/testdir
 </code></pre></div></div>
 
-<p>Real-life <strong>test</strong> to check new <strong>access rights</strong>:</p>
+<p>Real-life <strong>test</strong> to <strong>check</strong> new <strong>access rights</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># su - ben
 $ touch /home/alice/testdir/testfile
@@ -102,7 +102,7 @@ this is a write access test
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

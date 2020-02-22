@@ -47,7 +47,7 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p><strong>CRON</strong></p>
 
-<p>Cron can be configured using <strong>crontab</strong>.<br />
+<p><strong>Cron</strong> can be configured using <strong>crontab</strong>.<br />
 An explanation of the configuration is available in <strong>/etc/crontab</strong> file (see below).</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># .---------------- minute (0 - 59)
@@ -59,7 +59,7 @@ An explanation of the configuration is available in <strong>/etc/crontab</strong
 # *  *  *  *  * user-name  command to be executed
 </code></pre></div></div>
 
-<p>Prior to create the crontab job, make sure your command/script is working:</p>
+<p>Prior to create the <strong>cron job</strong>, make sure your command/script is working:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># find /var -type f -name "*.log" &gt;&gt; /var/log/varfiles
 # cat /var/log/varfiles
@@ -101,14 +101,15 @@ This tool is not installed by default in CentOS 7 minimal installation.</p>
 
 <p>Let’s <strong>check</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># su - alice
-$ at
+<pre>
+# <b>su - alice</b>
+$ <b>at</b>
 	You do not have permission to use at.
-$ exit
-# su - ben
-$ at
+$ <b>exit</b>
+# <b>su - ben</b>
+$ <b>at</b>
 	Garbled time
-</code></pre></div></div>
+</pre>
 
   </div><a class="u-url" href="/rhcsa/centos7/2020/02/20/rhcsa-13-cron.html" hidden></a>
 </article>
@@ -129,7 +130,7 @@ $ at
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

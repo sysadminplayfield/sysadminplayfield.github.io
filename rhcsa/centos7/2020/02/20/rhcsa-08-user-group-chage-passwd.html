@@ -50,35 +50,36 @@
 <p><br />
 <strong>USERADD</strong></p>
 
-<p>Usage: <code class="highlighter-rouge">useradd [options] &lt;user_name&gt;</code><br />
-This command will create a new user account, and, if no other option is specified, will also create a home folder in <code class="highlighter-rouge">/home/&lt;user_name&gt;</code><br />
-To start with, the most important options are:
- -D : defaults (can be altered with additional options)<br />
- -m : create home directory if it doesn’t exist <br />
- -s : shell (/bin/bash, /sbin/nologin, etc. …)  <br />
- -e : expire date with format YYYY-MM-DD<br />
- -f : inactive after creation<br />
- -g : manual gid number<br />
- -u : manual uid number 
- -G : groups (coma separated)<br />
- -r : system account, doesn’t create home, mail, usergroup…
-And more … rtfm</p>
+<p>Usage: <code class="highlighter-rouge">useradd [options] &lt;user_name&gt;</code></p>
+
+<p>Important options:<br />
+ <strong>-D</strong> : <strong>defaults</strong> (can be altered with additional options)<br />
+ <strong>-m</strong> : <strong>create home directory</strong> if it doesn’t exist <br />
+ <strong>-s</strong> : <strong>shell</strong> (/bin/bash, /sbin/nologin, etc. …)  <br />
+ <strong>-e</strong> : <strong>expire date</strong> with format YYYY-MM-DD<br />
+ <strong>-f</strong> : <strong>inactive</strong> after creation<br />
+ <strong>-g</strong> : manual <strong>gid</strong> number<br />
+ <strong>-u</strong> : manual <strong>uid</strong> number<br />
+ <strong>-G</strong> : <strong>groups</strong> (coma separated)<br />
+ <strong>-r</strong> : <strong>system account</strong>, doesn’t create home, mail, usergroup…</p>
+
+<p>More on <code class="highlighter-rouge">man useradd</code></p>
 
 <p><br />
 <strong>CHAGE</strong></p>
 
 <p>Usage: <code class="highlighter-rouge">chage [options] &lt;user_name&gt;</code></p>
 
-<p>The <strong>-l</strong> option will <strong>display</strong> password aging <strong>information</strong>:</p>
+<p>The <strong>-l</strong> option will <strong>display password aging information</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chage -l mary
-# chage -l barry
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chage -l alice
+# chage -l ben
 </code></pre></div></div>
 
 <p>The <strong>-E</strong> option will set a <strong>password expiration</strong> date for the user:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chage -E 2017-12-31 mary
-# chage -E 2017-12-31 barry
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chage -E 2017-12-31 alice
+# chage -E 2017-12-31 ben
 </code></pre></div></div>
 
 <p><br />
@@ -95,24 +96,24 @@ And more … rtfm</p>
 <strong>USERMOD</strong></p>
 
 <p>Usage: <code class="highlighter-rouge">usermod [options] &lt;user_name&gt;</code>
-The <strong>-aG</strong> option means <strong>append Group</strong>. It will basically add a supplementary group to the user.</p>
+The <strong>-aG</strong> option <strong>appends group</strong> (add a supplementary group to the user).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># usermod -aG dba larry
-# usermod -aG dba gary
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># usermod -aG dba alice
+# usermod -aG dba ben
 </code></pre></div></div>
 
 <p><br />
 <strong>CHOWN</strong></p>
 
-<p>Use <strong>chown</strong> to <strong>change user and/or group</strong> ownership:</p>
+<p>Use <strong>chown</strong> to <strong>change</strong> user and/or group <strong>ownership</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chown larry /srv/grouptest
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chown alice /srv/groupdir
 or
-# chown larry:dba /srv/grouptest
+# chown alice:dba /srv/groupdir
 or
-# chown larry: /srv/grouptest
+# chown alice: /srv/groupdir
 or
-# chown :dba /srv/grouptest
+# chown :dba /srv/groupdir
 </code></pre></div></div>
 
 <p><br />
@@ -120,53 +121,55 @@ or
 
 <p>Use <strong>chgrp</strong> to <strong>change</strong> the <strong>group</strong> on a file or folder:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chgrp /srv/grouptest dba
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chgrp /srv/groupdir dba
 </code></pre></div></div>
 
 <p><br />
 <strong>CHMOD</strong></p>
 
-<p>Use <strong>chmod</strong> to change permissions to <strong>rwx</strong> (read, write, execute) on <strong>/srv/grouptest</strong> for owner and group members only:</p>
+<p>Use <strong>chmod</strong> to <strong>change permissions</strong> to <strong>rwx</strong> (read, write, execute) on <strong>/srv/groupdir</strong> for owner and group members only:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod -R 770 /srv/grouptest
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod -R 770 /srv/groupdir
 or
-# chmod -R ug=rwx,o-rwx /srv/grouptest
+# chmod -R ug=rwx,o-rwx /srv/groupdir
 </code></pre></div></div>
 
-<p>Group collaboration:<br />
-SetGID: All files created belong to the group. All the members of the group can create files, edit or remove any files from the group.</p>
+<p><strong>Group collaboration</strong>:<br />
+<strong>SetGID</strong>: All files created belong to the group. All the members of the group can create files, edit or remove any files from the group.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 2770 /srv/grouptest
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 2770 /srv/groupdir
 or
-# chmod g+s /srv/grouptest
+# chmod g+s /srv/groupdir
 </code></pre></div></div>
 
-<p>SetUID is not recommended. Users allowed to execute a program use the identity (and permissions) of the owner.</p>
+<p><strong>SetUID</strong> is <strong>not recommended</strong>. Users allowed to <strong>execute</strong> a program use the <strong>identity</strong> (and <strong>permissions</strong>) of the <strong>owner</strong>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 4770 /srv/grouptest/script.sh
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 4770 /srv/groupdir/script.sh
 or
-# chmod u+s /srv/grouptest/script.sh
+# chmod u+s /srv/groupdir/script.sh
 </code></pre></div></div>
 
-<p>StickyBit:</p>
+<p><strong>StickyBit</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 1770 /srv/grouptest/myfile
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 1770 /srv/groupdir/myfile
 or
-# chmod +t /srv/grouptest/myfile
+# chmod +t /srv/groupdir/myfile
 </code></pre></div></div>
 
-<p>StickyBit with SetGID:<br />
+<p><strong>StickyBit with SetGID</strong>:<br />
 StickyBit sets additional permissions on a file. It comes very convenient in case of group collaboration because only the owner can delete its files:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#chmod 3770 /srv/grouptest/myfile
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chmod 3770 /srv/groupdir/myfile
 </code></pre></div></div>
 
 <p><br />
 <strong>CHATTR</strong></p>
 
-<p>Change attributes on a file, set the file to immutable (even by root):</p>
+<p><strong>Change attributes</strong> on a file, set the file to <strong>immutable</strong> (even by root):</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># chattr +i file
+or, to remove
+# chattr -i file
 </code></pre></div></div>
 
 <p><br />
@@ -174,28 +177,28 @@ StickyBit sets additional permissions on a file. It comes very convenient in cas
 
 <p>Usage: <code class="highlighter-rouge">gpasswd [option] &lt;user_name&gt; &lt;group_name&gt;</code></p>
 
-<p>Remove user larry from the dba group:</p>
+<p><strong>Remove user</strong> alice <strong>from</strong> the dba <strong>group</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># gpasswd -d larry dba
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># gpasswd -d alice dba
 </code></pre></div></div>
 
 <p><br />
 <strong>USERDEL</strong></p>
 
-<p>Delete a user:</p>
+<p><strong>Delete</strong> a <strong>user</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># userdel larry
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># userdel alice
 </code></pre></div></div>
 
-<p>Delete a user with its home directory and mailbox:</p>
+<p><strong>Delete</strong> a <strong>user</strong> with its <strong>home directory</strong> and <strong>mailbox</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># userdel -r larry
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># userdel -r ben
 </code></pre></div></div>
 
 <p><br />
 <strong>GROUPDEL</strong></p>
 
-<p>Delete a group:</p>
+<p><strong>Delete</strong> a <strong>group</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># groupdel dba
 </code></pre></div></div>
@@ -203,24 +206,24 @@ StickyBit sets additional permissions on a file. It comes very convenient in cas
 <p><br />
 <strong>EXAMPLE</strong></p>
 
-<p>Create several users in 1 command:</p>
+<p><strong>Create</strong> several <strong>users</strong> in 1 command:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># for i in barry harry larry mary gary; do useradd $i; done
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># for i in user{1,2,3,4,5}; do useradd $i; done
 </code></pre></div></div>
 
-<p>Check if all the user accounts have properly been created:</p>
+<p><strong>Check</strong> created <strong>accounts</strong> in <strong>/etc/passwd</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tail -5 /etc/passwd
 or
-# for i in barry harry larry mary gary; do id $i; done
+# for i in user{1,2,3,4,5}; do id $i; done
 </code></pre></div></div>
 
-<p>Set password for all newly created users by redirecting “password” in the standard input:</p>
+<p><strong>Set password</strong> for all newly created users by redirecting “password” in the <strong>standard input</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># for i in barry harry larry mary gary; do echo "password" | passwd $i --stdin; done
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># for i in user{1,2,3,4,5}; do echo "password" | passwd $i --stdin; done
 </code></pre></div></div>
 
-<p>Just to mention that this is not the safest way to do it !
+<p><strong>Warning: this is not the safest way to do it!</strong><br />
 There are several discussions related to this topic, for example in https://stackoverflow.com/questions/714915/using-the-passwd-command-from-within-a-shell-script<br />
 Also, it may not be ideal to keep this command in the bash history. If you want to run the command without keeping it in history, just add a space at the beginning of the line (works for bash shell, not for zsh).</p>
 
@@ -243,7 +246,7 @@ Also, it may not be ideal to keep this command in the bash history. If you want 
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

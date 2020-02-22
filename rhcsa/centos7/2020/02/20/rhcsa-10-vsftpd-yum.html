@@ -47,22 +47,22 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p>Install <strong>vsftpd</strong> (very secure file transfer protocol daemon) and <strong>createrepo</strong> (tool to create repositories):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum install vsftpd createrepo
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum install -y vsftpd createrepo
 </code></pre></div></div>
 
-<p>Start vsftpd.service and enable autostart at boot:</p>
+<p><strong>Start vsftpd</strong> and enable <strong>autostart</strong> at boot:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl enable vsftpd.service
 # systemctl start vsftpd.service
 </code></pre></div></div>
 
-<p>Configure firewalld to allow ftp service (default port 21):</p>
+<p>Configure <strong>firewalld</strong> to <strong>allow ftp</strong> service (default <strong>port 21</strong>):</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-service=ftp
 # firewall-cmd --reload
 </code></pre></div></div>
 
-<p>Create the custom repository on the server with createrepo:</p>
+<p><strong>Create</strong> the <strong>custom repository</strong> on the server with <strong>createrepo</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkdir /var/ftp/pub/customrepo
 # createrepo /var/ftp/pub/customrepo
@@ -71,18 +71,19 @@
 <p><br />
 <strong>CLIENT SETUP</strong></p>
 
-<p>Just create a new file: <strong>/etc/yum.repos.d/customrepo.repo</strong> :</p>
+<p><strong>Create</strong> a new file: <strong>/etc/yum.repos.d/customrepo.repo</strong> :</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># vi /etc/yum.repos.d/customrepo.repo
+<pre>
+# <b>vi /etc/yum.repos.d/customrepo.repo</b>
 
 [customrepo]
 name=Custom Repo
-baseurl=ftp://&lt;client_IP_or_hostname&gt;/pub/customrepo
+baseurl=ftp://server.example.local/pub/customrepo
 enabled=1
 gpgcheck=0
-</code></pre></div></div>
+</pre>
 
-<p>Update the repository cache:</p>
+<p><strong>Update</strong> the <strong>repository cache</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum repolist
 </code></pre></div></div>
@@ -106,7 +107,7 @@ gpgcheck=0
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

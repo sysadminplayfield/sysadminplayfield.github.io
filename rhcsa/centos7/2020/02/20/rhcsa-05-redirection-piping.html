@@ -53,60 +53,70 @@ stderr: 2&gt; : code 2 : Standard error<br />
 <code class="highlighter-rouge">||</code> : logical OR (if the 1st command fails, do the 2nd anyway)<br />
 <code class="highlighter-rouge">&amp;&amp;</code> : logical AND (if the 1st command fails, stop)</p>
 
-<p>Redirect stdout to a file (stderr will be displayed on screen and ):</p>
+<p><strong>Redirect stdout</strong> to a file (stderr will be displayed on screen and ):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># find /var/log -perm 0755 &gt;/root/perms.txt
-</code></pre></div></div>
+<pre>
+# find /var/log -perm 0755 <b>&gt;</b> /root/perms.txt
+</pre>
 
-<p>Redirect stderr to a file (stdout will be displayed on screen):</p>
+<p><strong>Redirect stderr</strong> to a file (stdout will be displayed on screen):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># find /var/log -perm 0755 2&gt; /root/perms.txt
-</code></pre></div></div>
+<pre>
+# find /var/log -perm 0755 <b>2&gt;</b> /root/perms.txt
+</pre>
 
-<p>Redirect stderr to the target of stdout (here, a file called /root/perms.txt):</p>
+<p><strong>Redirect stderr</strong> to the target of <strong>stdout</strong> (here, a file called /root/perms.txt):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># find /var/log -perm 0755 &gt; /root/perms.txt 2&gt;&amp;1
-</code></pre></div></div>
+<pre>
+# find /var/log -perm 0755 <b>&gt;</b> /root/perms.txt <b>2&gt;&amp;1</b>
+</pre>
 
-<p>Redirect the <strong>echo</strong> command to a file:</p>
+<p><strong>Redirect</strong> the <strong>echo</strong> command <strong>to</strong> a <strong>file</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># echo "test" &gt; /root/testfile
-</code></pre></div></div>
+<pre>
+# echo "test" <b>&gt;</b> /root/testfile
+</pre>
 
-<p>Append text to a file:</p>
+<p><strong>Append</strong> text to a file:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># echo " and 2nd test" &gt;&gt; /root/testfile
-</code></pre></div></div>
+<pre>
+# echo " and 2nd test" <b>&gt;&gt;</b> /root/testfile
+</pre>
 
-<p>Redirect to stdin (here, the screen):</p>
+<p><strong>Redirect to stdin</strong> (here, the screen):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># &lt; testfile
-</code></pre></div></div>
+<pre>
+# <b>&lt;</b> testfile
+</pre>
 
-<p>Complex command to send a string and attach a file to an mail, and confirm if the command successfully exited:</p>
+<p><strong>Complex</strong> command to send a <strong>string</strong> and attach a file to an mail, and confirm if the command successfully exited:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># echo "Hi" | mailx -s "Re: requested file" root &lt; testfile | if [ $? -eq 0 ]; then; echo "Mail has been sent"; else; echo "Error"; fi
 </code></pre></div></div>
 
 <p><br />
-Usage for <code class="highlighter-rouge">**||**</code> and <code class="highlighter-rouge">**&amp;&amp;**</code>:</p>
+<strong>Usage</strong> for <b>||</b> and <b>&amp;&amp;</b>:</p>
 
-<p>Example for logical OR:</p>
+<p><strong>Example</strong> for logical <strong>OR</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -Rf somedir || exit_on_error "Failed to remove the directory"
-</code></pre></div></div>
+<pre>
+rm -Rf somedir <b>||</b> exit_on_error "Failed to remove the directory"
+</pre>
 
-<p>Example for logical AND (excludes 2nd part if the first fails):</p>
+<p><strong>Example</strong> for logical <strong>AND</strong> (excludes 2nd part if the first fails):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -Rf somedir &amp;&amp; trace_output "Removed the directory"
-</code></pre></div></div>
+<pre>
+rm -Rf somedir <b>&amp;&amp;</b> trace_output "Removed the directory"
+</pre>
 
-<p>Example for both logical AND and OR:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mailx -s "Re: requested file" root &lt; testfile &amp;&amp; echo "Mail has been sent" || echo "Error"
-</code></pre></div></div>
+<p><strong>Example</strong> for both logical <strong>AND</strong> and <strong>OR</strong>:</p>
+<pre>
+mailx -s "Re: requested file" root <b>&lt;</b> testfile <b>&amp;&amp;</b> echo "Mail has been sent" <b>||</b> echo "Error"
+</pre>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -Rf somedir &amp;&amp; trace_output "Removed the directory" || exit_on_error "Failed to remove the directory"
-</code></pre></div></div>
+<pre>
+rm -Rf somedir <b>&amp;&amp;</b> trace_output "Removed the directory" <b>||</b> exit_on_error "Failed to remove the directory"
+</pre>
 
   </div><a class="u-url" href="/rhcsa/centos7/2020/02/20/rhcsa-05-redirection-piping.html" hidden></a>
 </article>
@@ -127,7 +137,7 @@ Usage for <code class="highlighter-rouge">**||**</code> and <code class="highlig
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

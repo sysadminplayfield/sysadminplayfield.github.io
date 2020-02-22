@@ -85,12 +85,13 @@ If SELinux is disabled, <code class="highlighter-rouge">setenforce</code> will n
 
 <p>If you can’t remember what package provides <strong>semanage</strong> tool, and let’s install it:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum provides */semanage
+<pre>
+# <b>yum provides */semanage</b>
     [...]
     policycoreutils-python
     setroubleshoot-server
     [...]
-</code></pre></div></div>
+</pre>
 
 <p>You can install either <strong>setroubleshoot-server</strong> or <strong>policycoreutils-python</strong></p>
 
@@ -145,14 +146,15 @@ or, if you need to delete the context:
 
 <p><strong>Edit</strong> <strong>/etc/ssh/sshd_config</strong> to add listening on <strong>port 2222</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># vi /etc/ssh/sshd_config
+<pre>
+# <b>vi /etc/ssh/sshd_config</b>
 	[...]
 	Port 22
-	Port 2222
+	<b>Port 2222</b>
 	[...]
-	PermitRootLogin yes
+	<b>PermitRootLogin yes</b>
 	[...]
-</code></pre></div></div>
+</pre>
 
 <p><strong>Restart sshd</strong>:</p>
 
@@ -213,7 +215,7 @@ or
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Linux related... for now!</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

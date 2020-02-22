@@ -7,15 +7,15 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="RHCSA Certification - Part3 - systemd targets" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="With SysVinit, we talked about runlevels, but with systemd it is all about targets." />
-<meta property="og:description" content="With SysVinit, we talked about runlevels, but with systemd it is all about targets." />
+<meta name="description" content="With SystemV, we talked about runlevels. With systemd, we talk about targets." />
+<meta property="og:description" content="With SystemV, we talked about runlevels. With systemd, we talk about targets." />
 <link rel="canonical" href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html" />
 <meta property="og:url" content="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html" />
 <meta property="og:site_name" content="SysAdmin Playfield" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-20T20:00:01-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html","headline":"RHCSA Certification - Part3 - systemd targets","dateModified":"2020-02-20T20:00:01-06:00","description":"With SysVinit, we talked about runlevels, but with systemd it is all about targets.","datePublished":"2020-02-20T20:00:01-06:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html","headline":"RHCSA Certification - Part3 - systemd targets","dateModified":"2020-02-20T20:00:01-06:00","description":"With SystemV, we talked about runlevels. With systemd, we talk about targets.","datePublished":"2020-02-20T20:00:01-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -45,17 +45,19 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>With <strong>SysVinit</strong>, we talked about <strong>runlevels</strong>, but with <strong>systemd</strong> it is all about <strong>targets</strong>.</p>
+    <p>With <strong>SystemV</strong>, we talked about <strong>runlevels</strong>.<br />
+With <strong>systemd</strong>, we talk about <strong>targets</strong>.</p>
 
-<p>Below, the relationship between runlevels and targets:</p>
+<p>Relationship between runlevels and targets:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Runlevel	Target											Description
-0			runlevel0.target, poweroff.target				Power off
-1			runlevel1.target, rescue.target					Non-graphical single-user
-2,3,4		runlevel[234].target, multi-user.target			Non-graphical multi-user
-5 			runlevel5.target, graphical.target				Graphical multi-user
-6 			runlevel6.target, reboot.target					Reboot
-</code></pre></div></div>
+<pre>
+<b>Runlevel		Target				Description</b>
+0	runlevel0.target, poweroff.target	Power off
+1	runlevel1.target, rescue.target		Non-graphical single-user
+2,3,4	runlevel[234].target, multi-user.target	Non-graphical multi-user
+5 	runlevel5.target, graphical.target	Graphical multi-user
+6 	runlevel6.target, reboot.target		Reboot
+</pre>
 
 <p><br />
 <strong>Check</strong> the system’s current <strong>default target</strong>:</p>
@@ -63,12 +65,12 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> # systemctl get-default
 </code></pre></div></div>
 
-<p>If it is not already set to multi-user, <strong>set</strong> the new <strong>default target</strong> as follow:</p>
+<p><strong>Set</strong> the <strong>default target</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> # systemctl set-default multi-user.target
 </code></pre></div></div>
 
-<p>But if you wish to <strong>switch immediately to rescue</strong> (formerly “single user”, or “init 1”):</p>
+<p>If you wish to <strong>switch immediately</strong> to <strong>rescue.target</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> # systemctl isolate rescue
 </code></pre></div></div>
@@ -92,7 +94,7 @@
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

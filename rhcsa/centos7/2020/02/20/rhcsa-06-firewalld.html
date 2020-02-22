@@ -45,18 +45,18 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Verify if firewalld is active:</p>
+    <p><strong>Verify</strong> if firewalld is <strong>active</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --state
 running
 </code></pre></div></div>
 
-<p>Start firewalld:</p>
+<p><strong>Start</strong> firewalld:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl start firewalld.service
 </code></pre></div></div>
 
-<p>Set firewalld to start automatically at boot:</p>
+<p>Set firewalld to <strong>start</strong> automatically <strong>at boot</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl enable firewalld.service
 </code></pre></div></div>
@@ -88,20 +88,20 @@ running
 # firewall-cmd --reload
 </code></pre></div></div>
 
-<p>Add a <strong>port</strong> to a specific zone:</p>
+<p><strong>Add</strong> a <strong>port</strong> to a specific <strong>zone</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --zone=dmz --add-port=8080/tcp
 # firewall-cmd --permanent
 </code></pre></div></div>
 
-<p>Create a <strong>rich rules</strong>:</p>
+<p><strong>Create</strong> a <strong>rich rules</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=192.168.2.2 port port=80 protocol=tcp accept'
 # firewall-cmd --permanent --add-rich-rule 'rule service name=ssh log prefix="SSH_" level=debug limit value=2/m reject'
 #firewall-cmd --reload
 </code></pre></div></div>
 
-<p>Add a <strong>port forwarding</strong> to the default zone:</p>
+<p><strong>Add</strong> a <strong>port forwarding</strong> to the default zone:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-masquerade
 # firewall-cmd --permanent --add-forward-port=port=21:proto=tcp:toport=80:toaddr=192.168.2.3
@@ -127,7 +127,7 @@ running
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

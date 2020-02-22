@@ -56,37 +56,38 @@ LV = Logical Volume (logical space allocated on a VG, basically, a logical parti
 
 <p>Let’s create a new physical partition on /dev/sdb:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># fdisk /dev/sdb
-    p (print partition table on /dev/sdb)
-    n (create new partition)
-    p (primary partition type)
-    enter (default partition number - 1)
-    enter (default 1st block)
-    +330M (size of the new partition)
-    t (partition type)
-    enter (default partition number - 1)
-    8e (Linux LVM)
-    p (print partition table again, last check before writing changes to disk)
-    w (write changes made to the partition table)
-</code></pre></div></div>
+<pre>
+# fdisk /dev/sdb
+    <b>p</b> (print partition table on /dev/sdb)
+    <b>n</b> (create new partition)
+    <b>p</b> (primary partition type)
+    <b>enter</b> (default partition number - 1)
+    <b>enter</b> (default 1st block)
+    <b>+330M</b> (size of the new partition)
+    <b>t</b> (partition type)
+    <b>enter</b> (default partition number - 1)
+    <b>8e</b> (Linux LVM)
+    <b>p</b> (print partition table again, last check before writing changes to disk)
+    <b>w</b> (write changes made to the partition table)
+</pre>
 
 <p><br />
 <strong>PARTPROBE</strong></p>
 
-<p>Use <strong>partprobe</strong> to force the system to be aware of the new partition table:</p>
+<p>Use <strong>partprobe</strong> to <strong>force</strong> the system’s <strong>awareness</strong> of the new <strong>partition table</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># partprobe -s
 </code></pre></div></div>
 
 <p><br />
 <strong>PVCREATE</strong><br />
-(Optional, because the command <code class="highlighter-rouge">vgcreate</code> automatically creates the PVs)
-Create a PV on /dev/sdb1:</p>
+Optional: <code class="highlighter-rouge">vgcreate</code> automatically creates the PVs.<br />
+<strong>Create</strong> a <strong>PV</strong> on <strong>/dev/sdb1</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pvcreate /dev/sdb1
 </code></pre></div></div>
 
-<p>Let’s check it:</p>
+<p><strong>Check</strong> the <strong>PVs</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pvs
 # pvdisplay
@@ -95,12 +96,12 @@ Create a PV on /dev/sdb1:</p>
 <p><br />
 <strong>VGCREATE</strong></p>
 
-<p>Create a VG called vg_test, with a PE size of 8MB on /dev/sdb1:</p>
+<p><strong>Create</strong> a <strong>VG</strong> called <strong>vg_test</strong>, with a <strong>PE size</strong> of <strong>8MB</strong> on <strong>/dev/sdb1</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># vgcreate -s 8M vg_test /dev/sdb1
 </code></pre></div></div>
 
-<p>Let’s check it:</p>
+<p><strong>Check</strong> the <strong>VGs</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># vgs
 # vgdisplay
@@ -109,12 +110,12 @@ Create a PV on /dev/sdb1:</p>
 <p><br />
 <strong>LVCREATE</strong></p>
 
-<p><strong>Create</strong> an LV called <code class="highlighter-rouge">lv_test</code>, with a total size of <strong>10 LEs</strong> on <strong>vg_test</strong>:</p>
+<p><strong>Create</strong> an <strong>LV</strong> called <code class="highlighter-rouge">lv_test</code>, with a total <strong>size</strong> of <strong>10 LEs</strong> on <strong>vg_test</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># lvcreate -n lv_test -l 10 vg_test
 </code></pre></div></div>
 
-<p>Let’s check it:</p>
+<p><strong>Check LVs</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># lvs
 # lvdisplay
@@ -126,14 +127,12 @@ Create a PV on /dev/sdb1:</p>
 # mkdir /mnt/mountpoint
 </code></pre></div></div>
 
-<p>In order to automatically mount <code class="highlighter-rouge">lv_test</code> LVM at boot time, we need to define UUID (or logical map path), mounting point, filesystem type, and options in <strong>/etc/fstab</strong>:</p>
-
-<p>Let’s append the output of <strong>blkid</strong> to <strong>/etc/fstab</strong>:</p>
+<p><strong>Persistent</strong> mount <strong>across reboots</strong>: <strong>Export UUID</strong> or <strong>mapper name</strong> to <strong>/etc/fstab</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># blkid | grep lv_test &gt;&gt; /etc/fstab
 </code></pre></div></div>
 
-<p>And edit <strong>/etc/fstab</strong> to complete the information (in this example, we use the <strong>UUID</strong> to identify the volume):</p>
+<p><strong>Edit /etc/fstab</strong> to complete the information (here, using <strong>UUID</strong> to identify the partition):</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># vi /etc/fstab
     [...]
@@ -195,7 +194,7 @@ BUT IF YOU SKIP THE TEST AND LVEXTEND FAILS, YOU LOOSE ALL YOUR DATA.</p>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 

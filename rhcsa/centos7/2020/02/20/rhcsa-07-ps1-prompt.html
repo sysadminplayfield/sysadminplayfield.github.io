@@ -7,15 +7,15 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="RHCSA Certification - Part7 - The $PS1 variable" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="The $PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell) You can display your system variable using the echo command, as follows:" />
-<meta property="og:description" content="The $PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell) You can display your system variable using the echo command, as follows:" />
+<meta name="description" content="The PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell)" />
+<meta property="og:description" content="The PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell)" />
 <link rel="canonical" href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html" />
 <meta property="og:url" content="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html" />
 <meta property="og:site_name" content="SysAdmin Playfield" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-20T16:00:00-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html","headline":"RHCSA Certification - Part7 - The $PS1 variable","dateModified":"2020-02-20T16:00:00-06:00","description":"The $PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell) You can display your system variable using the echo command, as follows:","datePublished":"2020-02-20T16:00:00-06:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html","headline":"RHCSA Certification - Part7 - The $PS1 variable","dateModified":"2020-02-20T16:00:00-06:00","description":"The PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell)","datePublished":"2020-02-20T16:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -45,31 +45,37 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>The $PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell)
-You can display your system variable using the echo command, as follows:</p>
+    <p>The <strong>PS1 variable</strong> defines what your <strong>primary prompt</strong> looks like (in general, the primary prompt is <strong>bash</strong> – Bourne Again SHell)</p>
+
+<p><strong>Display</strong> your system’s <strong>PS1 variable</strong> using the <strong>echo</strong> command:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># echo $PS1
 </code></pre></div></div>
 
 <p><br />
-To find information about the <strong>$PS1</strong> variable when you do not have access to internet, you can check the <strong>bash manual</strong>.<br />
-To do so, just enter <code class="highlighter-rouge">man bash</code> in your terminal, then type <code class="highlighter-rouge">/PROMPTING</code> then hit enter, then hit the <strong>n</strong> key twice, and it will jump to the options available for the $PS1 variable.</p>
-
-<p>In our case, we only need 4 options:<br />
-\H = display hostname<br />
-\u = display username<br />
-\w = display working directory<br />
-$ = display “$” for normal user or “#” for root user</p>
+The <strong>bash manual</strong> contains some information about how to configure the prompt:</p>
+<ul>
+  <li>Display the bash manual using: <code class="highlighter-rouge">man bash</code></li>
+  <li>Type <code class="highlighter-rouge">/PROMPTING</code> to start a forward search</li>
+  <li>Press <strong>n</strong> twice</li>
+</ul>
 
 <p><br />
-Now we can change our <strong>$PS1</strong> variable:</p>
+<strong>PS1 variable</strong> most useful <strong>options</strong>:<br />
+<strong>\H</strong> = display <strong>hostname</strong><br />
+<strong>\u</strong> = display <strong>username</strong><br />
+<strong>\w</strong> = display <strong>working directory</strong><br />
+<strong>$</strong> = display “<strong>$</strong>” for normal user or “<strong>#</strong>” for root user</p>
+
+<p><br />
+Change the <strong>$PS1</strong> variable:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># export PS1="\H \u \w \$"
 # echo $PS1
  PS1="\H \u \w \$"
 </code></pre></div></div>
 
-<p>To make the variable <strong>persistent across reboots</strong>, we need to append it to the <code class="highlighter-rouge">.bashrc</code> file in the user directory (either <strong>/root</strong> or <strong>/home/$user</strong>):</p>
+<p>To make the custom prompt <strong>persistent across reboots</strong>, append to <strong>/root/.bashrc</strong> or <strong>/home/$user/.bashrc</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># echo 'export PS1="\H \u \w \$"' &gt;&gt; ~/.bashrc
 </code></pre></div></div>
@@ -93,7 +99,7 @@ Now we can change our <strong>$PS1</strong> variable:</p>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Tutorials for Linux, UNIX, VMware, Windows, etc. ... and news</p>
+        <p>Short Linux tutorials for RHEL/CentOS</p>
       </div>
     </div>
 
