@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-20T17:30:40-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html","headline":"RHCSA Certification - Part4 - SELinux","dateModified":"2020-02-20T17:30:40-06:00","description":"SElinux configuration file is /etc/selinux/config. In this file you can set the default configuration such as the mode (enforcing, permissive, disabled) and the protection type (targeted, minimum, mls)","datePublished":"2020-02-20T17:30:40-06:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","headline":"RHCSA Certification - Part4 - SELinux","dateModified":"2020-02-20T17:30:40-06:00","datePublished":"2020-02-20T17:30:40-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html","description":"SElinux configuration file is /etc/selinux/config. In this file you can set the default configuration such as the mode (enforcing, permissive, disabled) and the protection type (targeted, minimum, mls)","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -65,9 +65,9 @@ or
 
 <p>Or else, if it is set to “Permissive” and you want to <strong>temporarily</strong> set it to “<strong>Enforcing</strong>”:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> # setenforce permissive
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> # setenforce enforcing
 or
- # setenforce 0
+ # setenforce 1
 </code></pre></div></div>
 
 <p><br />
@@ -137,12 +137,16 @@ or
 
 <p><strong>Allow</strong> listening on an <strong>unconventional</strong> <strong>port</strong> for ssh in SELinux:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># semanage port -at ssh_port_t 2222 -p tcp
-or, if you need to change the default port:
-# semanage port -mt ssh_port_t 2222 -p tcp
-or, if you need to delete the context:
-# semanage port -dt ssh_port_t 2222 -p tcp
-</code></pre></div></div>
+<pre>
+<b>Add context</b> on a port:
+# semanage port -<b>a</b>t ssh_port_t 2222 -p tcp
+
+or, if you need to <b>modify</b> the <b>default context</b>:
+# semanage port -<b>m</b>t ssh_port_t 2222 -p tcp
+
+or, if you need to <b>delete</b> the <b>context</b>:
+# semanage port -<b>d</b>t ssh_port_t 2222 -p tcp
+</pre>
 
 <p><strong>Edit</strong> <strong>/etc/ssh/sshd_config</strong> to add listening on <strong>port 2222</strong>:</p>
 
