@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-21T19:00:30-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCSA Certification - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA Certification - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-23T12:38:54-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCSA Certification - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA Certification - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 At &lt;strong&gt;grub2&lt;/strong&gt; screen, press “&lt;strong&gt;e&lt;/strong&gt;” to &lt;strong&gt;edit&lt;/strong&gt; the configuration.&lt;br /&gt;
@@ -119,9 +119,9 @@ or
 
 &lt;p&gt;Or else, if it is set to “Permissive” and you want to &lt;strong&gt;temporarily&lt;/strong&gt; set it to “&lt;strong&gt;Enforcing&lt;/strong&gt;”:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # setenforce permissive
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # setenforce enforcing
 or
- # setenforce 0
+ # setenforce 1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;
@@ -191,12 +191,16 @@ or
 
 &lt;p&gt;&lt;strong&gt;Allow&lt;/strong&gt; listening on an &lt;strong&gt;unconventional&lt;/strong&gt; &lt;strong&gt;port&lt;/strong&gt; for ssh in SELinux:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# semanage port -at ssh_port_t 2222 -p tcp
-or, if you need to change the default port:
-# semanage port -mt ssh_port_t 2222 -p tcp
-or, if you need to delete the context:
-# semanage port -dt ssh_port_t 2222 -p tcp
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;pre&gt;
+&lt;b&gt;Add context&lt;/b&gt; on a port:
+# semanage port -&lt;b&gt;a&lt;/b&gt;t ssh_port_t 2222 -p tcp
+
+or, if you need to &lt;b&gt;modify&lt;/b&gt; the &lt;b&gt;default context&lt;/b&gt;:
+# semanage port -&lt;b&gt;m&lt;/b&gt;t ssh_port_t 2222 -p tcp
+
+or, if you need to &lt;b&gt;delete&lt;/b&gt; the &lt;b&gt;context&lt;/b&gt;:
+# semanage port -&lt;b&gt;d&lt;/b&gt;t ssh_port_t 2222 -p tcp
+&lt;/pre&gt;
 
 &lt;p&gt;&lt;strong&gt;Edit&lt;/strong&gt; &lt;strong&gt;/etc/ssh/sshd_config&lt;/strong&gt; to add listening on &lt;strong&gt;port 2222&lt;/strong&gt;:&lt;/p&gt;
 
