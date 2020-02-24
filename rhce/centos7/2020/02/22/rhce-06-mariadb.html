@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>RHCE Certification - Part5 - mariadb | SysAdmin Playfield</title>
+<title>RHCE Certification - Part6 - mariadb | SysAdmin Playfield</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="RHCE Certification - Part5 - mariadb" />
+<meta property="og:title" content="RHCE Certification - Part6 - mariadb" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="MARIADB SERVER" />
-<meta property="og:description" content="MARIADB SERVER" />
+<meta name="description" content="Server: srv.example.local Client: 192.168.2.20/24" />
+<meta property="og:description" content="Server: srv.example.local Client: 192.168.2.20/24" />
 <link rel="canonical" href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" />
 <meta property="og:url" content="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" />
 <meta property="og:site_name" content="SysAdmin Playfield" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-22T10:30:00-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"RHCE Certification - Part5 - mariadb","dateModified":"2020-02-22T10:30:00-06:00","datePublished":"2020-02-22T10:30:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html"},"url":"http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html","description":"MARIADB SERVER","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","headline":"RHCE Certification - Part6 - mariadb","dateModified":"2020-02-22T10:30:00-06:00","datePublished":"2020-02-22T10:30:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html"},"url":"http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html","description":"Server: srv.example.local Client: 192.168.2.20/24","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -38,14 +38,18 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">RHCE Certification - Part5 - mariadb</h1>
+    <h1 class="post-title p-name" itemprop="name headline">RHCE Certification - Part6 - mariadb</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="2020-02-22T10:30:00-06:00" itemprop="datePublished">Feb 22, 2020
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><strong>MARIADB SERVER</strong></p>
+    <p>Server: srv.example.local<br />
+Client: 192.168.2.20/24</p>
+
+<p><br />
+<strong>MARIADB SERVER</strong></p>
 
 <p><strong>Install mariadb</strong> and <strong>mariadb-server</strong>:</p>
 
@@ -58,26 +62,26 @@
 # systemctl start mariadb
 </code></pre></div></div>
 
-<p><strong>Run mysql_secure_installation</strong> to set the root password and disable guest account and test database:</p>
+<p><strong>Run mysql_secure_installation</strong> to set the root password, remove anonymous users and test database:</p>
 
 <pre>
 # <b>mysql_secure_installation</b>
 Enter current password for root (enter for none): <b>enter</b>
 Set root password? [Y/n] <b>enter</b>
-New password: <b>pass</b>
-Re-enter new password: <b>pass</b>
+New password: <b>password1</b>
+Re-enter new password: <b>password1</b>
 Remove anonymous users? [Y/n] <b>enter</b>
 Disallow root login remotely? [Y/n] <b>enter</b>
 Remove test database and access to it? [Y/n] <b>enter</b>
 Reload privilege tables now? [Y/n] <b>enter</b>
 </pre>
 
-<p>Log as root:</p>
+<p><strong>Login</strong> as <strong>root</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mysql -uroot -p
 </code></pre></div></div>
 
-<p>Display databases:</p>
+<p><strong>Display databases</strong>:</p>
 
 <pre>
 MariaDB[(none)]&gt; <b>show databases;</b>
@@ -93,13 +97,13 @@ MariaDB[db1]&gt; <b>insert into table1(id,name,age) values (1,"person1",25);</b>
 MariaDB[db1]&gt; <b>insert into table1(id,name,age) values (2,"person2",55);</b>
 </pre>
 
-<p>Display table structure:</p>
+<p><strong>Display table</strong> structure:</p>
 
 <pre>
 MariaDB[db1]&gt; <b>describe table1;</b>
 </pre>
 
-<p>Get items from table1:</p>
+<p><strong>Get items</strong> from table1:</p>
 
 <pre>
 MariaDB[db1]&gt; <b>select * from table1;</b>
@@ -107,32 +111,32 @@ MariaDB[db1]&gt; <b>select name,age from table1;</b>
 MariaDB[db1]&gt; <b>select name,age from table1 where age=25;</b>
 </pre>
 
-<p>Create a user:</p>
+<p><strong>Create</strong> a <strong>user</strong>:</p>
 
 <pre>
-MariaDB[db1]&gt; <b>create user alice@192.168.2.20 identified by 'pass';</b>
+MariaDB[db1]&gt; <b>create user alice@192.168.2.20 identified by 'password2';</b>
 MariaDB[db1]&gt; <b>grant all on db1.* to alice@192.168.2.20;</b>
 MariaDB[db1]&gt; <b>flush privileges;</b>
 </pre>
 
-<p>Change password for alice:</p>
+<p><strong>Change password</strong> for alice:</p>
 
 <pre>
-MariaDB[db1]&gt; <b>set password for alice@192.168.2.20 = password('newpass');</b>
+MariaDB[db1]&gt; <b>set password for alice@192.168.2.20 = password('newpassword2');</b>
 </pre>
 
-<p>Display database users:</p>
+<p><strong>Display</strong> database <strong>users</strong>:</p>
 <pre>
 MariaDB[db1]&gt; <b>select host,name,password from mysql.user;</b>
 </pre>
 
-<p>Delete user:</p>
+<p><strong>Delete user</strong>:</p>
 
 <pre>
 MariaDB[db1]&gt; <b>drop user alice@192.168.2.20;</b>
 </pre>
 
-<p>Display variables:</p>
+<p><strong>Display variables</strong>:</p>
 
 <pre>
 MariaDB[db1]&gt; <b>show variables like 'port';</b>
@@ -140,12 +144,12 @@ MariaDB[db1]&gt; <b>show variables like 'datadir';</b>
 MariaDB[db1]&gt; <b>show variables where variable_name='port' or variable_name='datadir';</b>
 </pre>
 
-<p>Exit the CLI:</p>
+<p><strong>Exit</strong> the <strong>CLI</strong>:</p>
 <pre>
 MariaDB[db1]&gt; <b>exit</b>
 </pre>
 
-<p>Allow port 3306 in firewalld:</p>
+<p><strong>Allow port 3306</strong> in firewalld:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-port=3306/tcp
 # firewall-cmd --reload
@@ -155,7 +159,7 @@ Or, use a rich rule:
 # firewall-cmd --reload
 </code></pre></div></div>
 
-<p>Change listening port to 8888/tcp and adjust SELinux context on port 8888/tcp:</p>
+<p><strong>Change listening port</strong> to <strong>8888/tcp</strong> and <strong>adjust SELinux context</strong> on port 8888/tcp:</p>
 
 <pre>
 # <b>semanage port -at -mysqld_port_t 8888 -p tcp</b>
@@ -165,7 +169,7 @@ Or, use a rich rule:
 [...]
 </pre>
 
-<p>Restart mysqld, and update firewalld rules:</p>
+<p><strong>Restart mariadb</strong>, and <strong>update firewall rules</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl restart mariadb
 # firewall-cmd --permanent --remove-port=3306/tcp
@@ -173,7 +177,7 @@ Or, use a rich rule:
 # firewall-cmd --reload
 </code></pre></div></div>
 
-<p>Change mariadb datadir:</p>
+<p><strong>Change</strong> mariadb <strong>datadir</strong>:</p>
 
 <pre>
 # systemctl stop mariadb
@@ -191,12 +195,12 @@ Or, use a rich rule:
 [...]
 </pre>
 
-<p>Check owner, permissions and SELinux contexts of the new datadir:</p>
+<p><strong>Check</strong> owner, <strong>permissions</strong> and <strong>SELinux contexts</strong> of the new datadir:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ls -alZ /srv/mariadb
 </code></pre></div></div>
 
-<p>Start mariadb:</p>
+<p><strong>Start mariadb</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl start mariadb
 </code></pre></div></div>
@@ -204,12 +208,12 @@ Or, use a rich rule:
 <p><br />
 <strong>MARIADB REMOTE CLIENT</strong></p>
 
-<p>Install mariadb:</p>
+<p><strong>Install mariadb</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum install -y mariadb
 </code></pre></div></div>
 
-<p>Connect to a remote mariadb server on port 8888/tcp:</p>
+<p><strong>Connect</strong> to a <strong>remote mariadb server</strong> on <strong>port 8888/tcp</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mysql -ualice -p -hsrv.example.local -P8888
 </code></pre></div></div>
