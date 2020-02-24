@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-24T14:47:43-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCE Certification - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE Certification - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;Display existing connections:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-24T15:20:22-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCE - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;Display existing connections:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli c s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -57,17 +57,22 @@ or
 # nmcli con up team0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Before starting team0, make sure to start the slave interfaces.&lt;/p&gt;</content><author><name></name></author><summary type="html">Display existing connections:</summary></entry><entry><title type="html">RHCE Certification - Part2 - Directory services: client connection using Kerberos</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos.html" rel="alternate" type="text/html" title="RHCE Certification - Part2 - Directory services: client connection using Kerberos" /><published>2020-02-22T11:30:00-06:00</published><updated>2020-02-22T11:30:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos.html">&lt;p&gt;&lt;strong&gt;LDAP KERBEROS CLIENT&lt;/strong&gt;&lt;br /&gt;
-kdc = ldap.example.local&lt;br /&gt;
+&lt;p&gt;Before starting team0, make sure to start the slave interfaces.&lt;/p&gt;</content><author><name></name></author><summary type="html">Display existing connections:</summary></entry><entry><title type="html">RHCE - Part2 - Directory services: client connection using Kerberos</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos.html" rel="alternate" type="text/html" title="RHCE - Part2 - Directory services: client connection using Kerberos" /><published>2020-02-22T11:30:00-06:00</published><updated>2020-02-22T11:30:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos.html">&lt;p&gt;kdc = ldap.example.local&lt;br /&gt;
 realm = EXAMPLE.LOCAL&lt;/p&gt;
 
-&lt;p&gt;Edit authconfig configuration detailed in the RHCSA section &lt;a href=&quot;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-17-sssd.html&quot;&gt;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-17-sssd.html&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;LDAP KERBEROS CLIENT&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Edit authconfig&lt;/strong&gt; configuration detailed in the RHCSA section &lt;a href=&quot;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-17-sssd.html&quot;&gt;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-17-sssd.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable Kerberos authenrication method&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# authconfig --enablekrb5 --krb5kdc=ldap.example.local --krb5realm=EXAMPLE.LOCAL --update
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">LDAP KERBEROS CLIENT kdc = ldap.example.local realm = EXAMPLE.LOCAL</summary></entry><entry><title type="html">RHCE Certification - Part3 - iSCSI: Target and Initiator</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi.html" rel="alternate" type="text/html" title="RHCE Certification - Part3 - iSCSI: Target and Initiator" /><published>2020-02-22T11:15:00-06:00</published><updated>2020-02-22T11:15:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi.html">&lt;p&gt;Target (server) = srv.example.local&lt;br /&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">kdc = ldap.example.local realm = EXAMPLE.LOCAL</summary></entry><entry><title type="html">RHCE - Part3 - iSCSI: Target and Initiator</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi.html" rel="alternate" type="text/html" title="RHCE - Part3 - iSCSI: Target and Initiator" /><published>2020-02-22T11:15:00-06:00</published><updated>2020-02-22T11:15:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi.html">&lt;p&gt;Target (server) = srv.example.local&lt;br /&gt;
 Initiator (client) = client.example.local&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;TARGET&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;TARGET&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Install targetcli&lt;/strong&gt;:&lt;/p&gt;
 
@@ -189,12 +194,13 @@ node.session.auth.password = pass
   &lt;li&gt;append the information to &lt;strong&gt;/etc/fstab&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;If&lt;/strong&gt; the &lt;strong&gt;discovery failed&lt;/strong&gt;, &lt;strong&gt;delete files under /var/lib/iscsi/nodes/&lt;/strong&gt;* and &lt;strong&gt;retry&lt;/strong&gt; with &lt;strong&gt;correct&lt;/strong&gt; discovery &lt;strong&gt;parameters&lt;/strong&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">Target (server) = srv.example.local Initiator (client) = client.example.local</summary></entry><entry><title type="html">RHCE Certification - Part4 - nfs Kerberos</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos.html" rel="alternate" type="text/html" title="RHCE Certification - Part4 - nfs Kerberos" /><published>2020-02-22T11:00:00-06:00</published><updated>2020-02-22T11:00:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos.html">&lt;p&gt;Make sure to review RHCSA topic on nfs &lt;a href=&quot;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&quot;&gt;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;If&lt;/strong&gt; the &lt;strong&gt;discovery failed&lt;/strong&gt;, &lt;strong&gt;delete files under /var/lib/iscsi/nodes/&lt;/strong&gt;* and &lt;strong&gt;retry&lt;/strong&gt; with &lt;strong&gt;correct&lt;/strong&gt; discovery &lt;strong&gt;parameters&lt;/strong&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">Target (server) = srv.example.local Initiator (client) = client.example.local</summary></entry><entry><title type="html">RHCE - Part4 - nfs Kerberos</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos.html" rel="alternate" type="text/html" title="RHCE - Part4 - nfs Kerberos" /><published>2020-02-22T11:00:00-06:00</published><updated>2020-02-22T11:00:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos.html">&lt;p&gt;Make sure to review RHCSA topic on nfs &lt;a href=&quot;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&quot;&gt;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Server = srv.example.local
 Client = client.example.local&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;NFS SERVER CONFIGURATION&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;NFS SERVER CONFIGURATION&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Create directory&lt;/strong&gt;:&lt;/p&gt;
 
@@ -308,7 +314,7 @@ srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4.2,sec=krb5p,rw,sync	0 0
 &lt;p&gt;&lt;strong&gt;Mount&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mount -av
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Make sure to review RHCSA topic on nfs https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html</summary></entry><entry><title type="html">RHCE Certification - Part4 - Postfix</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html" rel="alternate" type="text/html" title="RHCE Certification - Part4 - Postfix" /><published>2020-02-22T10:45:00-06:00</published><updated>2020-02-22T10:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html">&lt;p&gt;&lt;strong&gt;NULL CLIENT&lt;/strong&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Make sure to review RHCSA topic on nfs https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html</summary></entry><entry><title type="html">RHCE - Part5 - Postfix</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html" rel="alternate" type="text/html" title="RHCE - Part5 - Postfix" /><published>2020-02-22T10:45:00-06:00</published><updated>2020-02-22T10:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html">&lt;p&gt;&lt;strong&gt;NULL CLIENT&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Configure postfix&lt;/strong&gt; by editing &lt;strong&gt;/etc/postfix/main.cf&lt;/strong&gt;, &lt;strong&gt;or&lt;/strong&gt; send configuration from the terminal using &lt;strong&gt;postconf&lt;/strong&gt;:&lt;/p&gt;
 
@@ -389,7 +395,11 @@ srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4.2,sec=krb5p,rw,sync	0 0
 &lt;p&gt;&lt;strong&gt;Delete&lt;/strong&gt; a mail &lt;strong&gt;stuck&lt;/strong&gt; in the queue:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# postsuper -d ABCDEFGHI
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">NULL CLIENT</summary></entry><entry><title type="html">RHCE Certification - Part5 - mariadb</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" rel="alternate" type="text/html" title="RHCE Certification - Part5 - mariadb" /><published>2020-02-22T10:30:00-06:00</published><updated>2020-02-22T10:30:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html">&lt;p&gt;&lt;strong&gt;MARIADB SERVER&lt;/strong&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">NULL CLIENT</summary></entry><entry><title type="html">RHCE - Part6 - mariadb</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" rel="alternate" type="text/html" title="RHCE - Part6 - mariadb" /><published>2020-02-22T10:30:00-06:00</published><updated>2020-02-22T10:30:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html">&lt;p&gt;Server: srv.example.local&lt;br /&gt;
+Client: 192.168.2.20/24&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;MARIADB SERVER&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Install mariadb&lt;/strong&gt; and &lt;strong&gt;mariadb-server&lt;/strong&gt;:&lt;/p&gt;
 
@@ -402,26 +412,26 @@ srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4.2,sec=krb5p,rw,sync	0 0
 # systemctl start mariadb
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Run mysql_secure_installation&lt;/strong&gt; to set the root password and disable guest account and test database:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Run mysql_secure_installation&lt;/strong&gt; to set the root password, remove anonymous users and test database:&lt;/p&gt;
 
 &lt;pre&gt;
-# &lt;b&gt;mysql&amp;amp;#95secure&amp;amp;#95installation&lt;/b&gt;
+# &lt;b&gt;mysql_secure_installation&lt;/b&gt;
 Enter current password for root (enter for none): &lt;b&gt;enter&lt;/b&gt;
 Set root password? [Y/n] &lt;b&gt;enter&lt;/b&gt;
-New password: &lt;b&gt;pass&lt;/b&gt;
-Re-enter new password: &lt;b&gt;pass&lt;/b&gt;
+New password: &lt;b&gt;password1&lt;/b&gt;
+Re-enter new password: &lt;b&gt;password1&lt;/b&gt;
 Remove anonymous users? [Y/n] &lt;b&gt;enter&lt;/b&gt;
 Disallow root login remotely? [Y/n] &lt;b&gt;enter&lt;/b&gt;
 Remove test database and access to it? [Y/n] &lt;b&gt;enter&lt;/b&gt;
 Reload privilege tables now? [Y/n] &lt;b&gt;enter&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Log as root:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Login&lt;/strong&gt; as &lt;strong&gt;root&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mysql -uroot -p
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Display databases:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Display databases&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;pre&gt;
 MariaDB[(none)]&amp;gt; &lt;b&gt;show databases;&lt;/b&gt;
@@ -437,13 +447,13 @@ MariaDB[db1]&amp;gt; &lt;b&gt;insert into table1(id,name,age) values (1,&quot;pe
 MariaDB[db1]&amp;gt; &lt;b&gt;insert into table1(id,name,age) values (2,&quot;person2&quot;,55);&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Display table structure:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Display table&lt;/strong&gt; structure:&lt;/p&gt;
 
 &lt;pre&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;describe table1;&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Get items from table1:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Get items&lt;/strong&gt; from table1:&lt;/p&gt;
 
 &lt;pre&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;select * from table1;&lt;/b&gt;
@@ -451,32 +461,32 @@ MariaDB[db1]&amp;gt; &lt;b&gt;select name,age from table1;&lt;/b&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;select name,age from table1 where age=25;&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Create a user:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; a &lt;strong&gt;user&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;pre&gt;
-MariaDB[db1]&amp;gt; &lt;b&gt;create user alice@192.168.2.20 identified by 'pass';&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;create user alice@192.168.2.20 identified by 'password2';&lt;/b&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;grant all on db1.* to alice@192.168.2.20;&lt;/b&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;flush privileges;&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Change password for alice:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Change password&lt;/strong&gt; for alice:&lt;/p&gt;
 
 &lt;pre&gt;
-MariaDB[db1]&amp;gt; &lt;b&gt;set password for alice@192.168.2.20 = password('newpass');&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;set password for alice@192.168.2.20 = password('newpassword2');&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Display database users:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Display&lt;/strong&gt; database &lt;strong&gt;users&lt;/strong&gt;:&lt;/p&gt;
 &lt;pre&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;select host,name,password from mysql.user;&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Delete user:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Delete user&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;pre&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;drop user alice@192.168.2.20;&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Display variables:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Display variables&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;pre&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;show variables like 'port';&lt;/b&gt;
@@ -484,12 +494,12 @@ MariaDB[db1]&amp;gt; &lt;b&gt;show variables like 'datadir';&lt;/b&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;show variables where variable_name='port' or variable_name='datadir';&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Exit the CLI:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Exit&lt;/strong&gt; the &lt;strong&gt;CLI&lt;/strong&gt;:&lt;/p&gt;
 &lt;pre&gt;
 MariaDB[db1]&amp;gt; &lt;b&gt;exit&lt;/b&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Allow port 3306 in firewalld:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Allow port 3306&lt;/strong&gt; in firewalld:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-port=3306/tcp
 # firewall-cmd --reload
@@ -499,7 +509,7 @@ Or, use a rich rule:
 # firewall-cmd --reload
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Change listening port to 8888/tcp and adjust SELinux context on port 8888/tcp:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Change listening port&lt;/strong&gt; to &lt;strong&gt;8888/tcp&lt;/strong&gt; and &lt;strong&gt;adjust SELinux context&lt;/strong&gt; on port 8888/tcp:&lt;/p&gt;
 
 &lt;pre&gt;
 # &lt;b&gt;semanage port -at -mysqld_port_t 8888 -p tcp&lt;/b&gt;
@@ -509,7 +519,7 @@ Or, use a rich rule:
 [...]
 &lt;/pre&gt;
 
-&lt;p&gt;Restart mysqld, and update firewalld rules:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Restart mariadb&lt;/strong&gt;, and &lt;strong&gt;update firewall rules&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl restart mariadb
 # firewall-cmd --permanent --remove-port=3306/tcp
@@ -517,7 +527,7 @@ Or, use a rich rule:
 # firewall-cmd --reload
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Change mariadb datadir:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Change&lt;/strong&gt; mariadb &lt;strong&gt;datadir&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;pre&gt;
 # systemctl stop mariadb
@@ -535,12 +545,12 @@ Or, use a rich rule:
 [...]
 &lt;/pre&gt;
 
-&lt;p&gt;Check owner, permissions and SELinux contexts of the new datadir:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Check&lt;/strong&gt; owner, &lt;strong&gt;permissions&lt;/strong&gt; and &lt;strong&gt;SELinux contexts&lt;/strong&gt; of the new datadir:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ls -alZ /srv/mariadb
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Start mariadb:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Start mariadb&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl start mariadb
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -548,15 +558,15 @@ Or, use a rich rule:
 &lt;p&gt;&lt;br /&gt;
 &lt;strong&gt;MARIADB REMOTE CLIENT&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Install mariadb:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Install mariadb&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y mariadb
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Connect to a remote mariadb server on port 8888/tcp:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Connect&lt;/strong&gt; to a &lt;strong&gt;remote mariadb server&lt;/strong&gt; on &lt;strong&gt;port 8888/tcp&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mysql -ualice -p -hsrv.example.local -P8888
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">MARIADB SERVER</summary></entry><entry><title type="html">RHCSA Certification - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA Certification - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Server: srv.example.local Client: 192.168.2.20/24</summary></entry><entry><title type="html">RHCSA - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 At &lt;strong&gt;grub2&lt;/strong&gt; screen, press “&lt;strong&gt;e&lt;/strong&gt;” to &lt;strong&gt;edit&lt;/strong&gt; the configuration.&lt;br /&gt;
@@ -595,7 +605,7 @@ Log in as root with the new password, and reset the SELinux context of /etc/shad
 &lt;pre&gt;
 root@localhost# &lt;b&gt;restorecon -v /etc/shadow&lt;/b&gt;
 root@localhost# &lt;b&gt;reboot&lt;/b&gt;
-&lt;/pre&gt;</content><author><name></name></author><summary type="html">If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.</summary></entry><entry><title type="html">RHCSA Certification - Part2 - Configure network interface</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html" rel="alternate" type="text/html" title="RHCSA Certification - Part2 - Configure network interface" /><published>2020-02-20T22:00:01-06:00</published><updated>2020-02-20T22:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html">&lt;p&gt;We assume the following:&lt;/p&gt;
+&lt;/pre&gt;</content><author><name></name></author><summary type="html">If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.</summary></entry><entry><title type="html">RHCSA - Part2 - Configure network interface</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html" rel="alternate" type="text/html" title="RHCSA - Part2 - Configure network interface" /><published>2020-02-20T22:00:01-06:00</published><updated>2020-02-20T22:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html">&lt;p&gt;We assume the following:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;OS: CentOS 7.0&lt;/li&gt;
   &lt;li&gt;Static IP address: 192.168.2.100/24&lt;/li&gt;
@@ -629,7 +639,7 @@ Let’s start the configuration:&lt;/p&gt;
 &lt;p&gt;Test the new connection:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ping -I eth0 192.168.2.200
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">We assume the following: OS: CentOS 7.0 Static IP address: 192.168.2.100/24 Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</summary></entry><entry><title type="html">RHCSA Certification - Part3 - systemd targets</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html" rel="alternate" type="text/html" title="RHCSA Certification - Part3 - systemd targets" /><published>2020-02-20T20:00:01-06:00</published><updated>2020-02-20T20:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html">&lt;p&gt;With &lt;strong&gt;SystemV&lt;/strong&gt;, we talked about &lt;strong&gt;runlevels&lt;/strong&gt;.&lt;br /&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">We assume the following: OS: CentOS 7.0 Static IP address: 192.168.2.100/24 Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</summary></entry><entry><title type="html">RHCSA - Part3 - systemd targets</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html" rel="alternate" type="text/html" title="RHCSA - Part3 - systemd targets" /><published>2020-02-20T20:00:01-06:00</published><updated>2020-02-20T20:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html">&lt;p&gt;With &lt;strong&gt;SystemV&lt;/strong&gt;, we talked about &lt;strong&gt;runlevels&lt;/strong&gt;.&lt;br /&gt;
 With &lt;strong&gt;systemd&lt;/strong&gt;, we talk about &lt;strong&gt;targets&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Relationship between runlevels and targets:&lt;/p&gt;
@@ -657,7 +667,7 @@ With &lt;strong&gt;systemd&lt;/strong&gt;, we talk about &lt;strong&gt;targets&l
 &lt;p&gt;If you wish to &lt;strong&gt;switch immediately&lt;/strong&gt; to &lt;strong&gt;rescue.target&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # systemctl isolate rescue
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">With SystemV, we talked about runlevels. With systemd, we talk about targets.</summary></entry><entry><title type="html">RHCSA Certification - Part4 - SELinux</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html" rel="alternate" type="text/html" title="RHCSA Certification - Part4 - SELinux" /><published>2020-02-20T17:30:40-06:00</published><updated>2020-02-20T17:30:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html">&lt;p&gt;&lt;strong&gt;SElinux&lt;/strong&gt; configuration file is &lt;strong&gt;/etc/selinux/config&lt;/strong&gt;.&lt;br /&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">With SystemV, we talked about runlevels. With systemd, we talk about targets.</summary></entry><entry><title type="html">RHCSA - Part4 - SELinux</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html" rel="alternate" type="text/html" title="RHCSA - Part4 - SELinux" /><published>2020-02-20T17:30:40-06:00</published><updated>2020-02-20T17:30:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html">&lt;p&gt;&lt;strong&gt;SElinux&lt;/strong&gt; configuration file is &lt;strong&gt;/etc/selinux/config&lt;/strong&gt;.&lt;br /&gt;
 In this file you can set the default configuration such as the mode (&lt;strong&gt;enforcing&lt;/strong&gt;, &lt;strong&gt;permissive&lt;/strong&gt;, &lt;strong&gt;disabled&lt;/strong&gt;) and the protection type (&lt;strong&gt;targeted&lt;/strong&gt;, &lt;strong&gt;minimum&lt;/strong&gt;, &lt;strong&gt;mls&lt;/strong&gt;)&lt;/p&gt;
 
 &lt;p&gt;When enabled, SELinux can be in Permissive mode or Enforcing mode.&lt;/p&gt;

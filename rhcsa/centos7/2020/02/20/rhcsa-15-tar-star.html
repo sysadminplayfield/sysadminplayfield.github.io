@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>RHCSA Certification - Part15 - Compression: tar, star | SysAdmin Playfield</title>
+<title>RHCSA - Part15 - Compression: tar, star | SysAdmin Playfield</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="RHCSA Certification - Part15 - Compression: tar, star" />
+<meta property="og:title" content="RHCSA - Part15 - Compression: tar, star" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Create tar.gz archive file (cvzf= create verbose zip file):" />
-<meta property="og:description" content="Create tar.gz archive file (cvzf= create verbose zip file):" />
+<meta name="description" content="Create .tar archive file:" />
+<meta property="og:description" content="Create .tar archive file:" />
 <link rel="canonical" href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-15-tar-star.html" />
 <meta property="og:url" content="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-15-tar-star.html" />
 <meta property="og:site_name" content="SysAdmin Playfield" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-20T12:00:00-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"RHCSA Certification - Part15 - Compression: tar, star","dateModified":"2020-02-20T12:00:00-06:00","datePublished":"2020-02-20T12:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-15-tar-star.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-15-tar-star.html","description":"Create tar.gz archive file (cvzf= create verbose zip file):","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","headline":"RHCSA - Part15 - Compression: tar, star","dateModified":"2020-02-20T12:00:00-06:00","datePublished":"2020-02-20T12:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-15-tar-star.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-15-tar-star.html","description":"Create .tar archive file:","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -38,31 +38,47 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">RHCSA Certification - Part15 - Compression: tar, star</h1>
+    <h1 class="post-title p-name" itemprop="name headline">RHCSA - Part15 - Compression: tar, star</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="2020-02-20T12:00:00-06:00" itemprop="datePublished">Feb 20, 2020
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><strong>Create</strong> <strong>tar.gz</strong> archive <strong>file</strong> (cvzf= create verbose zip file):</p>
+    <p><strong>Create .tar</strong> archive <strong>file</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cvf /root/archive.tar /usr/local
+</code></pre></div></div>
+
+<p><strong>Create</strong> <strong>tar.gz compressed</strong> archive <strong>file</strong> (cvzf= create verbose zip file):</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cvzf /root/archive.tar.gz /usr/local
 </code></pre></div></div>
 
-<p><strong>List</strong> archive <strong>files</strong>:</p>
+<p><strong>List files from</strong> a <strong>.tar.gz compressed archive</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -tvzf /root/archive.tar.gz
 </code></pre></div></div>
 
 <p><strong>Create tar.bz2</strong> archive <strong>file</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cjzf /root/archive.tar.bz2 /usr/local
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cvjf /root/archive.tar.bz2 /usr/local
 </code></pre></div></div>
 
 <p><strong>Create tar.xz</strong> archive <strong>file</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cJzf /root/archive.tar.xz /usr/local
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -cvJf /root/archive.tar.xz /usr/local
+</code></pre></div></div>
+
+<p><strong>Extract archive</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># tar -xvf /root/archive.tar
+
+# tar -xvzf /root/archive.tar.gz
+
+# tar -xvjf /root/archive.tar.bz2
+
+# tar -zvJf /root/archive.tar.xz
 </code></pre></div></div>
 
   </div><a class="u-url" href="/rhcsa/centos7/2020/02/20/rhcsa-15-tar-star.html" hidden></a>
