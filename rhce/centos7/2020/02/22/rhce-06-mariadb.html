@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>RHCE Certification - Part5 - mariadb | SysAdmin Playfield</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="RHCE Certification - Part5 - mariadb" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="MARIADB SERVER" />
+<meta property="og:description" content="MARIADB SERVER" />
+<link rel="canonical" href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" />
+<meta property="og:url" content="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" />
+<meta property="og:site_name" content="SysAdmin Playfield" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-22T10:30:00-06:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","headline":"RHCE Certification - Part5 - mariadb","dateModified":"2020-02-22T10:30:00-06:00","datePublished":"2020-02-22T10:30:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html"},"url":"http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html","description":"MARIADB SERVER","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">SysAdmin Playfield</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">RHCE Certification - Part5 - mariadb</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-02-22T10:30:00-06:00" itemprop="datePublished">Feb 22, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><strong>MARIADB SERVER</strong></p>
+
+<p><strong>Install mariadb</strong> and <strong>mariadb-server</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum install -y mariadb mariadb-server
+</code></pre></div></div>
+
+<p><strong>Enable</strong> and <strong>start mariadb</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl enable mariadb
+# systemctl start mariadb
+</code></pre></div></div>
+
+<p><strong>Run mysql_secure_installation</strong> to set the root password and disable guest account and test database:</p>
+
+<pre>
+# <b>mysql&amp;#95secure&amp;#95installation</b>
+Enter current password for root (enter for none): <b>enter</b>
+Set root password? [Y/n] <b>enter</b>
+New password: <b>pass</b>
+Re-enter new password: <b>pass</b>
+Remove anonymous users? [Y/n] <b>enter</b>
+Disallow root login remotely? [Y/n] <b>enter</b>
+Remove test database and access to it? [Y/n] <b>enter</b>
+Reload privilege tables now? [Y/n] <b>enter</b>
+</pre>
+
+<p>Log as root:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mysql -uroot -p
+</code></pre></div></div>
+
+<p>Display databases:</p>
+
+<pre>
+MariaDB[(none)]&gt; <b>show databases;</b>
+</pre>
+
+<p>Create a database, a table and insert data:</p>
+
+<pre>
+MariaDB[(none)]&gt; <b>create database db1;</b>
+MariaDB[(none)]&gt; <b>use db1;</b>
+MariaDB[db1]&gt; <b>create table table1(id INT(10) unsigned, name VARCHAR(20), age INT(10));</b>
+MariaDB[db1]&gt; <b>insert into table1(id,name,age) values (1,"person1",25);</b>
+MariaDB[db1]&gt; <b>insert into table1(id,name,age) values (2,"person2",55);</b>
+</pre>
+
+<p>Display table structure:</p>
+
+<pre>
+MariaDB[db1]&gt; <b>describe table1;</b>
+</pre>
+
+<p>Get items from table1:</p>
+
+<pre>
+MariaDB[db1]&gt; <b>select * from table1;</b>
+MariaDB[db1]&gt; <b>select name,age from table1;</b>
+MariaDB[db1]&gt; <b>select name,age from table1 where age=25;</b>
+</pre>
+
+<p>Create a user:</p>
+
+<pre>
+MariaDB[db1]&gt; <b>create user alice@192.168.2.20 identified by 'pass';</b>
+MariaDB[db1]&gt; <b>grant all on db1.* to alice@192.168.2.20;</b>
+MariaDB[db1]&gt; <b>flush privileges;</b>
+</pre>
+
+<p>Change password for alice:</p>
+
+<pre>
+MariaDB[db1]&gt; <b>set password for alice@192.168.2.20 = password('newpass');</b>
+</pre>
+
+<p>Display database users:</p>
+<pre>
+MariaDB[db1]&gt; <b>select host,name,password from mysql.user;</b>
+</pre>
+
+<p>Delete user:</p>
+
+<pre>
+MariaDB[db1]&gt; <b>drop user alice@192.168.2.20;</b>
+</pre>
+
+<p>Display variables:</p>
+
+<pre>
+MariaDB[db1]&gt; <b>show variables like 'port';</b>
+MariaDB[db1]&gt; <b>show variables like 'datadir';</b>
+MariaDB[db1]&gt; <b>show variables where variable_name='port' or variable_name='datadir';</b>
+</pre>
+
+<p>Exit the CLI:</p>
+<pre>
+MariaDB[db1]&gt; <b>exit</b>
+</pre>
+
+<p>Allow port 3306 in firewalld:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-port=3306/tcp
+# firewall-cmd --reload
+
+Or, use a rich rule:
+# firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=192.168.2.20 port port=3306 protocol=tcp accept'
+# firewall-cmd --reload
+</code></pre></div></div>
+
+<p>Change listening port to 8888/tcp and adjust SELinux context on port 8888/tcp:</p>
+
+<pre>
+# <b>semanage port -at -mysqld_port_t 8888 -p tcp</b>
+# <b>vi /etc/my.cnf</b>
+[mysqld]
+<b>port=8888</b>
+[...]
+</pre>
+
+<p>Restart mysqld, and update firewalld rules:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl restart mariadb
+# firewall-cmd --permanent --remove-port=3306/tcp
+# firewall-cmd --permanent --add-port=8888/tcp
+# firewall-cmd --reload
+</code></pre></div></div>
+
+<p>Change mariadb datadir:</p>
+
+<pre>
+# systemctl stop mariadb
+# mkdir /srv/mariadb
+# semanage fcontext -at mysqld_db_t "/srv/mariadb(/.*)?"
+# restorecon -v /srv/mariadb
+# chown mysql: /srv/mariadb
+# cp -Rp /var/lib/mysql/* /srv/mariadb/
+
+# <b>vi /etc/my.cnf</b>
+[mysqld]
+[...]
+<b>#</b>datadir=/var/lib/mysql
+<b>datadir=/srv/mariadb</b>
+[...]
+</pre>
+
+<p>Check owner, permissions and SELinux contexts of the new datadir:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ls -alZ /srv/mariadb
+</code></pre></div></div>
+
+<p>Start mariadb:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl start mariadb
+</code></pre></div></div>
+
+<p><br />
+<strong>MARIADB REMOTE CLIENT</strong></p>
+
+<p>Install mariadb:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum install -y mariadb
+</code></pre></div></div>
+
+<p>Connect to a remote mariadb server on port 8888/tcp:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mysql -ualice -p -hsrv.example.local -P8888
+</code></pre></div></div>
+
+  </div><a class="u-url" href="/rhce/centos7/2020/02/22/rhce-06-mariadb.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">SysAdmin Playfield</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/sysadminplayfield"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">sysadminplayfield</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Short Linux tutorials for RHEL/CentOS</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
