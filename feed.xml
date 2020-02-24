@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-24T15:20:22-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCE - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;Display existing connections:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-24T17:40:03-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCE - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;&lt;strong&gt;Display&lt;/strong&gt; existing &lt;strong&gt;connections&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli c s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Delete existing connections automatically created by NetworkManager:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Delete&lt;/strong&gt; existing &lt;strong&gt;connections&lt;/strong&gt; automatically created by NetworkManager:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con del &quot;Wired connection 1&quot;
 # nmcli con del &quot;Wired connection 2&quot;
@@ -11,25 +11,27 @@
 # nmcli con del eth1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;BONDING&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;BONDING&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Create the bonding connection (here, mode 1 is active-backup):&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; the &lt;strong&gt;bonding&lt;/strong&gt; connection (here, &lt;strong&gt;mode 1&lt;/strong&gt; is &lt;strong&gt;active-backup&lt;/strong&gt;):&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type bond ifname bond0 con-name bond0 mode 1
 or
 # nmcli con add type bond ifname bond0 con-name bond0 mode 'active-backup'
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Create the 2 slave connections, based on the interface name:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; the 2 &lt;strong&gt;slave connections&lt;/strong&gt;, based on the interface name:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type bond-slave ifname eth0 con-name eth0 master bond0
 # nmcli con add type bond-slave ifname eth1 con-name eth1 master bond0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Configure bond0 connection:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Configure bond0&lt;/strong&gt; connection:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con mod bond0 ipv4.addresses &quot;192.168.2.10/24 192.168.2.1&quot; ipv4.dns 192.168.2.200 \  
-											ipv4.method manual connection.autoconnect yes
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con mod bond0 ipv4.addresses &quot;192.168.2.10/24 192.168.2.1&quot; \
+			ipv4.dns 192.168.2.200 ipv4.method manual \
+			connection.autoconnect yes
 # nmcli con up bond0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -38,18 +40,18 @@ or
 &lt;p&gt;&lt;br /&gt;
 &lt;strong&gt;TEAMING&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Create the teaming connection:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; the &lt;strong&gt;teaming&lt;/strong&gt; connection:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type team ifname team0 con-name team0 config '{&quot;runner&quot;: {&quot;name&quot;: &quot;activebackup&quot;}}'
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Create the slave connections:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; the &lt;strong&gt;slave connections&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type team-slave ifname eth0 con-name eth0 master team0
 # nmcli con add type team-slave ifname eth1 con-name eth1 master team0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Edit team0 connection:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Edit team0&lt;/strong&gt; connection:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con mod team0 ipv4.addresses &quot;192.168.2.20/24 192.168.2.1&quot; ipv4.dns 192.168.2.200 ipv4.method manual connection.autoconnect yes
 # nmcli con up eth0
@@ -188,16 +190,17 @@ node.session.auth.password = pass
 
 &lt;p&gt;Last step, you can :&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;use the mapped LUNs as LVMs (create a VG and LVs)&lt;/li&gt;
-  &lt;li&gt;format these drives/LVs to the required filesystem (xfs, ext4, etc. …)&lt;/li&gt;
+  &lt;li&gt;use the mapped &lt;strong&gt;LUNs&lt;/strong&gt; as &lt;strong&gt;LVMs&lt;/strong&gt; (create a VG and LVs)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;format&lt;/strong&gt; these drives/LVs to the required &lt;strong&gt;filesystem&lt;/strong&gt; (xfs, ext4, etc. …)&lt;/li&gt;
   &lt;li&gt;use &lt;strong&gt;blkid&lt;/strong&gt; to retrieve UUIDs, logical names or aliases&lt;/li&gt;
   &lt;li&gt;append the information to &lt;strong&gt;/etc/fstab&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;If&lt;/strong&gt; the &lt;strong&gt;discovery failed&lt;/strong&gt;, &lt;strong&gt;delete files under /var/lib/iscsi/nodes/&lt;/strong&gt;* and &lt;strong&gt;retry&lt;/strong&gt; with &lt;strong&gt;correct&lt;/strong&gt; discovery &lt;strong&gt;parameters&lt;/strong&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">Target (server) = srv.example.local Initiator (client) = client.example.local</summary></entry><entry><title type="html">RHCE - Part4 - nfs Kerberos</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos.html" rel="alternate" type="text/html" title="RHCE - Part4 - nfs Kerberos" /><published>2020-02-22T11:00:00-06:00</published><updated>2020-02-22T11:00:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos.html">&lt;p&gt;Make sure to review RHCSA topic on nfs &lt;a href=&quot;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&quot;&gt;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Server = srv.example.local
-Client = client.example.local&lt;/p&gt;
+&lt;p&gt;KDC: kdc.example.local&lt;br /&gt;
+Server: srv.example.local&lt;br /&gt;
+Client: client.example.local&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;strong&gt;NFS SERVER CONFIGURATION&lt;/strong&gt;&lt;/p&gt;
@@ -230,9 +233,9 @@ or, if ipa-client is installed
 &lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;: &lt;strong&gt;Enable&lt;/strong&gt; NFS &lt;strong&gt;version 4.2&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;pre&gt;
-# &lt;b&gt;vi /et	c/sysconfig/nfs&lt;/b&gt;
+# &lt;b&gt;vi /etc/sysconfig/nfs&lt;/b&gt;
 [...]
-RPCNFSDARGS=&quot;-V 4.2&quot;
+RPCNFSDARGS=&quot;&lt;b&gt;-V 4.2&lt;/b&gt;&quot;
 [...]
 &lt;/pre&gt;
 
@@ -242,7 +245,7 @@ RPCNFSDARGS=&quot;-V 4.2&quot;
 # systemctl start nfs-server nfs-secure-server
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Allow nfs in firewalld:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Allow nfs&lt;/strong&gt; in &lt;strong&gt;firewall&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=nfs
 # firewall-cmd --reload
@@ -250,8 +253,8 @@ RPCNFSDARGS=&quot;-V 4.2&quot;
 
 &lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;: In some cases, &lt;strong&gt;mountd&lt;/strong&gt; and &lt;strong&gt;rpc-bind&lt;/strong&gt; are required in &lt;strong&gt;firewalld&lt;/strong&gt;:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;NFS3&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;Shared &lt;strong&gt;exports discovery&lt;/strong&gt; from the &lt;strong&gt;client&lt;/strong&gt; in &lt;strong&gt;NFS4&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;The server is NFS3&lt;/li&gt;
+  &lt;li&gt;The server is NFS4 and allows the remote clients to discover exported shares&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service={mountd,rpc-bind}
@@ -311,10 +314,10 @@ srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4,sec=krb5p,rw,sync	0 0
 srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4.2,sec=krb5p,rw,sync	0 0
 &lt;/pre&gt;
 
-&lt;p&gt;&lt;strong&gt;Mount&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Mount from /etc/fstab&lt;/strong&gt; entries:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mount -av
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Make sure to review RHCSA topic on nfs https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html</summary></entry><entry><title type="html">RHCE - Part5 - Postfix</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html" rel="alternate" type="text/html" title="RHCE - Part5 - Postfix" /><published>2020-02-22T10:45:00-06:00</published><updated>2020-02-22T10:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html">&lt;p&gt;&lt;strong&gt;NULL CLIENT&lt;/strong&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Make sure to review RHCSA topic on nfs https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html</summary></entry><entry><title type="html">RHCE - Part5 - Postfix</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html" rel="alternate" type="text/html" title="RHCE - Part5 - Postfix" /><published>2020-02-22T10:45:00-06:00</published><updated>2020-02-22T10:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html">&lt;p&gt;&lt;strong&gt;NULL CLIENT&lt;/strong&gt; (relays mails to a central server)&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Configure postfix&lt;/strong&gt; by editing &lt;strong&gt;/etc/postfix/main.cf&lt;/strong&gt;, &lt;strong&gt;or&lt;/strong&gt; send configuration from the terminal using &lt;strong&gt;postconf&lt;/strong&gt;:&lt;/p&gt;
 
@@ -395,8 +398,8 @@ srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4.2,sec=krb5p,rw,sync	0 0
 &lt;p&gt;&lt;strong&gt;Delete&lt;/strong&gt; a mail &lt;strong&gt;stuck&lt;/strong&gt; in the queue:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# postsuper -d ABCDEFGHI
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">NULL CLIENT</summary></entry><entry><title type="html">RHCE - Part6 - mariadb</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" rel="alternate" type="text/html" title="RHCE - Part6 - mariadb" /><published>2020-02-22T10:30:00-06:00</published><updated>2020-02-22T10:30:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html">&lt;p&gt;Server: srv.example.local&lt;br /&gt;
-Client: 192.168.2.20/24&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">NULL CLIENT (relays mails to a central server)</summary></entry><entry><title type="html">RHCE - Part6 - mariadb</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" rel="alternate" type="text/html" title="RHCE - Part6 - mariadb" /><published>2020-02-22T10:30:00-06:00</published><updated>2020-02-22T10:30:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html">&lt;p&gt;server = srv.example.local&lt;br /&gt;
+client = 192.168.2.20/24&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;strong&gt;MARIADB SERVER&lt;/strong&gt;&lt;/p&gt;
@@ -566,7 +569,78 @@ Or, use a rich rule:
 &lt;p&gt;&lt;strong&gt;Connect&lt;/strong&gt; to a &lt;strong&gt;remote mariadb server&lt;/strong&gt; on &lt;strong&gt;port 8888/tcp&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mysql -ualice -p -hsrv.example.local -P8888
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Server: srv.example.local Client: 192.168.2.20/24</summary></entry><entry><title type="html">RHCSA - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">server = srv.example.local client = 192.168.2.20/24</summary></entry><entry><title type="html">RHCE - Part7 - ssh</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-07-ssh.html" rel="alternate" type="text/html" title="RHCE - Part7 - ssh" /><published>2020-02-22T10:10:00-06:00</published><updated>2020-02-22T10:10:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-07-ssh</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-07-ssh.html">&lt;p&gt;server = srv.example.local&lt;br /&gt;
+client = 192.168.2.20/24&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;SSHD&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Add SELinux context&lt;/strong&gt; to &lt;strong&gt;allow sshd listening&lt;/strong&gt; on a &lt;strong&gt;non-standard port&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# semanage port -at ssh_port_t 3000 -p tcp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Configure /etc/ssh/sshd_config&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;vi /etc/ssh/sshd_config&lt;/b&gt;
+[...]
+&lt;b&gt;Listen 22&lt;/b&gt;
+&lt;b&gt;Listen 3000&lt;/b&gt;
+[...]
+&lt;b&gt;PermitRootLogin yes&lt;/b&gt;
+[...]
+&lt;b&gt;PubkeyAuthentication yes&lt;/b&gt;
+[...]
+&lt;/pre&gt;
+
+&lt;p&gt;Note: option “PermitRootLogin yes” is NOT RECOMMENDED. Instead, use a user present on both server and client (an ldap user account is the best option).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Add firewall rule&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-port=3000/tcp
+# firewall-cmd --reload
+
+Or, a rich-rule:
+# firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=192.168.2.20 port port=3000 protocol=tcp accept'
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Restart sshd&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl restart sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;SSH CLIENT&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Create public/private RSA key pair&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;ssh-keygen -t rsa -b 2048&lt;/b&gt;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): &lt;b&gt;enter&lt;/b&gt;
+Enter passphrase (empty for no passphrase): &lt;b&gt;enter&lt;/b&gt;
+Enter same passphraase again: &lt;b&gt;enter&lt;/b&gt;
+[...]
+&lt;/pre&gt;
+
+&lt;p&gt;Use &lt;strong&gt;ssh-copy-id&lt;/strong&gt; to &lt;strong&gt;send&lt;/strong&gt; the &lt;strong&gt;public key&lt;/strong&gt; to the server:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;ssh-copy-id -i ~/.ssh/id_rsa.pub -p 3000 root@srv.example.local&lt;/b&gt;
+The authenticity of the host '[srv.example.local]:3000 [...] can't be established.
+Are you sure you want to continue connecting (yes/no)? &lt;b&gt;yes&lt;/b&gt;
+[...]
+root@srv.example.local's password: &lt;b&gt;root_password&lt;/b&gt;
+Number of key(s) added: 1
+[...]
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Password-less key pair authentication&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ssh -p 3000 root@srv.example.local
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">server = srv.example.local client = 192.168.2.20/24</summary></entry><entry><title type="html">RHCSA - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to &lt;strong&gt;interrupt&lt;/strong&gt; the &lt;strong&gt;boot process&lt;/strong&gt; and gain access to a &lt;strong&gt;chrooted environment&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 At &lt;strong&gt;grub2&lt;/strong&gt; screen, press “&lt;strong&gt;e&lt;/strong&gt;” to &lt;strong&gt;edit&lt;/strong&gt; the configuration.&lt;br /&gt;
@@ -586,7 +660,7 @@ rhgb quiet LANG=en_US.UTF-8 &lt;b&gt;rd.break enforcing=0&lt;/b&gt;
 &lt;p&gt;Proceed with &lt;strong&gt;Ctrl+x&lt;/strong&gt; to continue the boot process with the new configuration.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Mount&lt;/strong&gt; the /sysroot folder with &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; access, and change root (&lt;strong&gt;chroot&lt;/strong&gt;) to set the new root password:&lt;/p&gt;
+&lt;strong&gt;Mount&lt;/strong&gt; the &lt;strong&gt;/sysroot&lt;/strong&gt; folder with &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; access, and change root (&lt;strong&gt;chroot&lt;/strong&gt;) to &lt;strong&gt;set&lt;/strong&gt; the &lt;strong&gt;new root password&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;pre&gt;
 switch_root:/# &lt;b&gt;mount -o rw,remount /sysroot&lt;/b&gt;
@@ -605,28 +679,23 @@ Log in as root with the new password, and reset the SELinux context of /etc/shad
 &lt;pre&gt;
 root@localhost# &lt;b&gt;restorecon -v /etc/shadow&lt;/b&gt;
 root@localhost# &lt;b&gt;reboot&lt;/b&gt;
-&lt;/pre&gt;</content><author><name></name></author><summary type="html">If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.</summary></entry><entry><title type="html">RHCSA - Part2 - Configure network interface</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html" rel="alternate" type="text/html" title="RHCSA - Part2 - Configure network interface" /><published>2020-02-20T22:00:01-06:00</published><updated>2020-02-20T22:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html">&lt;p&gt;We assume the following:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;OS: CentOS 7.0&lt;/li&gt;
-  &lt;li&gt;Static IP address: 192.168.2.100/24&lt;/li&gt;
-  &lt;li&gt;Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/pre&gt;</content><author><name></name></author><summary type="html">If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.</summary></entry><entry><title type="html">RHCSA - Part2 - Configure network interface</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html" rel="alternate" type="text/html" title="RHCSA - Part2 - Configure network interface" /><published>2020-02-20T22:00:01-06:00</published><updated>2020-02-20T22:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html">&lt;p&gt;OS = CentOS 7.0&lt;br /&gt;
+IP address: 192.168.2.20/24&lt;br /&gt;
+gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
-Although it is still possible to manually edit the network configuration files in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/sysconfig/network-scripts&lt;/code&gt; directory, this is not the preferred way anymore.&lt;br /&gt;
-If you still wish to manually modify the files, do not forget to execute &lt;code class=&quot;highlighter-rouge&quot;&gt;nmcli con reload&lt;/code&gt; to update changes.&lt;/p&gt;
+Note: Network configurations can also be edited in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/sysconfig/network-scripts&lt;/code&gt;, but requires &lt;code class=&quot;highlighter-rouge&quot;&gt;nmcli con reload&lt;/code&gt; command to update the modifications to NetworkManager.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
-Let’s start the configuration:&lt;/p&gt;
-
-&lt;p&gt;Display network configurations with &lt;strong&gt;nmcli&lt;/strong&gt;:&lt;/p&gt;
+&lt;strong&gt;Display&lt;/strong&gt; network &lt;strong&gt;configurations&lt;/strong&gt; with &lt;strong&gt;nmcli&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli c s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;If the command doesn’t display any connection and you don’t know the name of the interface, use &lt;code class=&quot;highlighter-rouge&quot;&gt;ip a&lt;/code&gt; to get it.&lt;/p&gt;
+&lt;p&gt;If &lt;code class=&quot;highlighter-rouge&quot;&gt;nmcli c s&lt;/code&gt; doesn’t display any connection and you don’t know the name of the available interfaces, use &lt;code class=&quot;highlighter-rouge&quot;&gt;ip l&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Create the new connection:&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;Create&lt;/strong&gt; the new &lt;strong&gt;connection&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type ethernet ifname eth0 con-name eth0
 # nmcli con mod eth0 ipv4.addresses &quot;192.168.2.100/24 192.168.2.1&quot; \
@@ -636,10 +705,17 @@ Let’s start the configuration:&lt;/p&gt;
 # nmcli con up eth0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Test the new connection:&lt;/p&gt;
+&lt;p&gt;Note: Other usefull options are:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;ipv4.dns-search example.local&lt;/li&gt;
+  &lt;li&gt;connection.zone dmz&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;Test&lt;/strong&gt; the new &lt;strong&gt;connection&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ping -I eth0 192.168.2.200
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">We assume the following: OS: CentOS 7.0 Static IP address: 192.168.2.100/24 Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</summary></entry><entry><title type="html">RHCSA - Part3 - systemd targets</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html" rel="alternate" type="text/html" title="RHCSA - Part3 - systemd targets" /><published>2020-02-20T20:00:01-06:00</published><updated>2020-02-20T20:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html">&lt;p&gt;With &lt;strong&gt;SystemV&lt;/strong&gt;, we talked about &lt;strong&gt;runlevels&lt;/strong&gt;.&lt;br /&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">OS = CentOS 7.0 IP address: 192.168.2.20/24 gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</summary></entry><entry><title type="html">RHCSA - Part3 - systemd targets</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html" rel="alternate" type="text/html" title="RHCSA - Part3 - systemd targets" /><published>2020-02-20T20:00:01-06:00</published><updated>2020-02-20T20:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html">&lt;p&gt;With &lt;strong&gt;SystemV&lt;/strong&gt;, we talked about &lt;strong&gt;runlevels&lt;/strong&gt;.&lt;br /&gt;
 With &lt;strong&gt;systemd&lt;/strong&gt;, we talk about &lt;strong&gt;targets&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Relationship between runlevels and targets:&lt;/p&gt;
@@ -667,157 +743,4 @@ With &lt;strong&gt;systemd&lt;/strong&gt;, we talk about &lt;strong&gt;targets&l
 &lt;p&gt;If you wish to &lt;strong&gt;switch immediately&lt;/strong&gt; to &lt;strong&gt;rescue.target&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # systemctl isolate rescue
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">With SystemV, we talked about runlevels. With systemd, we talk about targets.</summary></entry><entry><title type="html">RHCSA - Part4 - SELinux</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html" rel="alternate" type="text/html" title="RHCSA - Part4 - SELinux" /><published>2020-02-20T17:30:40-06:00</published><updated>2020-02-20T17:30:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-04-selinux.html">&lt;p&gt;&lt;strong&gt;SElinux&lt;/strong&gt; configuration file is &lt;strong&gt;/etc/selinux/config&lt;/strong&gt;.&lt;br /&gt;
-In this file you can set the default configuration such as the mode (&lt;strong&gt;enforcing&lt;/strong&gt;, &lt;strong&gt;permissive&lt;/strong&gt;, &lt;strong&gt;disabled&lt;/strong&gt;) and the protection type (&lt;strong&gt;targeted&lt;/strong&gt;, &lt;strong&gt;minimum&lt;/strong&gt;, &lt;strong&gt;mls&lt;/strong&gt;)&lt;/p&gt;
-
-&lt;p&gt;When enabled, SELinux can be in Permissive mode or Enforcing mode.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-Check current mode for SELinux:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # getenforce
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If SELinux current mode is “Enforcing”, you can &lt;strong&gt;temporarily&lt;/strong&gt; set it to “&lt;strong&gt;Permissive&lt;/strong&gt;”:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # setenforce permissive
-or
- # setenforce 0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Or else, if it is set to “Permissive” and you want to &lt;strong&gt;temporarily&lt;/strong&gt; set it to “&lt;strong&gt;Enforcing&lt;/strong&gt;”:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # setenforce enforcing
-or
- # setenforce 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-If SELinux is disabled, &lt;code class=&quot;highlighter-rouge&quot;&gt;setenforce&lt;/code&gt; will not work because it requires relabeling the whole filesystem. You can force a relabel with the following command:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;touch /.autorelabel
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To &lt;strong&gt;permanently&lt;/strong&gt; set an SELinux mode (&lt;strong&gt;persists across reboots&lt;/strong&gt;), &lt;strong&gt;edit&lt;/strong&gt; the configuration file &lt;strong&gt;/etc/selinux/config&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;SEMANAGE&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;semanage&lt;/strong&gt; tool is not present in the minimal install of CentOS 7, we need to install it.&lt;/p&gt;
-
-&lt;p&gt;If you can’t remember what package provides &lt;strong&gt;semanage&lt;/strong&gt; tool, and let’s install it:&lt;/p&gt;
-
-&lt;pre&gt;
-# &lt;b&gt;yum provides */semanage&lt;/b&gt;
-    [...]
-    policycoreutils-python
-    setroubleshoot-server
-    [...]
-&lt;/pre&gt;
-
-&lt;p&gt;You can install either &lt;strong&gt;setroubleshoot-server&lt;/strong&gt; or &lt;strong&gt;policycoreutils-python&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y setroubleshoot-server
-or
-# yum install -y policycoreutils-python
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CONTEXTS ON FILES/DIRECTORIES&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;List&lt;/strong&gt; available contexts for admin_home:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# semanage fcontext -l | grep admin_home
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Retreive SELinux context&lt;/strong&gt; for /root folder using ls with &lt;strong&gt;-Z&lt;/strong&gt; option:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ls -ldZ /root
-    dr-xr-x---. root root system-u:object_r:admin_home_t:s0 /root
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Create &lt;code class=&quot;highlighter-rouge&quot;&gt;/custom_home&lt;/code&gt; folder, and &lt;strong&gt;set&lt;/strong&gt; “&lt;strong&gt;admin_home_t&lt;/strong&gt;” &lt;strong&gt;context&lt;/strong&gt; on it using &lt;strong&gt;semanage&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /custom_home
-# semanage fcontext -a -t admin_home_t &quot;/custom_home(/.*)?&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Apply/Update&lt;/strong&gt; the new &lt;strong&gt;context&lt;/strong&gt; (-v option is for verbose) and check:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# restorecon -v /custom_home
-# ls -ldZ /custom_home
-    dr-xr-x---. root root unconfined_u:object_r:admin_home_t:s0 /custom_home
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CONTEXTS ON PORTS&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;List&lt;/strong&gt; available contexts for ssh:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;semanage port -l | grep ssh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Allow&lt;/strong&gt; listening on an &lt;strong&gt;unconventional&lt;/strong&gt; &lt;strong&gt;port&lt;/strong&gt; for ssh in SELinux:&lt;/p&gt;
-
-&lt;pre&gt;
-&lt;b&gt;Add context&lt;/b&gt; on a port:
-# semanage port -&lt;b&gt;a&lt;/b&gt;t ssh_port_t 2222 -p tcp
-
-or, if you need to &lt;b&gt;modify&lt;/b&gt; the &lt;b&gt;default context&lt;/b&gt;:
-# semanage port -&lt;b&gt;m&lt;/b&gt;t ssh_port_t 2222 -p tcp
-
-or, if you need to &lt;b&gt;delete&lt;/b&gt; the &lt;b&gt;context&lt;/b&gt;:
-# semanage port -&lt;b&gt;d&lt;/b&gt;t ssh_port_t 2222 -p tcp
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Edit&lt;/strong&gt; &lt;strong&gt;/etc/ssh/sshd_config&lt;/strong&gt; to add listening on &lt;strong&gt;port 2222&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;
-# &lt;b&gt;vi /etc/ssh/sshd_config&lt;/b&gt;
-	[...]
-	Port 22
-	&lt;b&gt;Port 2222&lt;/b&gt;
-	[...]
-	&lt;b&gt;PermitRootLogin yes&lt;/b&gt;
-	[...]
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Restart sshd&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl restart sshd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Allow&lt;/strong&gt; access in &lt;strong&gt;firewalld&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-port=2222/tcp
-# firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;BOOLEANS&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;List&lt;/strong&gt; all &lt;strong&gt;selinux booleans&lt;/strong&gt; related to nfs:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getsebool -a | grep httpd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Enable **temporarily&lt;/strong&gt; a &lt;strong&gt;boolean&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setsebool httpd_can_sendmail on
-or
-# setsebool httpd_can_sendmail 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Disable&lt;/strong&gt; &lt;strong&gt;temporarily&lt;/strong&gt; a &lt;strong&gt;boolean&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setsebool httpd_can_sendmail off
-or
-# setsebool httpd_can_sendmail 0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Enable&lt;/strong&gt; &lt;strong&gt;permanently&lt;/strong&gt; a &lt;strong&gt;boolean&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setsebool -P httpd_can_sendmail on
-or
-# setsebool -P httpd_can_sendmail 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">SElinux configuration file is /etc/selinux/config. In this file you can set the default configuration such as the mode (enforcing, permissive, disabled) and the protection type (targeted, minimum, mls)</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">With SystemV, we talked about runlevels. With systemd, we talk about targets.</summary></entry></feed>

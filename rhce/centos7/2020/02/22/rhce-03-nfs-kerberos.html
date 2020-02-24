@@ -47,8 +47,9 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p>Make sure to review RHCSA topic on nfs <a href="https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html">https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html</a></p>
 
-<p>Server = srv.example.local
-Client = client.example.local</p>
+<p>KDC: kdc.example.local<br />
+Server: srv.example.local<br />
+Client: client.example.local</p>
 
 <p><br />
 <strong>NFS SERVER CONFIGURATION</strong></p>
@@ -81,9 +82,9 @@ or, if ipa-client is installed
 <p><strong>Optional</strong>: <strong>Enable</strong> NFS <strong>version 4.2</strong>:</p>
 
 <pre>
-# <b>vi /et	c/sysconfig/nfs</b>
+# <b>vi /etc/sysconfig/nfs</b>
 [...]
-RPCNFSDARGS="-V 4.2"
+RPCNFSDARGS="<b>-V 4.2</b>"
 [...]
 </pre>
 
@@ -93,7 +94,7 @@ RPCNFSDARGS="-V 4.2"
 # systemctl start nfs-server nfs-secure-server
 </code></pre></div></div>
 
-<p>Allow nfs in firewalld:</p>
+<p><strong>Allow nfs</strong> in <strong>firewall</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-service=nfs
 # firewall-cmd --reload
@@ -101,8 +102,8 @@ RPCNFSDARGS="-V 4.2"
 
 <p><strong>Optional</strong>: In some cases, <strong>mountd</strong> and <strong>rpc-bind</strong> are required in <strong>firewalld</strong>:</p>
 <ul>
-  <li><strong>NFS3</strong></li>
-  <li>Shared <strong>exports discovery</strong> from the <strong>client</strong> in <strong>NFS4</strong></li>
+  <li>The server is NFS3</li>
+  <li>The server is NFS4 and allows the remote clients to discover exported shares</li>
 </ul>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-service={mountd,rpc-bind}
@@ -162,7 +163,7 @@ srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4,sec=krb5p,rw,sync	0 0
 srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4.2,sec=krb5p,rw,sync	0 0
 </pre>
 
-<p><strong>Mount</strong>:</p>
+<p><strong>Mount from /etc/fstab</strong> entries:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mount -av
 </code></pre></div></div>

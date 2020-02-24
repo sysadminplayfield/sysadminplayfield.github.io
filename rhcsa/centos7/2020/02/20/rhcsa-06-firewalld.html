@@ -45,50 +45,50 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><strong>Verify</strong> if firewalld is <strong>active</strong>:</p>
+    <p><strong>Verify</strong> if <strong>firewalld</strong> is <strong>active</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --state
 running
 </code></pre></div></div>
 
-<p><strong>Start</strong> firewalld:</p>
+<p><strong>Start firewalld</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl start firewalld.service
 </code></pre></div></div>
 
-<p>Set firewalld to <strong>start</strong> automatically <strong>at boot</strong>:</p>
+<p>Set <strong>firewalld</strong> to <strong>start</strong> automatically <strong>at boot</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl enable firewalld.service
 </code></pre></div></div>
 
-<p>Set the firewall <strong>default zone</strong> (Default is Public zone. Common zones are: internal, external, home, dmz, trusted, drop, etc. …):</p>
+<p><strong>Set</strong> the <strong>firewalld default zone</strong> (Default is Public zone. Common zones are: internal, external, home, dmz, trusted, drop, etc. …):</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --set-default-zone=dmz
 </code></pre></div></div>
 
-<p><strong>Allow temporarily</strong> a service to the default zone:</p>
+<p><strong>Allow temporarily</strong> a <strong>service</strong> to the <strong>default zone</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --add-service=ssh
 </code></pre></div></div>
 
-<p><strong>Allow permanently</strong> a service to the default zone:</p>
+<p><strong>Allow permanently</strong> a <strong>service</strong> to the <strong>default zone</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-service=ssh
 # firewall-cmd --reload
 </code></pre></div></div>
 
-<p><strong>Remove temporarily</strong> a service to the default zone:</p>
+<p><strong>Remove temporarily</strong> a <strong>service</strong> to the <strong>default zone</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --remove-service=ssh
 </code></pre></div></div>
 
-<p><strong>Remove permanently</strong> a service to the default zone:</p>
+<p><strong>Remove permanently</strong> a <strong>service</strong> to the <strong>default zone</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --remove-service=ssh
 # firewall-cmd --reload
 </code></pre></div></div>
 
-<p><strong>Add</strong> a <strong>port</strong> to a specific <strong>zone</strong>:</p>
+<p><strong>Add</strong> a <strong>port</strong> to a <strong>specific zone</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --zone=dmz --add-port=8080/tcp
 # firewall-cmd --permanent
@@ -101,7 +101,7 @@ running
 #firewall-cmd --reload
 </code></pre></div></div>
 
-<p><strong>Add</strong> a <strong>port forwarding</strong> to the default zone:</p>
+<p><strong>Add</strong> a <strong>port forwarding</strong> to the <strong>default zone</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-masquerade
 # firewall-cmd --permanent --add-forward-port=port=21:proto=tcp:toport=80:toaddr=192.168.2.3

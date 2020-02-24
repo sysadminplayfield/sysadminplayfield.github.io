@@ -45,12 +45,12 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Display existing connections:</p>
+    <p><strong>Display</strong> existing <strong>connections</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli c s
 </code></pre></div></div>
 
-<p>Delete existing connections automatically created by NetworkManager:</p>
+<p><strong>Delete</strong> existing <strong>connections</strong> automatically created by NetworkManager:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con del "Wired connection 1"
 # nmcli con del "Wired connection 2"
@@ -58,25 +58,27 @@
 # nmcli con del eth1
 </code></pre></div></div>
 
-<p><strong>BONDING</strong></p>
+<p><br />
+<strong>BONDING</strong></p>
 
-<p>Create the bonding connection (here, mode 1 is active-backup):</p>
+<p><strong>Create</strong> the <strong>bonding</strong> connection (here, <strong>mode 1</strong> is <strong>active-backup</strong>):</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con add type bond ifname bond0 con-name bond0 mode 1
 or
 # nmcli con add type bond ifname bond0 con-name bond0 mode 'active-backup'
 </code></pre></div></div>
 
-<p>Create the 2 slave connections, based on the interface name:</p>
+<p><strong>Create</strong> the 2 <strong>slave connections</strong>, based on the interface name:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con add type bond-slave ifname eth0 con-name eth0 master bond0
 # nmcli con add type bond-slave ifname eth1 con-name eth1 master bond0
 </code></pre></div></div>
 
-<p>Configure bond0 connection:</p>
+<p><strong>Configure bond0</strong> connection:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con mod bond0 ipv4.addresses "192.168.2.10/24 192.168.2.1" ipv4.dns 192.168.2.200 \  
-											ipv4.method manual connection.autoconnect yes
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con mod bond0 ipv4.addresses "192.168.2.10/24 192.168.2.1" \
+			ipv4.dns 192.168.2.200 ipv4.method manual \
+			connection.autoconnect yes
 # nmcli con up bond0
 </code></pre></div></div>
 
@@ -85,18 +87,18 @@ or
 <p><br />
 <strong>TEAMING</strong></p>
 
-<p>Create the teaming connection:</p>
+<p><strong>Create</strong> the <strong>teaming</strong> connection:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con add type team ifname team0 con-name team0 config '{"runner": {"name": "activebackup"}}'
 </code></pre></div></div>
 
-<p>Create the slave connections:</p>
+<p><strong>Create</strong> the <strong>slave connections</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con add type team-slave ifname eth0 con-name eth0 master team0
 # nmcli con add type team-slave ifname eth1 con-name eth1 master team0
 </code></pre></div></div>
 
-<p>Edit team0 connection:</p>
+<p><strong>Edit team0</strong> connection:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con mod team0 ipv4.addresses "192.168.2.20/24 192.168.2.1" ipv4.dns 192.168.2.200 ipv4.method manual connection.autoconnect yes
 # nmcli con up eth0

@@ -7,15 +7,15 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="RHCSA - Part2 - Configure network interface" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="We assume the following: OS: CentOS 7.0 Static IP address: 192.168.2.100/24 Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)" />
-<meta property="og:description" content="We assume the following: OS: CentOS 7.0 Static IP address: 192.168.2.100/24 Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)" />
+<meta name="description" content="OS = CentOS 7.0 IP address: 192.168.2.20/24 gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)" />
+<meta property="og:description" content="OS = CentOS 7.0 IP address: 192.168.2.20/24 gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)" />
 <link rel="canonical" href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html" />
 <meta property="og:url" content="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html" />
 <meta property="og:site_name" content="SysAdmin Playfield" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-20T22:00:01-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"RHCSA - Part2 - Configure network interface","dateModified":"2020-02-20T22:00:01-06:00","datePublished":"2020-02-20T22:00:01-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html","description":"We assume the following: OS: CentOS 7.0 Static IP address: 192.168.2.100/24 Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","headline":"RHCSA - Part2 - Configure network interface","dateModified":"2020-02-20T22:00:01-06:00","datePublished":"2020-02-20T22:00:01-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html","description":"OS = CentOS 7.0 IP address: 192.168.2.20/24 gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -45,28 +45,23 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>We assume the following:</p>
-<ul>
-  <li>OS: CentOS 7.0</li>
-  <li>Static IP address: 192.168.2.100/24</li>
-  <li>Gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</li>
-</ul>
+    <p>OS = CentOS 7.0<br />
+IP address: 192.168.2.20/24<br />
+gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</p>
 
 <p><br />
-Although it is still possible to manually edit the network configuration files in <code class="highlighter-rouge">/etc/sysconfig/network-scripts</code> directory, this is not the preferred way anymore.<br />
-If you still wish to manually modify the files, do not forget to execute <code class="highlighter-rouge">nmcli con reload</code> to update changes.</p>
+Note: Network configurations can also be edited in <code class="highlighter-rouge">/etc/sysconfig/network-scripts</code>, but requires <code class="highlighter-rouge">nmcli con reload</code> command to update the modifications to NetworkManager.</p>
 
 <p><br />
-Let’s start the configuration:</p>
-
-<p>Display network configurations with <strong>nmcli</strong>:</p>
+<strong>Display</strong> network <strong>configurations</strong> with <strong>nmcli</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli c s
 </code></pre></div></div>
 
-<p>If the command doesn’t display any connection and you don’t know the name of the interface, use <code class="highlighter-rouge">ip a</code> to get it.</p>
+<p>If <code class="highlighter-rouge">nmcli c s</code> doesn’t display any connection and you don’t know the name of the available interfaces, use <code class="highlighter-rouge">ip l</code>.</p>
 
-<p>Create the new connection:</p>
+<p><br />
+<strong>Create</strong> the new <strong>connection</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nmcli con add type ethernet ifname eth0 con-name eth0
 # nmcli con mod eth0 ipv4.addresses "192.168.2.100/24 192.168.2.1" \
@@ -76,7 +71,14 @@ Let’s start the configuration:</p>
 # nmcli con up eth0
 </code></pre></div></div>
 
-<p>Test the new connection:</p>
+<p>Note: Other usefull options are:</p>
+<ul>
+  <li>ipv4.dns-search example.local</li>
+  <li>connection.zone dmz</li>
+</ul>
+
+<p><br />
+<strong>Test</strong> the new <strong>connection</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ping -I eth0 192.168.2.200
 </code></pre></div></div>
