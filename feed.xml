@@ -1,4 +1,562 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-24T12:00:29-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCSA Certification - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA Certification - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-24T14:42:47-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCE Certification - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE Certification - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;Display existing connections:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli c s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Delete existing connections automatically created by NetworkManager:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con del &quot;Wired connection 1&quot;
+# nmcli con del &quot;Wired connection 2&quot;
+# nmcli con del eth0
+# nmcli con del eth1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;BONDING&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Create the bonding connection (here, mode 1 is active-backup):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type bond ifname bond0 con-name bond0 mode 1
+or
+# nmcli con add type bond ifname bond0 con-name bond0 mode 'active-backup'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create the 2 slave connections, based on the interface name:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type bond-slave ifname eth0 con-name eth0 master bond0
+# nmcli con add type bond-slave ifname eth1 con-name eth1 master bond0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Configure bond0 connection:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con mod bond0 ipv4.addresses &quot;192.168.2.10/24 192.168.2.1&quot; ipv4.dns 192.168.2.200 \  
+											ipv4.method manual connection.autoconnect yes
+# nmcli con up bond0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When bond0 is started, both slave interfaces are started too.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;TEAMING&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Create the teaming connection:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type team ifname team0 con-name team0 config '{&quot;runner&quot;: {&quot;name&quot;: &quot;activebackup&quot;}}'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create the slave connections:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type team-slave ifname eth0 con-name eth0 master team0
+# nmcli con add type team-slave ifname eth1 con-name eth1 master team0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Edit team0 connection:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con mod team0 ipv4.addresses &quot;192.168.2.20/24 192.168.2.1&quot; ipv4.dns 192.168.2.200 ipv4.method manual connection.autoconnect yes
+# nmcli con up eth0
+# nmcli con up eth1
+# nmcli con up team0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Before starting team0, make sure to start the slave interfaces.&lt;/p&gt;</content><author><name></name></author><summary type="html">Display existing connections:</summary></entry><entry><title type="html">RHCE Certification - Part2 - Directory services: client connection using Kerberos</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos.html" rel="alternate" type="text/html" title="RHCE Certification - Part2 - Directory services: client connection using Kerberos" /><published>2020-02-22T11:30:00-06:00</published><updated>2020-02-22T11:30:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-02-directory-client-kerberos.html">&lt;p&gt;&lt;strong&gt;LDAP KERBEROS CLIENT&lt;/strong&gt;&lt;br /&gt;
+kdc = ldap.example.local&lt;br /&gt;
+realm = EXAMPLE.LOCAL&lt;/p&gt;
+
+&lt;p&gt;Edit authconfig configuration detailed in the RHCSA section &lt;a href=&quot;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-17-sssd.html&quot;&gt;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-17-sssd.html&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# authconfig --enablekrb5 --krb5kdc=ldap.example.local --krb5realm=EXAMPLE.LOCAL --update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">LDAP KERBEROS CLIENT kdc = ldap.example.local realm = EXAMPLE.LOCAL</summary></entry><entry><title type="html">RHCE Certification - Part3 - iSCSI: Target and Initiator</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi.html" rel="alternate" type="text/html" title="RHCE Certification - Part3 - iSCSI: Target and Initiator" /><published>2020-02-22T11:15:00-06:00</published><updated>2020-02-22T11:15:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-04-iscsi.html">&lt;p&gt;Target (server) = srv.example.local&lt;br /&gt;
+Initiator (client) = client.example.local&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TARGET&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Install targetcli&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y targetcli
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable target&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable target
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Enter the CLI to &lt;strong&gt;configure&lt;/strong&gt; the &lt;strong&gt;target&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# targetcli
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; the &lt;strong&gt;backstores&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/&amp;gt; backstores/fileio create file1 /srv/lunfile 100M sparse=true write_back=false
+/&amp;gt; backstores/block create block1 /dev/vg/lv_iscsi write_back=false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Create IQN&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/&amp;gt; iscsi/ create iqn.2020-02.local.example:srv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Create portal&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/&amp;gt; iscsi/iqn.2020-02.local.example:srv/tpg1/portals create
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; &lt;strong&gt;ACL&lt;/strong&gt; (client/&lt;strong&gt;initiator&lt;/strong&gt; configuration):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/&amp;gt; iscsi/iqn.2020-02.local.example:srv/tpg1/acls create iqn.2020-02.local.example:client
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Create LUNs&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/&amp;gt; iscsi/iqn.2020-02.local.example:srv/tpg1/luns create /backstores/fileio/file1
+/&amp;gt; iscsi/iqn.2020-02.local.example:srv/tpg1/luns create /backstores/block/block1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;: Set &lt;strong&gt;CHAP&lt;/strong&gt; connection and set &lt;strong&gt;username&lt;/strong&gt; and &lt;strong&gt;password&lt;/strong&gt; for the &lt;strong&gt;initiator&lt;/strong&gt; to log onto the target:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/&amp;gt; iscsi/iqn.2020-02.local.example:srv/tpg1/acls/iqn.2020-02.local.example:client set auth userid=user password=pass
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Check target configuration&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/&amp;gt; ls
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Save configuration&lt;/strong&gt; and exit the CLI:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/&amp;gt; saveconfig
+/&amp;gt; exit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Open&lt;/strong&gt; port &lt;strong&gt;3260/tcp&lt;/strong&gt; in firewall:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-port=3260/tcp
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;INITIATOR&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Install iscsi-initiator-utils&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y iscsi-initiator-utils
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Configure initiator name&lt;/strong&gt; in &lt;strong&gt;/etc/iscsi/initiatorname.iscsi&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;vi /etc/iscsi/initiatorname.iscsi&lt;/b&gt;
+InitiatorName=iqn.2020-02.local.example:client
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;: configure &lt;strong&gt;CHAP&lt;/strong&gt; settings in &lt;strong&gt;/etc/iscsi/iscsid.conf&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;vi /etc/iscsi/iscsid.conf&lt;/b&gt;
+[...]
+node.session.auth.authmethod = CHAP
+[...]
+node.session.auth.username = user
+node.session.auth.password = pass
+[...]
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable&lt;/strong&gt; and &lt;strong&gt;start&lt;/strong&gt; &lt;strong&gt;iscsi&lt;/strong&gt; and &lt;strong&gt;iscsid&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable iscsi iscsid
+# systemctl start iscsi iscsid
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Start target discovery&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# iscsiadm -m discovery -t st -p srv.example.local:3260
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Login&lt;/strong&gt; and connect to the target:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# iscsiadm -m node -T iqn.2020-02.local.example:srv -p srv.example.local:3260 --login
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Check iscsi&lt;/strong&gt; LUNs provided by the target:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# lsblk -S | grep LIO
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Last step, you can :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;use the mapped LUNs as LVMs (create a VG and LVs)&lt;/li&gt;
+  &lt;li&gt;format these drives/LVs to the required filesystem (xfs, ext4, etc. …)&lt;/li&gt;
+  &lt;li&gt;use &lt;strong&gt;blkid&lt;/strong&gt; to retrieve UUIDs, logical names or aliases&lt;/li&gt;
+  &lt;li&gt;append the information to &lt;strong&gt;/etc/fstab&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;If&lt;/strong&gt; the &lt;strong&gt;discovery failed&lt;/strong&gt;, &lt;strong&gt;delete files under /var/lib/iscsi/nodes/&lt;/strong&gt;* and &lt;strong&gt;retry&lt;/strong&gt; with &lt;strong&gt;correct&lt;/strong&gt; discovery &lt;strong&gt;parameters&lt;/strong&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">Target (server) = srv.example.local Initiator (client) = client.example.local</summary></entry><entry><title type="html">RHCE Certification - Part4 - nfs Kerberos</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos.html" rel="alternate" type="text/html" title="RHCE Certification - Part4 - nfs Kerberos" /><published>2020-02-22T11:00:00-06:00</published><updated>2020-02-22T11:00:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-03-nfs-kerberos.html">&lt;p&gt;Make sure to review RHCSA topic on nfs &lt;a href=&quot;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&quot;&gt;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Server = srv.example.local
+Client = client.example.local&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NFS SERVER CONFIGURATION&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Create directory&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /srv/nfskerberos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Set SELinux context&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# semanage fcontext -at nfs_t &quot;/srv/nfskerberos(/.*)?&quot;
+# restorecon -v /srv/nfskerberos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Edit /etc/exports&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;vi /etc/exports&lt;/b&gt;
+/srv/nfskerberos client.example.local(sec=krb5p,rw,sync)
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Retrieve keytab file from the KDC&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# wget -O /etc/krb5.keytab ftp://kdc.example.local/pub/srv.keytab
+or, if ipa-client is installed
+# ipa-getkeytab -s kdc.example.local -p nfs/srv.example.local -k /etc/krb5.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;: &lt;strong&gt;Enable&lt;/strong&gt; NFS &lt;strong&gt;version 4.2&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;vi /et	c/sysconfig/nfs&lt;/b&gt;
+[...]
+RPCNFSDARGS=&quot;-V 4.2&quot;
+[...]
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable&lt;/strong&gt; and &lt;strong&gt;start&lt;/strong&gt; &lt;strong&gt;nfs-server&lt;/strong&gt; and &lt;strong&gt;nfs-secure-server&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable nfs-server nfs-secure-server
+# systemctl start nfs-server nfs-secure-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Allow nfs in firewalld:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=nfs
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;: In some cases, &lt;strong&gt;mountd&lt;/strong&gt; and &lt;strong&gt;rpc-bind&lt;/strong&gt; are required in &lt;strong&gt;firewalld&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;NFS3&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Shared &lt;strong&gt;exports discovery&lt;/strong&gt; from the &lt;strong&gt;client&lt;/strong&gt; in &lt;strong&gt;NFS4&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service={mountd,rpc-bind}
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;NFS CLIENT CONFIGURATION&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Install nfs-utils&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y nfs-utils
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Create mountpoint&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /mnt/nfs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Retrieve keytab file from the KDC&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# wget -O /etc/krb5.keytab ftp://kdc.example.local/pub/client.keytab
+or, if ipa-client is installed
+# ipa-getkeytab -s kdc.example.local -p nfs/client.example.local -k /etc/krb5.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable&lt;/strong&gt; and &lt;strong&gt;start nfs-secure&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable nfs-secure
+# systemctl start nfs-secure
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Temporarily mount&lt;/strong&gt; the nfs share:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;For nfs3
+# mount -v -t nfs -o vers=3,sec=krb5p,rw,sync srv.example.local:/srv/nfskerberos /mnt/nfs
+
+For nfs4
+# mount -v -t nfs4 -o sec=krb5p,rw,sync srv.example.local:/srv/nfskerberos /mnt/nfs
+
+For nfs4.2
+# mount -v -t nfs4 -o sec=krb5p,rw,sync srv.example.local:/srv/nfskerberos /mnt/nfs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Permanently mount&lt;/strong&gt; the nfs share by editing &lt;strong&gt;/etc/fstab&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;vi /etc/fstab&lt;/b&gt;
+[...]
+#For nfs3
+srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=3,sec=krb5p,rw,sync	0 0
+
+#For nfs4
+srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4,sec=krb5p,rw,sync	0 0
+
+#For nfs4.2
+srv.example.local:/srv/nfskerberos	/mnt/nfs	nfs		vers=4.2,sec=krb5p,rw,sync	0 0
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Mount&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mount -av
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Make sure to review RHCSA topic on nfs https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html</summary></entry><entry><title type="html">RHCE Certification - Part4 - Postfix</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html" rel="alternate" type="text/html" title="RHCE Certification - Part4 - Postfix" /><published>2020-02-22T10:45:00-06:00</published><updated>2020-02-22T10:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-05-postfix.html">&lt;p&gt;&lt;strong&gt;NULL CLIENT&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Configure postfix&lt;/strong&gt; by editing &lt;strong&gt;/etc/postfix/main.cf&lt;/strong&gt;, &lt;strong&gt;or&lt;/strong&gt; send configuration from the terminal using &lt;strong&gt;postconf&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# postconf -e 'myhostname=srv.example.local'
+# postconf -e 'mydomain=example.local'
+# postconf -e 'myorigin=$mydomain'
+# postconf -e 'inet_interfaces=loopback-only'
+# postconf -e 'mydestination='
+# postconf -e 'relayhost=[centralmail.example.local]'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Check&lt;/strong&gt; postfix &lt;strong&gt;configuration&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# postfix check
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Restart postfix&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl restart postfix
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;CENTRAL MAIL SERVER&lt;/strong&gt; (gateway)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Configure postfix&lt;/strong&gt; by editing &lt;strong&gt;/etc/postfix/main.cf&lt;/strong&gt;, &lt;strong&gt;or&lt;/strong&gt; send configuration from the terminal using &lt;strong&gt;postconf&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# postconf -e 'myhostname=centralmail.example.local'
+# postconf -e 'mydomain=example.local'
+# postconf -e 'myorigin=$mydomain'
+# postconf -e 'inet_interfaces=all'
+# postconf -e 'mydestination=$myhostname, localhost.$mydomain, localhost, $mydomain'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Check&lt;/strong&gt; postfix &lt;strong&gt;configuration&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# postfix check
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Restart postfix&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl restart postfix
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Allow smtp in firewalld:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=smtp
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;TESTS&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Install mailx&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y mailx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Send&lt;/strong&gt; a &lt;strong&gt;mail&lt;/strong&gt; &lt;strong&gt;to&lt;/strong&gt; the &lt;strong&gt;root&lt;/strong&gt; user:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo test | mailx -s test root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Monitor&lt;/strong&gt; with &lt;strong&gt;journalctl&lt;/strong&gt; (if the mail is deleted, it has been sent):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# journalctl -xlf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Check&lt;/strong&gt; the &lt;strong&gt;mail queue&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mailq
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Resend&lt;/strong&gt; a mail &lt;strong&gt;stuck&lt;/strong&gt; in the queue:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# postsuper -r ABCDEFGHI
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Delete&lt;/strong&gt; a mail &lt;strong&gt;stuck&lt;/strong&gt; in the queue:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# postsuper -d ABCDEFGHI
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">NULL CLIENT</summary></entry><entry><title type="html">RHCE Certification - Part5 - mariadb</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html" rel="alternate" type="text/html" title="RHCE Certification - Part5 - mariadb" /><published>2020-02-22T10:30:00-06:00</published><updated>2020-02-22T10:30:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-06-mariadb.html">&lt;p&gt;&lt;strong&gt;MARIADB SERVER&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Install mariadb&lt;/strong&gt; and &lt;strong&gt;mariadb-server&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y mariadb mariadb-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable&lt;/strong&gt; and &lt;strong&gt;start mariadb&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable mariadb
+# systemctl start mariadb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Run mysql_secure_installation&lt;/strong&gt; to set the root password and disable guest account and test database:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;mysql&amp;amp;#95secure&amp;amp;#95installation&lt;/b&gt;
+Enter current password for root (enter for none): &lt;b&gt;enter&lt;/b&gt;
+Set root password? [Y/n] &lt;b&gt;enter&lt;/b&gt;
+New password: &lt;b&gt;pass&lt;/b&gt;
+Re-enter new password: &lt;b&gt;pass&lt;/b&gt;
+Remove anonymous users? [Y/n] &lt;b&gt;enter&lt;/b&gt;
+Disallow root login remotely? [Y/n] &lt;b&gt;enter&lt;/b&gt;
+Remove test database and access to it? [Y/n] &lt;b&gt;enter&lt;/b&gt;
+Reload privilege tables now? [Y/n] &lt;b&gt;enter&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Log as root:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mysql -uroot -p
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Display databases:&lt;/p&gt;
+
+&lt;pre&gt;
+MariaDB[(none)]&amp;gt; &lt;b&gt;show databases;&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Create a database, a table and insert data:&lt;/p&gt;
+
+&lt;pre&gt;
+MariaDB[(none)]&amp;gt; &lt;b&gt;create database db1;&lt;/b&gt;
+MariaDB[(none)]&amp;gt; &lt;b&gt;use db1;&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;create table table1(id INT(10) unsigned, name VARCHAR(20), age INT(10));&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;insert into table1(id,name,age) values (1,&quot;person1&quot;,25);&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;insert into table1(id,name,age) values (2,&quot;person2&quot;,55);&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Display table structure:&lt;/p&gt;
+
+&lt;pre&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;describe table1;&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Get items from table1:&lt;/p&gt;
+
+&lt;pre&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;select * from table1;&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;select name,age from table1;&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;select name,age from table1 where age=25;&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Create a user:&lt;/p&gt;
+
+&lt;pre&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;create user alice@192.168.2.20 identified by 'pass';&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;grant all on db1.* to alice@192.168.2.20;&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;flush privileges;&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Change password for alice:&lt;/p&gt;
+
+&lt;pre&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;set password for alice@192.168.2.20 = password('newpass');&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Display database users:&lt;/p&gt;
+&lt;pre&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;select host,name,password from mysql.user;&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Delete user:&lt;/p&gt;
+
+&lt;pre&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;drop user alice@192.168.2.20;&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Display variables:&lt;/p&gt;
+
+&lt;pre&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;show variables like 'port';&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;show variables like 'datadir';&lt;/b&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;show variables where variable_name='port' or variable_name='datadir';&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Exit the CLI:&lt;/p&gt;
+&lt;pre&gt;
+MariaDB[db1]&amp;gt; &lt;b&gt;exit&lt;/b&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Allow port 3306 in firewalld:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-port=3306/tcp
+# firewall-cmd --reload
+
+Or, use a rich rule:
+# firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=192.168.2.20 port port=3306 protocol=tcp accept'
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Change listening port to 8888/tcp and adjust SELinux context on port 8888/tcp:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;semanage port -at -mysqld_port_t 8888 -p tcp&lt;/b&gt;
+# &lt;b&gt;vi /etc/my.cnf&lt;/b&gt;
+[mysqld]
+&lt;b&gt;port=8888&lt;/b&gt;
+[...]
+&lt;/pre&gt;
+
+&lt;p&gt;Restart mysqld, and update firewalld rules:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl restart mariadb
+# firewall-cmd --permanent --remove-port=3306/tcp
+# firewall-cmd --permanent --add-port=8888/tcp
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Change mariadb datadir:&lt;/p&gt;
+
+&lt;pre&gt;
+# systemctl stop mariadb
+# mkdir /srv/mariadb
+# semanage fcontext -at mysqld_db_t &quot;/srv/mariadb(/.*)?&quot;
+# restorecon -v /srv/mariadb
+# chown mysql: /srv/mariadb
+# cp -Rp /var/lib/mysql/* /srv/mariadb/
+
+# &lt;b&gt;vi /etc/my.cnf&lt;/b&gt;
+[mysqld]
+[...]
+&lt;b&gt;#&lt;/b&gt;datadir=/var/lib/mysql
+&lt;b&gt;datadir=/srv/mariadb&lt;/b&gt;
+[...]
+&lt;/pre&gt;
+
+&lt;p&gt;Check owner, permissions and SELinux contexts of the new datadir:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ls -alZ /srv/mariadb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Start mariadb:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl start mariadb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;MARIADB REMOTE CLIENT&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Install mariadb:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y mariadb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Connect to a remote mariadb server on port 8888/tcp:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mysql -ualice -p -hsrv.example.local -P8888
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">MARIADB SERVER</summary></entry><entry><title type="html">RHCSA Certification - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA Certification - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 At &lt;strong&gt;grub2&lt;/strong&gt; screen, press “&lt;strong&gt;e&lt;/strong&gt;” to &lt;strong&gt;edit&lt;/strong&gt; the configuration.&lt;br /&gt;
@@ -252,426 +810,4 @@ or
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setsebool -P httpd_can_sendmail on
 or
 # setsebool -P httpd_can_sendmail 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">SElinux configuration file is /etc/selinux/config. In this file you can set the default configuration such as the mode (enforcing, permissive, disabled) and the protection type (targeted, minimum, mls)</summary></entry><entry><title type="html">RHCSA Certification - Part5 - Redirections, STD{IN,OUT,ERR}, |, ||, &amp;amp;&amp;amp;</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-05-redirection-piping.html" rel="alternate" type="text/html" title="RHCSA Certification - Part5 - Redirections, STD{IN,OUT,ERR}, |, ||, &amp;&amp;" /><published>2020-02-20T17:00:00-06:00</published><updated>2020-02-20T17:00:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-05-redirection-piping</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-05-redirection-piping.html">&lt;p&gt;stdin: &amp;lt; : code 0 : Standard input&lt;br /&gt;
-stdout: &amp;gt; : code 1 : Standard output&lt;br /&gt;
-stderr: 2&amp;gt; : code 2 : Standard error&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;|&lt;/code&gt; : redirects the output of a command to another command &lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&amp;gt;&lt;/code&gt; : append to a file&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;||&lt;/code&gt; : logical OR (if the 1st command fails, do the 2nd anyway)&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&amp;amp;&lt;/code&gt; : logical AND (if the 1st command fails, stop)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Redirect stdout&lt;/strong&gt; to a file (stderr will be displayed on screen and ):&lt;/p&gt;
-
-&lt;pre&gt;
-# find /var/log -perm 0755 &lt;b&gt;&amp;gt;&lt;/b&gt; /root/perms.txt
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Redirect stderr&lt;/strong&gt; to a file (stdout will be displayed on screen):&lt;/p&gt;
-
-&lt;pre&gt;
-# find /var/log -perm 0755 &lt;b&gt;2&amp;gt;&lt;/b&gt; /root/perms.txt
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Redirect stderr&lt;/strong&gt; to the target of &lt;strong&gt;stdout&lt;/strong&gt; (here, a file called /root/perms.txt):&lt;/p&gt;
-
-&lt;pre&gt;
-# find /var/log -perm 0755 &lt;b&gt;&amp;gt;&lt;/b&gt; /root/perms.txt &lt;b&gt;2&amp;gt;&amp;amp;1&lt;/b&gt;
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Redirect&lt;/strong&gt; the &lt;strong&gt;echo&lt;/strong&gt; command &lt;strong&gt;to&lt;/strong&gt; a &lt;strong&gt;file&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;
-# echo &quot;test&quot; &lt;b&gt;&amp;gt;&lt;/b&gt; /root/testfile
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Append&lt;/strong&gt; text to a file:&lt;/p&gt;
-
-&lt;pre&gt;
-# echo &quot; and 2nd test&quot; &lt;b&gt;&amp;gt;&amp;gt;&lt;/b&gt; /root/testfile
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Redirect to stdin&lt;/strong&gt; (here, the screen):&lt;/p&gt;
-
-&lt;pre&gt;
-# &lt;b&gt;&amp;lt;&lt;/b&gt; testfile
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Complex&lt;/strong&gt; command to send a &lt;strong&gt;string&lt;/strong&gt; and attach a file to an mail, and confirm if the command successfully exited:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo &quot;Hi&quot; | mailx -s &quot;Re: requested file&quot; root &amp;lt; testfile | if [ $? -eq 0 ]; then; echo &quot;Mail has been sent&quot;; else; echo &quot;Error&quot;; fi
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Usage&lt;/strong&gt; for &lt;b&gt;||&lt;/b&gt; and &lt;b&gt;&amp;amp;&amp;amp;&lt;/b&gt;:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt; for logical &lt;strong&gt;OR&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;
-rm -Rf somedir &lt;b&gt;||&lt;/b&gt; exit_on_error &quot;Failed to remove the directory&quot;
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt; for logical &lt;strong&gt;AND&lt;/strong&gt; (excludes 2nd part if the first fails):&lt;/p&gt;
-
-&lt;pre&gt;
-rm -Rf somedir &lt;b&gt;&amp;amp;&amp;amp;&lt;/b&gt; trace_output &quot;Removed the directory&quot;
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt; for both logical &lt;strong&gt;AND&lt;/strong&gt; and &lt;strong&gt;OR&lt;/strong&gt;:&lt;/p&gt;
-&lt;pre&gt;
-mailx -s &quot;Re: requested file&quot; root &lt;b&gt;&amp;lt;&lt;/b&gt; testfile &lt;b&gt;&amp;amp;&amp;amp;&lt;/b&gt; echo &quot;Mail has been sent&quot; &lt;b&gt;||&lt;/b&gt; echo &quot;Error&quot;
-&lt;/pre&gt;
-
-&lt;pre&gt;
-rm -Rf somedir &lt;b&gt;&amp;amp;&amp;amp;&lt;/b&gt; trace_output &quot;Removed the directory&quot; &lt;b&gt;||&lt;/b&gt; exit_on_error &quot;Failed to remove the directory&quot;
-&lt;/pre&gt;</content><author><name></name></author><summary type="html">stdin: &amp;lt; : code 0 : Standard input stdout: &amp;gt; : code 1 : Standard output stderr: 2&amp;gt; : code 2 : Standard error | : redirects the output of a command to another command &amp;gt;&amp;gt; : append to a file || : logical OR (if the 1st command fails, do the 2nd anyway) &amp;amp;&amp;amp; : logical AND (if the 1st command fails, stop)</summary></entry><entry><title type="html">RHCSA Certification - Part6 - Firewalld</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-06-firewalld.html" rel="alternate" type="text/html" title="RHCSA Certification - Part6 - Firewalld" /><published>2020-02-20T16:30:00-06:00</published><updated>2020-02-20T16:30:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-06-firewalld</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-06-firewalld.html">&lt;p&gt;&lt;strong&gt;Verify&lt;/strong&gt; if firewalld is &lt;strong&gt;active&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --state
-running
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Start&lt;/strong&gt; firewalld:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl start firewalld.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Set firewalld to &lt;strong&gt;start&lt;/strong&gt; automatically &lt;strong&gt;at boot&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable firewalld.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Set the firewall &lt;strong&gt;default zone&lt;/strong&gt; (Default is Public zone. Common zones are: internal, external, home, dmz, trusted, drop, etc. …):&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --set-default-zone=dmz
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Allow temporarily&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --add-service=ssh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Allow permanently&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=ssh
-# firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Remove temporarily&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --remove-service=ssh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Remove permanently&lt;/strong&gt; a service to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --remove-service=ssh
-# firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Add&lt;/strong&gt; a &lt;strong&gt;port&lt;/strong&gt; to a specific &lt;strong&gt;zone&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --zone=dmz --add-port=8080/tcp
-# firewall-cmd --permanent
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; a &lt;strong&gt;rich rules&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=192.168.2.2 port port=80 protocol=tcp accept'
-# firewall-cmd --permanent --add-rich-rule 'rule service name=ssh log prefix=&quot;SSH_&quot; level=debug limit value=2/m reject'
-#firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Add&lt;/strong&gt; a &lt;strong&gt;port forwarding&lt;/strong&gt; to the default zone:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-masquerade
-# firewall-cmd --permanent --add-forward-port=port=21:proto=tcp:toport=80:toaddr=192.168.2.3
-# firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Verify if firewalld is active:</summary></entry><entry><title type="html">RHCSA Certification - Part7 - The $PS1 variable</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html" rel="alternate" type="text/html" title="RHCSA Certification - Part7 - The $PS1 variable" /><published>2020-02-20T16:00:00-06:00</published><updated>2020-02-20T16:00:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-07-ps1-prompt.html">&lt;p&gt;The &lt;strong&gt;PS1 variable&lt;/strong&gt; defines what your &lt;strong&gt;primary prompt&lt;/strong&gt; looks like (in general, the primary prompt is &lt;strong&gt;bash&lt;/strong&gt; – Bourne Again SHell)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Display&lt;/strong&gt; your system’s &lt;strong&gt;PS1 variable&lt;/strong&gt; using the &lt;strong&gt;echo&lt;/strong&gt; command:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo $PS1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-The &lt;strong&gt;bash manual&lt;/strong&gt; contains some information about how to configure the prompt:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Display the bash manual using: &lt;code class=&quot;highlighter-rouge&quot;&gt;man bash&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Type &lt;code class=&quot;highlighter-rouge&quot;&gt;/PROMPTING&lt;/code&gt; to start a forward search&lt;/li&gt;
-  &lt;li&gt;Press &lt;strong&gt;n&lt;/strong&gt; twice&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;PS1 variable&lt;/strong&gt; most useful &lt;strong&gt;options&lt;/strong&gt;:&lt;br /&gt;
-&lt;strong&gt;\H&lt;/strong&gt; = display &lt;strong&gt;hostname&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;\u&lt;/strong&gt; = display &lt;strong&gt;username&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;\w&lt;/strong&gt; = display &lt;strong&gt;working directory&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;$&lt;/strong&gt; = display “&lt;strong&gt;$&lt;/strong&gt;” for normal user or “&lt;strong&gt;#&lt;/strong&gt;” for root user&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-Change the &lt;strong&gt;$PS1&lt;/strong&gt; variable:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# export PS1=&quot;\H \u \w \$&quot;
-# echo $PS1
- PS1=&quot;\H \u \w \$&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To make the custom prompt &lt;strong&gt;persistent across reboots&lt;/strong&gt;, append to &lt;strong&gt;/root/.bashrc&lt;/strong&gt; or &lt;strong&gt;/home/$user/.bashrc&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# echo 'export PS1=&quot;\H \u \w \$&quot;' &amp;gt;&amp;gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">The PS1 variable defines what your primary prompt looks like (in general, the primary prompt is bash – Bourne Again SHell)</summary></entry><entry><title type="html">RHCSA Certification - Part8 - User/group management and basic permissions</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html" rel="alternate" type="text/html" title="RHCSA Certification - Part8 - User/group management and basic permissions" /><published>2020-02-20T15:30:00-06:00</published><updated>2020-02-20T15:30:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-08-user-group-chage-passwd.html">&lt;p&gt;It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;USERADD&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Usage: &lt;code class=&quot;highlighter-rouge&quot;&gt;useradd [options] &amp;lt;user_name&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Important options:&lt;br /&gt;
- &lt;strong&gt;-D&lt;/strong&gt; : &lt;strong&gt;defaults&lt;/strong&gt; (can be altered with additional options)&lt;br /&gt;
- &lt;strong&gt;-m&lt;/strong&gt; : &lt;strong&gt;create home directory&lt;/strong&gt; if it doesn’t exist &lt;br /&gt;
- &lt;strong&gt;-s&lt;/strong&gt; : &lt;strong&gt;shell&lt;/strong&gt; (/bin/bash, /sbin/nologin, etc. …)  &lt;br /&gt;
- &lt;strong&gt;-e&lt;/strong&gt; : &lt;strong&gt;expire date&lt;/strong&gt; with format YYYY-MM-DD&lt;br /&gt;
- &lt;strong&gt;-f&lt;/strong&gt; : &lt;strong&gt;inactive&lt;/strong&gt; after creation&lt;br /&gt;
- &lt;strong&gt;-g&lt;/strong&gt; : manual &lt;strong&gt;gid&lt;/strong&gt; number&lt;br /&gt;
- &lt;strong&gt;-u&lt;/strong&gt; : manual &lt;strong&gt;uid&lt;/strong&gt; number&lt;br /&gt;
- &lt;strong&gt;-G&lt;/strong&gt; : &lt;strong&gt;groups&lt;/strong&gt; (coma separated)&lt;br /&gt;
- &lt;strong&gt;-r&lt;/strong&gt; : &lt;strong&gt;system account&lt;/strong&gt;, doesn’t create home, mail, usergroup…&lt;/p&gt;
-
-&lt;p&gt;More on &lt;code class=&quot;highlighter-rouge&quot;&gt;man useradd&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CHAGE&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Usage: &lt;code class=&quot;highlighter-rouge&quot;&gt;chage [options] &amp;lt;user_name&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;The &lt;strong&gt;-l&lt;/strong&gt; option will &lt;strong&gt;display password aging information&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chage -l alice
-# chage -l ben
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;strong&gt;-E&lt;/strong&gt; option will set a &lt;strong&gt;password expiration&lt;/strong&gt; date for the user:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chage -E 2017-12-31 alice
-# chage -E 2017-12-31 ben
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;GROUPADD&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Usage: &lt;code class=&quot;highlighter-rouge&quot;&gt;groupadd [options] &amp;lt;group_name&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Just &lt;strong&gt;create&lt;/strong&gt; the &lt;strong&gt;group&lt;/strong&gt; dba:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# groupadd dba
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;USERMOD&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Usage: &lt;code class=&quot;highlighter-rouge&quot;&gt;usermod [options] &amp;lt;user_name&amp;gt;&lt;/code&gt;
-The &lt;strong&gt;-aG&lt;/strong&gt; option &lt;strong&gt;appends group&lt;/strong&gt; (add a supplementary group to the user).&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# usermod -aG dba alice
-# usermod -aG dba ben
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CHOWN&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Use &lt;strong&gt;chown&lt;/strong&gt; to &lt;strong&gt;change&lt;/strong&gt; user and/or group &lt;strong&gt;ownership&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chown alice /srv/groupdir
-or
-# chown alice:dba /srv/groupdir
-or
-# chown alice: /srv/groupdir
-or
-# chown :dba /srv/groupdir
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CHGRP&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Use &lt;strong&gt;chgrp&lt;/strong&gt; to &lt;strong&gt;change&lt;/strong&gt; the &lt;strong&gt;group&lt;/strong&gt; on a file or folder:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chgrp /srv/groupdir dba
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CHMOD&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Use &lt;strong&gt;chmod&lt;/strong&gt; to &lt;strong&gt;change permissions&lt;/strong&gt; to &lt;strong&gt;rwx&lt;/strong&gt; (read, write, execute) on &lt;strong&gt;/srv/groupdir&lt;/strong&gt; for owner and group members only:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chmod -R 770 /srv/groupdir
-or
-# chmod -R ug=rwx,o-rwx /srv/groupdir
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Group collaboration&lt;/strong&gt;:&lt;br /&gt;
-&lt;strong&gt;SetGID&lt;/strong&gt;: All files created belong to the group. All the members of the group can create files, edit or remove any files from the group.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chmod 2770 /srv/groupdir
-or
-# chmod g+s /srv/groupdir
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;SetUID&lt;/strong&gt; is &lt;strong&gt;not recommended&lt;/strong&gt;. Users allowed to &lt;strong&gt;execute&lt;/strong&gt; a program use the &lt;strong&gt;identity&lt;/strong&gt; (and &lt;strong&gt;permissions&lt;/strong&gt;) of the &lt;strong&gt;owner&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chmod 4770 /srv/groupdir/script.sh
-or
-# chmod u+s /srv/groupdir/script.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;StickyBit&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chmod 1770 /srv/groupdir/myfile
-or
-# chmod +t /srv/groupdir/myfile
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;StickyBit with SetGID&lt;/strong&gt;:&lt;br /&gt;
-StickyBit sets additional permissions on a file. It comes very convenient in case of group collaboration because only the owner can delete its files:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chmod 3770 /srv/groupdir/myfile
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CHATTR&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Change attributes&lt;/strong&gt; on a file, set the file to &lt;strong&gt;immutable&lt;/strong&gt; (even by root):&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chattr +i file
-or, to remove
-# chattr -i file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;GPASSWD&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Usage: &lt;code class=&quot;highlighter-rouge&quot;&gt;gpasswd [option] &amp;lt;user_name&amp;gt; &amp;lt;group_name&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Remove user&lt;/strong&gt; alice &lt;strong&gt;from&lt;/strong&gt; the dba &lt;strong&gt;group&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# gpasswd -d alice dba
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;USERDEL&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Delete&lt;/strong&gt; a &lt;strong&gt;user&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# userdel alice
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Delete&lt;/strong&gt; a &lt;strong&gt;user&lt;/strong&gt; with its &lt;strong&gt;home directory&lt;/strong&gt; and &lt;strong&gt;mailbox&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# userdel -r ben
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;GROUPDEL&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Delete&lt;/strong&gt; a &lt;strong&gt;group&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# groupdel dba
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;EXAMPLE&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; several &lt;strong&gt;users&lt;/strong&gt; in 1 command:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# for i in user{1,2,3,4,5}; do useradd $i; done
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Check&lt;/strong&gt; created &lt;strong&gt;accounts&lt;/strong&gt; in &lt;strong&gt;/etc/passwd&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# tail -5 /etc/passwd
-or
-# for i in user{1,2,3,4,5}; do id $i; done
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Set password&lt;/strong&gt; for all newly created users by redirecting “password” in the &lt;strong&gt;standard input&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# for i in user{1,2,3,4,5}; do echo &quot;password&quot; | passwd $i --stdin; done
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Warning: this is not the safest way to do it!&lt;/strong&gt;&lt;br /&gt;
-There are several discussions related to this topic, for example in https://stackoverflow.com/questions/714915/using-the-passwd-command-from-within-a-shell-script&lt;br /&gt;
-Also, it may not be ideal to keep this command in the bash history. If you want to run the command without keeping it in history, just add a space at the beginning of the line (works for bash shell, not for zsh).&lt;/p&gt;</content><author><name></name></author><summary type="html">It is easy to create a user with useradd, but if you have to create multiple user accounts, it is much more convenient to do it with a bash script that will loop the command for you.</summary></entry><entry><title type="html">RHCSA Certification - Part9 - ACLs</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-09-ACLs.html" rel="alternate" type="text/html" title="RHCSA Certification - Part9 - ACLs" /><published>2020-02-20T15:00:00-06:00</published><updated>2020-02-20T15:00:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-09-ACLs</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-09-ACLs.html">&lt;p&gt;&lt;br /&gt;
-Use &lt;strong&gt;chown&lt;/strong&gt; to &lt;strong&gt;change ownership&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# chown alice: /home/alice/testdir
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Use &lt;strong&gt;getfacl&lt;/strong&gt; to &lt;strong&gt;retrieve&lt;/strong&gt; the &lt;strong&gt;ACLs&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfacl /home/alice/testdir
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with &lt;strong&gt;-m&lt;/strong&gt; option to set &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs for ben to access testdir subfolder with &lt;strong&gt;read-only&lt;/strong&gt; permissions:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:ben:rx /home/alice
-# setfacl -m du:ben:rx /home/alice
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Use &lt;strong&gt;setfacl&lt;/strong&gt; with option &lt;strong&gt;-m&lt;/strong&gt; to modify &lt;strong&gt;standard&lt;/strong&gt; and &lt;strong&gt;default&lt;/strong&gt; ACLs in order to provide ben with &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; access:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# setfacl -m u:ben:rwx /home/alice/testdir
-# setfacl -m du:ben:rwx /home/alice/testdir
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Check&lt;/strong&gt; newly applied &lt;strong&gt;ACLs&lt;/strong&gt; on folders &lt;strong&gt;/home/alice&lt;/strong&gt; and &lt;strong&gt;/home/alice/testdir&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# getfacl /home/alice
-# getfacl /home/alice/testdir
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Real-life &lt;strong&gt;test&lt;/strong&gt; to &lt;strong&gt;check&lt;/strong&gt; new &lt;strong&gt;access rights&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# su - ben
-$ touch /home/alice/testdir/testfile
-$ echo &quot;this is a write access test&quot; &amp;gt; /home/alice/testdir/testfile
-$ cat /home/alice/testdir/testfile
-this is a write access test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Use chown to change ownership:</summary></entry><entry><title type="html">RHCSA Certification - Part10 - vsftpd, yum custom repository</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-10-vsftpd-yum.html" rel="alternate" type="text/html" title="RHCSA Certification - Part10 - vsftpd, yum custom repository" /><published>2020-02-20T14:30:00-06:00</published><updated>2020-02-20T14:30:00-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-10-vsftpd-yum</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-10-vsftpd-yum.html">&lt;p&gt;Install &lt;strong&gt;vsftpd&lt;/strong&gt; (very secure file transfer protocol daemon) and &lt;strong&gt;createrepo&lt;/strong&gt; (tool to create repositories):&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y vsftpd createrepo
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Start vsftpd&lt;/strong&gt; and enable &lt;strong&gt;autostart&lt;/strong&gt; at boot:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable vsftpd.service
-# systemctl start vsftpd.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Configure &lt;strong&gt;firewalld&lt;/strong&gt; to &lt;strong&gt;allow ftp&lt;/strong&gt; service (default &lt;strong&gt;port 21&lt;/strong&gt;):&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=ftp
-# firewall-cmd --reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; the &lt;strong&gt;custom repository&lt;/strong&gt; on the server with &lt;strong&gt;createrepo&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /var/ftp/pub/customrepo
-# createrepo /var/ftp/pub/customrepo
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;CLIENT SETUP&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; a new file: &lt;strong&gt;/etc/yum.repos.d/customrepo.repo&lt;/strong&gt; :&lt;/p&gt;
-
-&lt;pre&gt;
-# &lt;b&gt;vi /etc/yum.repos.d/customrepo.repo&lt;/b&gt;
-
-[customrepo]
-name=Custom Repo
-baseurl=ftp://server.example.local/pub/customrepo
-enabled=1
-gpgcheck=0
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt; the &lt;strong&gt;repository cache&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum repolist
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Install vsftpd (very secure file transfer protocol daemon) and createrepo (tool to create repositories):</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">SElinux configuration file is /etc/selinux/config. In this file you can set the default configuration such as the mode (enforcing, permissive, disabled) and the protection type (targeted, minimum, mls)</summary></entry></feed>
