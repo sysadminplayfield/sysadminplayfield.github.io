@@ -7,15 +7,15 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="RHCSA Certification - Part11 - Logical volumes: PV, VG, LV" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="PV = Physical Volume (can be a partition on a physical drive, or a full disk) VG = Volume Group (logical group made of one or more PVs) PE = Physical Extent (minimal unit size defined for a VG, default is 4MB) LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10*LE=40MB) LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)" />
-<meta property="og:description" content="PV = Physical Volume (can be a partition on a physical drive, or a full disk) VG = Volume Group (logical group made of one or more PVs) PE = Physical Extent (minimal unit size defined for a VG, default is 4MB) LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10*LE=40MB) LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)" />
+<meta name="description" content="PV = Physical Volume (can be a partition on a physical drive, or a full disk) VG = Volume Group (logical group made of one or more PVs) PE = Physical Extent (minimal block unit size defined for a VG, default is 4MB) LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10 x LE = 40MB) LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)" />
+<meta property="og:description" content="PV = Physical Volume (can be a partition on a physical drive, or a full disk) VG = Volume Group (logical group made of one or more PVs) PE = Physical Extent (minimal block unit size defined for a VG, default is 4MB) LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10 x LE = 40MB) LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)" />
 <link rel="canonical" href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-11-lvm-vg-pv.html" />
 <meta property="og:url" content="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-11-lvm-vg-pv.html" />
 <meta property="og:site_name" content="SysAdmin Playfield" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-20T14:00:00-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"RHCSA Certification - Part11 - Logical volumes: PV, VG, LV","dateModified":"2020-02-20T14:00:00-06:00","datePublished":"2020-02-20T14:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-11-lvm-vg-pv.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-11-lvm-vg-pv.html","description":"PV = Physical Volume (can be a partition on a physical drive, or a full disk) VG = Volume Group (logical group made of one or more PVs) PE = Physical Extent (minimal unit size defined for a VG, default is 4MB) LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10*LE=40MB) LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-11-lvm-vg-pv.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-11-lvm-vg-pv.html","headline":"RHCSA Certification - Part11 - Logical volumes: PV, VG, LV","dateModified":"2020-02-20T14:00:00-06:00","description":"PV = Physical Volume (can be a partition on a physical drive, or a full disk) VG = Volume Group (logical group made of one or more PVs) PE = Physical Extent (minimal block unit size defined for a VG, default is 4MB) LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10 x LE = 40MB) LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)","datePublished":"2020-02-20T14:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -45,19 +45,19 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>PV = Physical Volume (can be a partition on a physical drive, or a full disk)<br />
-VG = Volume Group (logical group made of one or more PVs)<br />
-PE = Physical Extent (minimal unit size defined for a VG, default is 4MB)<br />
-LE = Logical Extent (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10*LE=40MB)<br />
-LV = Logical Volume (logical space allocated on a VG, basically, a logical partition)</p>
+    <p><strong>PV</strong> = <strong>Physical Volume</strong> (can be a partition on a physical drive, or a full disk)<br />
+<strong>VG</strong> = <strong>Volume Group</strong> (logical group made of one or more PVs)<br />
+<strong>PE</strong> = <strong>Physical Extent</strong> (minimal block unit size defined for a VG, default is 4MB)<br />
+<strong>LE</strong> = <strong>Logical Extent</strong> (same size as physical, it is used by LVs to set its total size defined by how many extents they are meant to use. e.g: 10 x LE = 40MB)<br />
+<strong>LV</strong> = <strong>Logical Volume</strong> (logical space allocated on a VG, basically, a logical partition)</p>
 
 <p><br />
 <strong>FDISK</strong></p>
 
-<p>Let’s create a new physical partition on /dev/sdb:</p>
+<p>Let’s create a <strong>new physical partition</strong> on <strong>/dev/sdb</strong>:</p>
 
 <pre>
-# fdisk /dev/sdb
+# <b>fdisk /dev/sdb</b>
     <b>p</b> (print partition table on /dev/sdb)
     <b>n</b> (create new partition)
     <b>p</b> (primary partition type)
@@ -80,8 +80,8 @@ LV = Logical Volume (logical space allocated on a VG, basically, a logical parti
 </code></pre></div></div>
 
 <p><br />
-<strong>PVCREATE</strong><br />
-Optional: <code class="highlighter-rouge">vgcreate</code> automatically creates the PVs.<br />
+<strong>PVCREATE</strong> (optional)<br />
+<code class="highlighter-rouge">vgcreate</code> automatically creates the PVs.<br />
 <strong>Create</strong> a <strong>PV</strong> on <strong>/dev/sdb1</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pvcreate /dev/sdb1
@@ -121,7 +121,7 @@ Optional: <code class="highlighter-rouge">vgcreate</code> automatically creates 
 # lvdisplay
 </code></pre></div></div>
 
-<p><strong>Format</strong> the LV filesystem to <strong>xfs</strong> and create a mount point:</p>
+<p><strong>Format</strong> the <strong>LV</strong> filesystem to <strong>xfs</strong> and create a mount point:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkfs.xfs /dev/vg_test/lv_test
 # mkdir /mnt/mountpoint
@@ -139,7 +139,7 @@ Optional: <code class="highlighter-rouge">vgcreate</code> automatically creates 
     UUID=&lt;UUID-of-lv_test&gt;	/mnt/mountpoint		xfs		defaults 0 0
 </code></pre></div></div>
 
-<p>Mount the volume:</p>
+<p><strong>Mount</strong> the volume:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mount -av
 # mount | grep lv_test
@@ -148,7 +148,7 @@ Optional: <code class="highlighter-rouge">vgcreate</code> automatically creates 
 <p><br />
 <strong>VGEXTEND</strong></p>
 
-<p>Add a new PV to an existing VG:</p>
+<p><strong>Add</strong> a <strong>new PV</strong> to an <strong>existing VG</strong> (<strong>extend VG</strong>):</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># vgextend vg_test /dev/sdc1
 </code></pre></div></div>
@@ -156,21 +156,22 @@ Optional: <code class="highlighter-rouge">vgcreate</code> automatically creates 
 <p><br />
 <strong>LVEXTEND</strong></p>
 
-<p><strong>WARNING</strong>: AT EVERY LV RESIZING USING LVEXTEND, FIRST, MAKE SURE TO TEST WITH THE “-t” OPTION.<br />
-IF IT FAILS WITH THE “-t” OPTION, IT’S OK, YOU CAN INVESTIGATE.
-BUT IF YOU SKIP THE TEST AND LVEXTEND FAILS, YOU LOOSE ALL YOUR DATA.</p>
+<p><strong>WARNING USING LVEXTEND</strong><br />
+MAKE SURE TO <strong>TEST</strong> WITH THE “<strong>-t</strong>” OPTION.<br />
+IF IT FAILS WITH THE “-t” OPTION, IT’S OK BECAUSE YOU CAN INVESTIGATE.<br />
+BUT IF <strong>LVEXTEND FAILS</strong>, YOU <strong>LOOSE ALL YOUR DATA</strong>.</p>
 
 <p><strong>Test</strong> <strong>lvxtend</strong> with the “<strong>-t</strong>” option:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># lvextend -r -L +35 /dev/vg_test/lv_test -t
 </code></pre></div></div>
 
-<p>If there is no error message, you can proceed:</p>
+<p><strong>If</strong> there is <strong>no error message</strong>, you can <strong>proceed</strong>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># lvextend -r -L +35 /dev/vg_test/lv_test
 </code></pre></div></div>
 
-<p>You can also extend with <code class="highlighter-rouge">-l +100%FREE</code> to extend an LV to the maximum size provided by the VG:</p>
+<p>You can also <strong>extend with</strong> <code class="highlighter-rouge">-l +100%FREE</code> to extend an LV to the <strong>maximum size</strong> provided by the VG:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># lvextend -r -l +100%FREE /dev/vg_test/lv_test
 </code></pre></div></div>

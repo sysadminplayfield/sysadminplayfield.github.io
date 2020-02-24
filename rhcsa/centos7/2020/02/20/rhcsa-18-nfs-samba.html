@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-20T11:45:00-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"RHCSA Certification - Part18 - NFS client, Samba client","dateModified":"2020-02-20T11:45:00-06:00","datePublished":"2020-02-20T11:45:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html","description":"NFS client","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html","headline":"RHCSA Certification - Part18 - NFS client, Samba client","dateModified":"2020-02-20T11:45:00-06:00","description":"NFS client","datePublished":"2020-02-20T11:45:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -68,13 +68,12 @@ or
 
 <pre>
 For <b>NFS3</b>
-# mount -v -t nfs -o rw,sync srv.example.local:/srv/share /mnt/mount_dir
+# mount -v -t nfs -o vers=3,rw,sync srv.example.local:/srv/share /mnt/mount_dir
 
 or for <b>NFS4</b>
 # mount -v -t nfs4 -o rw,sync srv.example.local:/srv/share /mnt/mount_dir
 
 or for <b>NFS 4.2</b>
-# systemctl enable nfs-client
 # mount -v -t nfs -o sec=sys,vers=4.2,rw,sync srv.example.local:/srv/share /mnt/mount_dir
 </pre>
 
@@ -84,10 +83,10 @@ or for <b>NFS 4.2</b>
 # <b>vi /etc/fstab</b>
 [...]
 # for <b>NFS 3</b>
-srv.example.local:/srv/share		/mnt/mount_dir		nfs		rw,sync		0 0
+srv.example.local:/srv/share		/mnt/mount_dir		nfs		vers=3,rw,sync		0 0
 
 # for <b>NFS 4</b>
-srv.example.local:/srv/share		/mnt/mount_dir		nfs		vers=4.0,rw,sync		0 0
+srv.example.local:/srv/share		/mnt/mount_dir		nfs		vers=4,rw,sync		0 0
 
 # for <b>NFS 4.2</b>
 srv.example.local:/srv/share		/mnt/mount_dir		nfs		sec=sys,vers=4.2,rw,sync		0 0
