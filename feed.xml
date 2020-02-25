@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-24T17:40:03-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCE - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;&lt;strong&gt;Display&lt;/strong&gt; existing &lt;strong&gt;connections&lt;/strong&gt;:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-25T11:30:48-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCE - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;&lt;strong&gt;Display&lt;/strong&gt; existing &lt;strong&gt;connections&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli c s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -18,7 +18,7 @@
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type bond ifname bond0 con-name bond0 mode 1
 or
-# nmcli con add type bond ifname bond0 con-name bond0 mode 'active-backup'
+# nmcli con add type bond ifname bond0 con-name bond0 mode active-backup
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; the 2 &lt;strong&gt;slave connections&lt;/strong&gt;, based on the interface name:&lt;/p&gt;
@@ -640,7 +640,98 @@ Number of key(s) added: 1
 &lt;p&gt;&lt;strong&gt;Password-less key pair authentication&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ssh -p 3000 root@srv.example.local
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">server = srv.example.local client = 192.168.2.20/24</summary></entry><entry><title type="html">RHCSA - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to &lt;strong&gt;interrupt&lt;/strong&gt; the &lt;strong&gt;boot process&lt;/strong&gt; and gain access to a &lt;strong&gt;chrooted environment&lt;/strong&gt;.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">server = srv.example.local client = 192.168.2.20/24</summary></entry><entry><title type="html">RHCE - Part8 - samba</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-08-samba.html" rel="alternate" type="text/html" title="RHCE - Part8 - samba" /><published>2020-02-22T10:00:00-06:00</published><updated>2020-02-22T10:00:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-08-samba</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-08-samba.html">&lt;p&gt;server = srv.example.local (192.168.2.10/24)&lt;br /&gt;
+client = client.example.local (192.168.2.20/24)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;SERVER CONFIGURATION&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Install samba&lt;/strong&gt; and &lt;strong&gt;samba-client&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install -y samba samba-client
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; shared &lt;strong&gt;directory&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /srv/sambashare
+# chmod 777 /srv/sambashare
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Set samba_share_t&lt;/strong&gt; SELinux &lt;strong&gt;context&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# semanage fcontext -at samba_share_t &quot;/srv/samba_share(/.*)?&quot;
+# restorecon -v /srv/sambashare
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Configure /etc/samba/smb.conf&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[global] section&lt;/strong&gt;:&lt;br /&gt;
+By &lt;strong&gt;default&lt;/strong&gt;, &lt;strong&gt;guests&lt;/strong&gt; are &lt;strong&gt;prohibited&lt;/strong&gt; by the following implicit option:  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;map to guest = Never&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If you provide at least one &lt;strong&gt;public share&lt;/strong&gt;, you can &lt;strong&gt;force&lt;/strong&gt; the &lt;strong&gt;guests&lt;/strong&gt; to &lt;strong&gt;use&lt;/strong&gt; the “&lt;strong&gt;nobody&lt;/strong&gt;” &lt;strong&gt;account&lt;/strong&gt; using both of these 2 options: &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;map to guest = Bad User&lt;/code&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;guest account = nobody&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;host allow&lt;/strong&gt; option allows networks:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;host allow = 127. 192.168.2.&lt;/code&gt;&lt;br /&gt;
+Or hosts (ip or hostname):&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;host allow = 192.168.2.20 client.example.local&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# &lt;b&gt;vi /etc/samba/smb.conf&lt;/b&gt;
+[global]
+[...]
+hosts allow = 127. 192.168.2.20
+[...]
+
+[custom_share]
+comment = group share
+path = /srv/sambashare
+browseable = yes
+writable = no
+printable = no
+valid users = @group, alice
+write list = @group
+&lt;/pre&gt;
+
+&lt;p&gt;The global configuration only allows the share to be accessed by localhost or 192.168.2.20.&lt;br /&gt;
+Every single user requires a user account (ldap is more convenient).&lt;br /&gt;
+The share is only writable by the users who belong to the (ldap) group named &lt;code class=&quot;highlighter-rouge&quot;&gt;group&lt;/code&gt; &lt;br /&gt;
+The user alice has read access even though she doesn’t belong to the group &lt;code class=&quot;highlighter-rouge&quot;&gt;group&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;** Check** samba &lt;strong&gt;configuration&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# testparm -s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Enable&lt;/strong&gt; and &lt;strong&gt;start smb&lt;/strong&gt; and &lt;strong&gt;nmb&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# systemctl enable smb smb
+# systemctl start smb nmb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Allow&lt;/strong&gt; service in &lt;strong&gt;firewall&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# firewall-cmd --permanent --add-service=samba
+# firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Create user accounts&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# smbpasswd add alice
+# smbpasswd add user1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note: &lt;code class=&quot;highlighter-rouge&quot;&gt;user1&lt;/code&gt; is a member of &lt;code class=&quot;highlighter-rouge&quot;&gt;group&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;CLIENT CONFIGURATION&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;p&gt;See RHCSA post regarding samba (2nd part):&lt;br /&gt;
+https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&lt;/p&gt;</content><author><name></name></author><summary type="html">server = srv.example.local (192.168.2.10/24) client = client.example.local (192.168.2.20/24)</summary></entry><entry><title type="html">RHCSA - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to &lt;strong&gt;interrupt&lt;/strong&gt; the &lt;strong&gt;boot process&lt;/strong&gt; and gain access to a &lt;strong&gt;chrooted environment&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 At &lt;strong&gt;grub2&lt;/strong&gt; screen, press “&lt;strong&gt;e&lt;/strong&gt;” to &lt;strong&gt;edit&lt;/strong&gt; the configuration.&lt;br /&gt;
@@ -715,32 +806,4 @@ Note: Network configurations can also be edited in &lt;code class=&quot;highligh
 &lt;strong&gt;Test&lt;/strong&gt; the new &lt;strong&gt;connection&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ping -I eth0 192.168.2.200
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">OS = CentOS 7.0 IP address: 192.168.2.20/24 gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</summary></entry><entry><title type="html">RHCSA - Part3 - systemd targets</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html" rel="alternate" type="text/html" title="RHCSA - Part3 - systemd targets" /><published>2020-02-20T20:00:01-06:00</published><updated>2020-02-20T20:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-03-systemd-targets.html">&lt;p&gt;With &lt;strong&gt;SystemV&lt;/strong&gt;, we talked about &lt;strong&gt;runlevels&lt;/strong&gt;.&lt;br /&gt;
-With &lt;strong&gt;systemd&lt;/strong&gt;, we talk about &lt;strong&gt;targets&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Relationship between runlevels and targets:&lt;/p&gt;
-
-&lt;pre&gt;
-&lt;b&gt;Runlevel		Target				Description&lt;/b&gt;
-0	runlevel0.target, poweroff.target	Power off
-1	runlevel1.target, rescue.target		Non-graphical single-user
-2,3,4	runlevel[234].target, multi-user.target	Non-graphical multi-user
-5 	runlevel5.target, graphical.target	Graphical multi-user
-6 	runlevel6.target, reboot.target		Reboot
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Check&lt;/strong&gt; the system’s current &lt;strong&gt;default target&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # systemctl get-default
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Set&lt;/strong&gt; the &lt;strong&gt;default target&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # systemctl set-default multi-user.target
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you wish to &lt;strong&gt;switch immediately&lt;/strong&gt; to &lt;strong&gt;rescue.target&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # systemctl isolate rescue
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">With SystemV, we talked about runlevels. With systemd, we talk about targets.</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">OS = CentOS 7.0 IP address: 192.168.2.20/24 gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</summary></entry></feed>

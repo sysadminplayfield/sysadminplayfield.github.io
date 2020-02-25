@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-20T11:45:00-06:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"RHCSA - Part18 - NFS client, Samba client","dateModified":"2020-02-20T11:45:00-06:00","datePublished":"2020-02-20T11:45:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html","description":"NFS client","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html"},"url":"http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html","headline":"RHCSA - Part18 - NFS client, Samba client","dateModified":"2020-02-20T11:45:00-06:00","description":"NFS client","datePublished":"2020-02-20T11:45:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
 <body><header class="site-header" role="banner">
@@ -110,9 +110,14 @@ srv.example.local:/srv/share		/mnt/mount_dir		nfs		sec=sys,vers=4.2,rw,sync		0 0
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum install -y cifs-utils samba-client
 </code></pre></div></div>
 
+<p><strong>Optional</strong>: Display the shares using <strong>smbclient</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># smbclient -L srv.example.local
+</code></pre></div></div>
+
 <p><strong>Create</strong> the <strong>mount point</strong> then <strong>mount</strong> the remote share:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkdir /mnt/mount_dir
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkdir /mnt/samba
 </code></pre></div></div>
 
 <p><strong>Create</strong> the <strong>credentials file</strong> <code class="highlighter-rouge">/root/creds.txt</code> (to hide user/password from /etc/fstab):</p>
@@ -128,7 +133,7 @@ pass=pass
 <pre>
 # <b>vi /etc/fstab</b>
 [...]
-//srv.example.com/share		/mnt/mount_dir	cifs	credentials=/root/creds.txt	0 0
+//srv.example.com/custom_share		/mnt/samba	cifs	credentials=/root/creds.txt	0 0
 </pre>
 
 <p>For <strong>multiuser</strong>:</p>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>RHCE - Part8 - samba | SysAdmin Playfield</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="RHCE - Part8 - samba" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="server = srv.example.local (192.168.2.10/24) client = client.example.local (192.168.2.20/24)" />
+<meta property="og:description" content="server = srv.example.local (192.168.2.10/24) client = client.example.local (192.168.2.20/24)" />
+<link rel="canonical" href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-08-samba.html" />
+<meta property="og:url" content="http://localhost:4000/rhce/centos7/2020/02/22/rhce-08-samba.html" />
+<meta property="og:site_name" content="SysAdmin Playfield" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-22T10:00:00-06:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/rhce/centos7/2020/02/22/rhce-08-samba.html"},"url":"http://localhost:4000/rhce/centos7/2020/02/22/rhce-08-samba.html","headline":"RHCE - Part8 - samba","dateModified":"2020-02-22T10:00:00-06:00","description":"server = srv.example.local (192.168.2.10/24) client = client.example.local (192.168.2.20/24)","datePublished":"2020-02-22T10:00:00-06:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="SysAdmin Playfield" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">SysAdmin Playfield</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">RHCE - Part8 - samba</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-02-22T10:00:00-06:00" itemprop="datePublished">Feb 22, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>server = srv.example.local (192.168.2.10/24)<br />
+client = client.example.local (192.168.2.20/24)</p>
+
+<p><br />
+<strong>SERVER CONFIGURATION</strong></p>
+
+<p><strong>Install samba</strong> and <strong>samba-client</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum install -y samba samba-client
+</code></pre></div></div>
+
+<p><strong>Create</strong> shared <strong>directory</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkdir /srv/sambashare
+# chmod 777 /srv/sambashare
+</code></pre></div></div>
+
+<p><strong>Set samba_share_t</strong> SELinux <strong>context</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># semanage fcontext -at samba_share_t "/srv/samba_share(/.*)?"
+# restorecon -v /srv/sambashare
+</code></pre></div></div>
+
+<p><strong>Configure /etc/samba/smb.conf</strong>:</p>
+
+<p><strong>[global] section</strong>:<br />
+By <strong>default</strong>, <strong>guests</strong> are <strong>prohibited</strong> by the following implicit option:  <br />
+<code class="highlighter-rouge">map to guest = Never</code></p>
+
+<p>If you provide at least one <strong>public share</strong>, you can <strong>force</strong> the <strong>guests</strong> to <strong>use</strong> the “<strong>nobody</strong>” <strong>account</strong> using both of these 2 options: <br />
+<code class="highlighter-rouge">map to guest = Bad User</code><br />
+<code class="highlighter-rouge">guest account = nobody</code></p>
+
+<p>The <strong>host allow</strong> option allows networks:<br />
+<code class="highlighter-rouge">host allow = 127. 192.168.2.</code><br />
+Or hosts (ip or hostname):<br />
+<code class="highlighter-rouge">host allow = 192.168.2.20 client.example.local</code></p>
+
+<p><strong>Example</strong>:</p>
+
+<pre>
+# <b>vi /etc/samba/smb.conf</b>
+[global]
+[...]
+hosts allow = 127. 192.168.2.20
+[...]
+
+[custom_share]
+comment = group share
+path = /srv/sambashare
+browseable = yes
+writable = no
+printable = no
+valid users = @group, alice
+write list = @group
+</pre>
+
+<p>The global configuration only allows the share to be accessed by localhost or 192.168.2.20.<br />
+Every single user requires a user account (ldap is more convenient).<br />
+The share is only writable by the users who belong to the (ldap) group named <code class="highlighter-rouge">group</code> <br />
+The user alice has read access even though she doesn’t belong to the group <code class="highlighter-rouge">group</code>.</p>
+
+<p>** Check** samba <strong>configuration</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># testparm -s
+</code></pre></div></div>
+
+<p><strong>Enable</strong> and <strong>start smb</strong> and <strong>nmb</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl enable smb smb
+# systemctl start smb nmb
+</code></pre></div></div>
+
+<p><strong>Allow</strong> service in <strong>firewall</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># firewall-cmd --permanent --add-service=samba
+# firewall-cmd --reload
+</code></pre></div></div>
+
+<p><strong>Create user accounts</strong>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># smbpasswd add alice
+# smbpasswd add user1
+</code></pre></div></div>
+
+<p>Note: <code class="highlighter-rouge">user1</code> is a member of <code class="highlighter-rouge">group</code>.</p>
+
+<p><br />
+<strong>CLIENT CONFIGURATION</strong>:</p>
+
+<p>See RHCSA post regarding samba (2nd part):<br />
+https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html</p>
+
+  </div><a class="u-url" href="/rhce/centos7/2020/02/22/rhce-08-samba.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">SysAdmin Playfield</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/sysadminplayfield"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">sysadminplayfield</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Short Linux tutorials for RHEL/CentOS</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
