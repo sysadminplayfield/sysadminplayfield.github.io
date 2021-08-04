@@ -1,4 +1,128 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-25T11:30:48-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">RHCE - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;&lt;strong&gt;Display&lt;/strong&gt; existing &lt;strong&gt;connections&lt;/strong&gt;:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-04T16:59:46-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SysAdmin Playfield</title><subtitle>Short Linux tutorials for RHEL/CentOS</subtitle><entry><title type="html">Jekyll and gh-pages</title><link href="http://localhost:4000/linux/2021/08/04/linux-jekyll-gh-pages.html" rel="alternate" type="text/html" title="Jekyll and gh-pages" /><published>2021-08-04T00:00:00-05:00</published><updated>2021-08-04T00:00:00-05:00</updated><id>http://localhost:4000/linux/2021/08/04/linux-jekyll-gh-pages</id><content type="html" xml:base="http://localhost:4000/linux/2021/08/04/linux-jekyll-gh-pages.html">&lt;p&gt;GitHub allows you to use your repository as a storage for a personal static website through its gh-pages.&lt;/p&gt;
+
+&lt;p&gt;Jekyll, a Ruby based static website generator, is supported and is a great tool to give a dynamic taste to your static site.&lt;/p&gt;
+
+&lt;p&gt;First, let’s install Jekyll locally.&lt;/p&gt;
+
+&lt;h2 id=&quot;jekyll&quot;&gt;Jekyll&lt;/h2&gt;
+
+&lt;h3 id=&quot;install-ruby&quot;&gt;Install ruby:&lt;/h3&gt;
+
+&lt;p&gt;There are several ways to install Ruby. Here are 2 of them:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Install Ruby from your distribution package manager, following the official documentation: 
+&lt;a href=&quot;https://www.ruby-lang.org/en/documentation/installation/&quot;&gt;https://www.ruby-lang.org/en/documentation/installation/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Or install RVM (Ruby Version Manager) so you can have several different versions of ruby on your system:
+&lt;a href=&quot;https://rvm.io/&quot;&gt;https://rvm.io/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;install-jekyll-and-bundler&quot;&gt;Install Jekyll and bundler&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gem install jekyll bundler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;initialize-your-jekyll-website&quot;&gt;Initialize your Jekyll website&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ mkdir mywebsite
+$ cd mywebsite
+$ bundle install
+$ bundle exec jekyll s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;browse-your-local-website&quot;&gt;Browse your local website&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://127.0.0.1:4000&quot;&gt;http://127.0.0.1:4000&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;create-a-new-postpagearticle&quot;&gt;Create a new post/page/article&lt;/h4&gt;
+
+&lt;p&gt;Jekyll generates your pages written in markdown syntax under mywebsite/_posts.&lt;/p&gt;
+
+&lt;p&gt;Let’s create a new post:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd mywebsite/_posts
+
+vi $(date +&quot;%F&quot;)-my-first-article.md
+
+	---
+	layout: post
+	title:  &quot;My first post&quot;
+	date:	&quot;YYYY-MM-DD&quot;		### REPLACE YYY-MM-DD BY THE CURRENT DATE
+	categories: 
+
+	---
+	## Congratulations
+	
+	You have written your first article!
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Or, the fast way with copy/paste:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd mywebsite/_posts &amp;amp;&amp;amp; cat &amp;lt;&amp;lt;EOF &amp;gt; $(date +&quot;%F&quot;)-my-first-article.md
+---
+layout: post
+title:  &quot;My first post&quot;
+date:	&quot;$(date +&quot;%F&quot;)&quot;
+categories: 
+
+---
+# Congratulations!
+
+You have written your first article!
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;git&quot;&gt;Git&lt;/h2&gt;
+
+&lt;h3 id=&quot;install-git&quot;&gt;Install git&lt;/h3&gt;
+&lt;p&gt;For RHEL/CentOS/Fedora:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# yum install git
+or
+# dnf install git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For Debian based distributions:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# apt install git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;github-configuration&quot;&gt;Github configuration&lt;/h3&gt;
+
+&lt;p&gt;Create a github account.&lt;/p&gt;
+
+&lt;p&gt;Create a new repository.&lt;/p&gt;
+
+&lt;p&gt;Create an additional branch: gh-pages.&lt;/p&gt;
+
+&lt;p&gt;Optional: Go to your account settings and set up authentication keys (ssh) so, later, git will not ask you for a password every time you push new commits to the master branch.&lt;/p&gt;
+
+&lt;p&gt;Initialize your repository:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd mywebsite/_site
+$ git init
+$ git checkout master
+$ git add .
+$ git commit -m &quot;first commit&quot;
+$ git push origin master
+$ git checkout gh-pages
+$ git rebase master
+$ git push origin gh-pages
+$ git checkout master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To ease the procedure, you can set an alias in mywebsite/_site/.git/config&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[alias]
+    sync-ghpages = !git checkout gh-pages &amp;amp;&amp;amp; git rebase master &amp;amp;&amp;amp; git push origin gh-pages &amp;amp;&amp;amp; git checkout master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, you only have to commit and push to the master branch, then use the alias &lt;em&gt;sync-ghpages&lt;/em&gt; to synchronize the gh-pages with the master branch.&lt;/p&gt;</content><author><name></name></author><summary type="html">GitHub allows you to use your repository as a storage for a personal static website through its gh-pages.</summary></entry><entry><title type="html">RHCE - Part1 - Link aggregation: Bonding, teaming</title><link href="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html" rel="alternate" type="text/html" title="RHCE - Part1 - Link aggregation: Bonding, teaming" /><published>2020-02-22T11:45:00-06:00</published><updated>2020-02-22T11:45:00-06:00</updated><id>http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming</id><content type="html" xml:base="http://localhost:4000/rhce/centos7/2020/02/22/rhce-01-bonding-teaming.html">&lt;p&gt;&lt;strong&gt;Display&lt;/strong&gt; existing &lt;strong&gt;connections&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli c s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -702,7 +826,7 @@ Every single user requires a user account (ldap is more convenient).&lt;br /&gt;
 The share is only writable by the users who belong to the (ldap) group named &lt;code class=&quot;highlighter-rouge&quot;&gt;group&lt;/code&gt; &lt;br /&gt;
 The user alice has read access even though she doesn’t belong to the group &lt;code class=&quot;highlighter-rouge&quot;&gt;group&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;** Check** samba &lt;strong&gt;configuration&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Check&lt;/strong&gt; samba &lt;strong&gt;configuration&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# testparm -s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -721,8 +845,8 @@ The user alice has read access even though she doesn’t belong to the group &lt
 
 &lt;p&gt;&lt;strong&gt;Create user accounts&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# smbpasswd add alice
-# smbpasswd add user1
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# smbpasswd -a alice
+# smbpasswd -a user1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Note: &lt;code class=&quot;highlighter-rouge&quot;&gt;user1&lt;/code&gt; is a member of &lt;code class=&quot;highlighter-rouge&quot;&gt;group&lt;/code&gt;.&lt;/p&gt;
@@ -731,7 +855,7 @@ The user alice has read access even though she doesn’t belong to the group &lt
 &lt;strong&gt;CLIENT CONFIGURATION&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;p&gt;See RHCSA post regarding samba (2nd part):&lt;br /&gt;
-https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&lt;/p&gt;</content><author><name></name></author><summary type="html">server = srv.example.local (192.168.2.10/24) client = client.example.local (192.168.2.20/24)</summary></entry><entry><title type="html">RHCSA - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to &lt;strong&gt;interrupt&lt;/strong&gt; the &lt;strong&gt;boot process&lt;/strong&gt; and gain access to a &lt;strong&gt;chrooted environment&lt;/strong&gt;.&lt;/p&gt;
+&lt;a href=&quot;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&quot;&gt;https://sysadminplayfield.github.io/rhcsa/centos7/2020/02/20/rhcsa-18-nfs-samba.html&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">server = srv.example.local (192.168.2.10/24) client = client.example.local (192.168.2.20/24)</summary></entry><entry><title type="html">RHCSA - Part1 - Reset root password</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html" rel="alternate" type="text/html" title="RHCSA - Part1 - Reset root password" /><published>2020-02-20T23:00:40-06:00</published><updated>2020-02-20T23:00:40-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-01-reset-root-password.html">&lt;p&gt;If the root password is lost, you need to &lt;strong&gt;interrupt&lt;/strong&gt; the &lt;strong&gt;boot process&lt;/strong&gt; and gain access to a &lt;strong&gt;chrooted environment&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 At &lt;strong&gt;grub2&lt;/strong&gt; screen, press “&lt;strong&gt;e&lt;/strong&gt;” to &lt;strong&gt;edit&lt;/strong&gt; the configuration.&lt;br /&gt;
@@ -770,40 +894,4 @@ Log in as root with the new password, and reset the SELinux context of /etc/shad
 &lt;pre&gt;
 root@localhost# &lt;b&gt;restorecon -v /etc/shadow&lt;/b&gt;
 root@localhost# &lt;b&gt;reboot&lt;/b&gt;
-&lt;/pre&gt;</content><author><name></name></author><summary type="html">If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.</summary></entry><entry><title type="html">RHCSA - Part2 - Configure network interface</title><link href="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html" rel="alternate" type="text/html" title="RHCSA - Part2 - Configure network interface" /><published>2020-02-20T22:00:01-06:00</published><updated>2020-02-20T22:00:01-06:00</updated><id>http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli</id><content type="html" xml:base="http://localhost:4000/rhcsa/centos7/2020/02/20/rhcsa-02-configure-netowrk-interface-nmcli.html">&lt;p&gt;OS = CentOS 7.0&lt;br /&gt;
-IP address: 192.168.2.20/24&lt;br /&gt;
-gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-Note: Network configurations can also be edited in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/sysconfig/network-scripts&lt;/code&gt;, but requires &lt;code class=&quot;highlighter-rouge&quot;&gt;nmcli con reload&lt;/code&gt; command to update the modifications to NetworkManager.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Display&lt;/strong&gt; network &lt;strong&gt;configurations&lt;/strong&gt; with &lt;strong&gt;nmcli&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli c s
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If &lt;code class=&quot;highlighter-rouge&quot;&gt;nmcli c s&lt;/code&gt; doesn’t display any connection and you don’t know the name of the available interfaces, use &lt;code class=&quot;highlighter-rouge&quot;&gt;ip l&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Create&lt;/strong&gt; the new &lt;strong&gt;connection&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# nmcli con add type ethernet ifname eth0 con-name eth0
-# nmcli con mod eth0 ipv4.addresses &quot;192.168.2.100/24 192.168.2.1&quot; \
- 			ipv4.dns 192.168.2.200 \
- 			ipv4.method manual \
- 			connection.autoconnect yes
-# nmcli con up eth0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Note: Other usefull options are:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;ipv4.dns-search example.local&lt;/li&gt;
-  &lt;li&gt;connection.zone dmz&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Test&lt;/strong&gt; the new &lt;strong&gt;connection&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ping -I eth0 192.168.2.200
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">OS = CentOS 7.0 IP address: 192.168.2.20/24 gateway: 192.168.2.200 (you can also choose a public DNS server such as google 8.8.8.8)</summary></entry></feed>
+&lt;/pre&gt;</content><author><name></name></author><summary type="html">If the root password is lost, you need to interrupt the boot process and gain access to a chrooted environment.</summary></entry></feed>
